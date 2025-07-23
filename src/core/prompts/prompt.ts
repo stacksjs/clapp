@@ -1,5 +1,5 @@
 import type { Key, ReadLine } from 'node:readline'
-import type { Readable, Writable  } from 'node:stream'
+import type { Readable, Writable } from 'node:stream'
 import type { Action } from '../../utils/index'
 import type { ClappEvents, ClappState } from '../types'
 import process, { stdin, stdout } from 'node:process'
@@ -11,8 +11,8 @@ import { CANCEL_SYMBOL, diffLines, isActionKey, setRawMode, settings } from '../
 export interface PromptOptions<TValue, Self extends Prompt<TValue>> {
   render: (this: Omit<Self, 'prompt'>) => string | undefined
   initialValue?: any
-  initialUserInput?: string;
-	validate?: ((value: TValue | undefined) => string | Error | undefined) | undefined;
+  initialUserInput?: string
+  validate?: ((value: TValue | undefined) => string | Error | undefined) | undefined
   input?: Readable
   output?: Writable
   debug?: boolean
@@ -25,8 +25,8 @@ export default class Prompt<TValue> {
   private _abortSignal?: AbortSignal
 
   private rl: ReadLine | undefined
-  private opts: Omit<PromptOptions<TValue, Prompt<TValue>>, 'render' | 'input' | 'output'>;
-	private _render: (context: Omit<Prompt<TValue>, 'prompt'>) => string | undefined;
+  private opts: Omit<PromptOptions<TValue, Prompt<TValue>>, 'render' | 'input' | 'output'>
+  private _render: (context: Omit<Prompt<TValue>, 'prompt'>) => string | undefined
   private _track = false
   private _prevFrame = ''
   private _subscribers = new Map<string, { cb: (...args: any) => any, once?: boolean }[]>()
@@ -34,8 +34,8 @@ export default class Prompt<TValue> {
 
   public state: ClappState = 'initial'
   public error = ''
-  public value: TValue | undefined;
-	public userInput = '';
+  public value: TValue | undefined
+  public userInput = ''
 
   constructor(options: PromptOptions<TValue, Prompt<TValue>>, trackValue = true) {
     const { input = stdin, output = stdout, render, signal, ...opts } = options
@@ -64,9 +64,9 @@ export default class Prompt<TValue> {
    * @param event - The event name
    */
   private setSubscriber<T extends keyof ClappEvents<TValue>>(
-		event: T,
-		opts: { cb: ClappEvents<TValue>[T]; once?: boolean }
-	) {
+    event: T,
+    opts: { cb: ClappEvents<TValue>[T], once?: boolean },
+  ) {
     const params = this._subscribers.get(event) ?? []
     params.push(opts)
     this._subscribers.set(event, params)
@@ -136,7 +136,6 @@ export default class Prompt<TValue> {
         )
       }
 
-
       this.rl = readline.createInterface({
         input: this.input,
         tabSize: 2,
@@ -146,8 +145,8 @@ export default class Prompt<TValue> {
       })
       this.rl.prompt()
       if (this.opts.initialUserInput !== undefined) {
-				this._setUserInput(this.opts.initialUserInput, true);
-			}
+        this._setUserInput(this.opts.initialUserInput, true)
+      }
 
       this.input.on('keypress', this.onKeypress)
       setRawMode(this.input, true)
@@ -171,31 +170,31 @@ export default class Prompt<TValue> {
   }
 
   protected _isActionKey(char: string | undefined, _key: Key): boolean {
-		return char === '\t';
-	}
+    return char === '\t'
+  }
 
-	protected _setValue(value: TValue | undefined): void {
-		this.value = value;
-		this.emit('value', this.value);
-	}
+  protected _setValue(value: TValue | undefined): void {
+    this.value = value
+    this.emit('value', this.value)
+  }
 
-	protected _setUserInput(value: string | undefined, write?: boolean): void {
-		this.userInput = value ?? '';
-		this.emit('userInput', this.userInput);
-		if (write && this._track && this.rl) {
-			this.rl.write(this.userInput);
-			this._cursor = this.rl.cursor;
-		}
-	}
+  protected _setUserInput(value: string | undefined, write?: boolean): void {
+    this.userInput = value ?? ''
+    this.emit('userInput', this.userInput)
+    if (write && this._track && this.rl) {
+      this.rl.write(this.userInput)
+      this._cursor = this.rl.cursor
+    }
+  }
 
   private onKeypress(char: string | undefined, key: Key) {
-		if (this._track && key.name !== 'return') {
-			if (key.name && this._isActionKey(char, key)) {
-				this.rl?.write(null, { ctrl: true, name: 'h' });
-			}
-			this._cursor = this.rl?.cursor ?? 0;
-			this._setUserInput(this.rl?.line);
-		}
+    if (this._track && key.name !== 'return') {
+      if (key.name && this._isActionKey(char, key)) {
+        this.rl?.write(null, { ctrl: true, name: 'h' })
+      }
+      this._cursor = this.rl?.cursor ?? 0
+      this._setUserInput(this.rl?.line)
+    }
 
     if (this.state === 'error') {
       this.state = 'active'
@@ -212,10 +211,9 @@ export default class Prompt<TValue> {
       this.emit('confirm', char.toLowerCase() === 'y')
     }
 
-    this.emit('key', char?.toLowerCase(), key);
+    this.emit('key', char?.toLowerCase(), key)
 
     if (key?.name === 'return') {
-
       if (this.opts.validate) {
         const problem = this.opts.validate(this.value)
         if (problem) {
@@ -252,19 +250,18 @@ export default class Prompt<TValue> {
   }
 
   private restoreCursor(): void {
-    const lines =
-			wrap(this._prevFrame, process.stdout.columns, { hard: true, trim: false }).split('\n')
-				.length - 1;
-		this.output.write(cursor.move(-999, lines * -1));
+    const lines = wrap(this._prevFrame, process.stdout.columns, { hard: true, trim: false }).split('\n').length - 1
+    this.output.write(cursor.move(-999, lines * -1))
   }
 
   private render() {
     const frame = wrap(this._render(this) ?? '', process.stdout.columns, {
-			hard: true,
-			trim: false,
-		});
-    if (frame === this._prevFrame)
+      hard: true,
+      trim: false,
+    })
+    if (frame === this._prevFrame) {
       return
+    }
 
     if (this.state === 'initial') {
       this.output.write(cursor.hide)

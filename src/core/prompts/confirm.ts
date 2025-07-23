@@ -2,7 +2,7 @@ import type { PromptOptions } from './prompt'
 import { cursor } from '../../utils'
 import Prompt from './prompt'
 
-interface ConfirmOptions extends PromptOptions<boolean, Prompt<boolean>> {
+interface ConfirmOptions extends PromptOptions<boolean, ConfirmPrompt> {
   active: string
   inactive: string
   initialValue?: boolean
@@ -18,7 +18,7 @@ export default class ConfirmPrompt extends Prompt<boolean> {
   }
 
   constructor(opts: ConfirmOptions) {
-    super(opts, false)
+    super(opts as unknown as PromptOptions<boolean, Prompt<boolean>>, false)
     this.value = !!opts.initialValue
 
     this.on('userInput', () => {

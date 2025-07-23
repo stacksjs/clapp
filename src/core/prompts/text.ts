@@ -2,23 +2,22 @@ import type { PromptOptions } from './prompt'
 import color from 'picocolors'
 import Prompt from './prompt'
 
-interface TextOptions extends PromptOptions<TextPrompt> {
+interface TextOptions extends PromptOptions<string, TextPrompt> {
   placeholder?: string
   defaultValue?: string
 }
 
-export default class TextPrompt extends Prompt {
-  get valueWithCursor(): string {
+export default class TextPrompt extends Prompt<string> {
+  get userInputWithCursor(): string {
     if (this.state === 'submit') {
-      return this.value
+      return this.userInput
     }
-
-    if (this.cursor >= this.value.length) {
-      return `${this.value}█`
+    const userInput = this.userInput
+    if (this.cursor >= userInput.length) {
+      return `${this.userInput}█`
     }
-
-    const s1 = this.value.slice(0, this.cursor)
-    const [s2, ...s3] = this.value.slice(this.cursor)
+    const s1 = userInput.slice(0, this.cursor)
+    const [s2, ...s3] = userInput.slice(this.cursor)
     return `${s1}${color.inverse(s2)}${s3.join('')}`
   }
 
@@ -27,11 +26,17 @@ export default class TextPrompt extends Prompt {
   }
 
   constructor(opts: TextOptions) {
-    super(opts as unknown as PromptOptions<Prompt>)
+    super({ ...opts, initialUserInput: opts.initialUserInput ?? opts.initialValue } as unknown as PromptOptions<string, Prompt<string>>)
 
+    this.on('userInput', (input) => {
+      this._setValue(input)
+    })
     this.on('finalize', () => {
       if (!this.value) {
         this.value = opts.defaultValue
+      }
+      if (this.value === undefined) {
+        this.value = ''
       }
     })
   }

@@ -1,4 +1,4 @@
-import type { Key } from 'node:readline';
+import type { Key } from 'node:readline'
 import type { Action } from '../utils/settings'
 
 /**
@@ -16,10 +16,10 @@ export interface ClappEvents<TValue> {
   submit: (value?: any) => void
   error: (value?: any) => void
   cursor: (key?: Action) => void
-  key: (key: string | undefined, info: Key) => void;
-	value: (value?: TValue) => void;
-	userInput: (value: string) => void;
-	confirm: (value?: boolean) => void;
-	finalize: () => void;
-	beforePrompt: () => void;
+  key: (key: string | undefined, info: Key) => void
+  value: (value?: TValue) => void
+  userInput: (value: string) => void
+  confirm: (value?: boolean) => void
+  finalize: () => void
+  beforePrompt: () => void
 }
