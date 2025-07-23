@@ -68,8 +68,7 @@ export function select<Value>(opts: SelectOptions<Value>) {
       case 'selected':
         return `${color.dim(label)}`
       case 'active':
-        return `${color.green(S_RADIO_ACTIVE)} ${label} ${option.hint ? color.dim(`(${option.hint})`) : ''
-        }`
+        return `${color.green(S_RADIO_ACTIVE)} ${label}${option.hint ? ` ${color.dim(`(${option.hint})`)}` : ''}`
       case 'cancelled':
         return `${color.strikethrough(color.dim(label))}`
       default:
@@ -79,6 +78,7 @@ export function select<Value>(opts: SelectOptions<Value>) {
 
   return new SelectPrompt({
     options: opts.options,
+    signal: opts.signal,
     input: opts.input,
     output: opts.output,
     initialValue: opts.initialValue,

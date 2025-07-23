@@ -36,6 +36,7 @@ export function spinner({
   errorMessage,
   frames = unicode ? ['◒', '◐', '◓', '◑'] : ['•', 'o', 'O', '0'],
   delay = unicode ? 80 : 120,
+  signal,
 }: SpinnerOptions = {}): SpinnerResult {
   const isCI = isCIFn()
 
@@ -128,6 +129,10 @@ export function spinner({
     process.removeListener('SIGINT', signalEventHandler)
     process.removeListener('SIGTERM', signalEventHandler)
     process.removeListener('exit', handleExit)
+
+    if (signal) {
+      signal.removeEventListener('abort', signalEventHandler)
+    }
   }
 
   function start(msg = ''): void {
@@ -159,7 +164,8 @@ export function spinner({
       }
 
       frameIndex = frameIndex + 1 < frames.length ? frameIndex + 1 : 0
-      indicatorTimer = indicatorTimer < frames.length ? indicatorTimer + 0.125 : 0
+      // indicator increase by 1 every 8 frames
+      indicatorTimer = indicatorTimer < 4 ? indicatorTimer + 0.125 : 0
     }, delay)
   }
 

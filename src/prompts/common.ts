@@ -7,6 +7,10 @@ import { isUnicodeSupported } from '../utils'
 
 export const unicode: boolean = isUnicodeSupported()
 export const isCI = (): boolean => process.env.CI === 'true'
+export function isTTY(output: Writable): boolean {
+  return (output as Writable & { isTTY?: boolean }).isTTY === true
+}
+
 export const unicodeOr: (c: string, fallback: string) => string = (c: string, fallback: string) => (unicode ? c : fallback)
 export const S_STEP_ACTIVE: string = unicodeOr('◆', '*')
 export const S_STEP_CANCEL: string = unicodeOr('■', 'x')
@@ -51,6 +55,7 @@ export function symbol(state: State): string {
 export interface CommonOptions {
   input?: Readable
   output?: Writable
+  signal?: AbortSignal
 }
 
 // Helper function to process markdown in any string

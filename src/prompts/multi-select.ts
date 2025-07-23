@@ -27,35 +27,33 @@ export function multiselect<Value>(opts: MultiSelectOptions<Value>) {
   ) => {
     const label = option.label ?? String(option.value)
     if (state === 'active') {
-      return `${color.cyan(S_CHECKBOX_ACTIVE)} ${label} ${option.hint ? color.dim(`(${option.hint})`) : ''
-      }`
+      return `${color.cyan(S_CHECKBOX_ACTIVE)} ${label}${option.hint ? ` ${color.dim(`(${option.hint})`)}` : ''}`
     }
     if (state === 'selected') {
-      return `${color.green(S_CHECKBOX_SELECTED)} ${color.dim(label)} ${option.hint ? color.dim(`(${option.hint})`) : ''
-      }`
+      return `${color.green(S_CHECKBOX_SELECTED)} ${color.dim(label)}${option.hint ? ` ${color.dim(`(${option.hint})`)}` : ''}`
     }
     if (state === 'cancelled') {
       return `${color.strikethrough(color.dim(label))}`
     }
     if (state === 'active-selected') {
-      return `${color.green(S_CHECKBOX_SELECTED)} ${label} ${option.hint ? color.dim(`(${option.hint})`) : ''
-      }`
+      return `${color.green(S_CHECKBOX_SELECTED)} ${label}${option.hint ? ` ${color.dim(`(${option.hint})`)}` : ''}`
     }
     if (state === 'submitted') {
       return `${color.dim(label)}`
     }
     return `${color.dim(S_CHECKBOX_INACTIVE)} ${color.dim(label)}`
   }
+  const required = opts.required ?? true
 
   return new MultiSelectPrompt({
     options: opts.options,
     input: opts.input,
     output: opts.output,
     initialValues: opts.initialValues,
-    required: opts.required ?? true,
+    required,
     cursorAt: opts.cursorAt,
-    validate(selected: Value[]) {
-      if (this.required && selected.length === 0) {
+    validate(selected: Value[] | undefined) {
+      if (required && (selected === undefined || selected.length === 0)) {
         return `Please select at least one option.\n${color.reset(
           color.dim(
             `Press ${color.gray(color.bgWhite(color.inverse(' space ')))} to select, ${color.gray(
@@ -67,9 +65,10 @@ export function multiselect<Value>(opts: MultiSelectOptions<Value>) {
     },
     render() {
       const title = `${color.gray(S_BAR)}\n${symbol(this.state)}  ${opts.message}\n`
+      const value = this.value ?? []
 
       const styleOption = (option: Option<Value>, active: boolean) => {
-        const selected = this.value.includes(option.value)
+        const selected = value.includes(option.value)
         if (active && selected) {
           return opt(option, 'active-selected')
         }
@@ -82,18 +81,17 @@ export function multiselect<Value>(opts: MultiSelectOptions<Value>) {
       switch (this.state) {
         case 'submit': {
           return `${title}${color.gray(S_BAR)}  ${this.options
-            .filter(({ value }: { value: Value }) => this.value.includes(value))
+            .filter(({ value: optionValue }) => value.includes(optionValue))
             .map((option: Option<Value>) => opt(option, 'submitted'))
             .join(color.dim(', ')) || color.dim('none')
           }`
         }
         case 'cancel': {
           const label = this.options
-            .filter(({ value }: { value: Value }) => this.value.includes(value))
+            .filter(({ value: optionValue }) => value.includes(optionValue))
             .map((option: Option<Value>) => opt(option, 'cancelled'))
             .join(color.dim(', '))
-          return `${title}${color.gray(S_BAR)}  ${label.trim() ? `${label}\n${color.gray(S_BAR)}` : ''
-          }`
+          return `${title}${color.gray(S_BAR)}${label.trim() ? `  ${label}\n${color.gray(S_BAR)}` : ''}`
         }
         case 'error': {
           const footer = this.error

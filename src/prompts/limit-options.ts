@@ -15,6 +15,7 @@ export function limitOptions<TOption>(params: LimitOptionsParams<TOption>): stri
   const { cursor, options, style } = params
   const output: Writable = params.output ?? process.stdout
   const rows = output instanceof WriteStream && output.rows !== undefined ? output.rows : 10
+  const overflowFormat = color.dim('...')
 
   const paramMaxItems = params.maxItems ?? Number.POSITIVE_INFINITY
   const outputMaxItems = Math.max(rows - 4, 0)
@@ -39,7 +40,7 @@ export function limitOptions<TOption>(params: LimitOptionsParams<TOption>): stri
       const isTopLimit = i === 0 && shouldRenderTopEllipsis
       const isBottomLimit = i === arr.length - 1 && shouldRenderBottomEllipsis
       return isTopLimit || isBottomLimit
-        ? color.dim('...')
+        ? overflowFormat
         : style(option, i + slidingWindowLocation === cursor)
     })
 }

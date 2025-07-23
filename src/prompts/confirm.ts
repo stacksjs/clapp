@@ -1,4 +1,4 @@
-import type { CommonOptions } from './common.js'
+import type { CommonOptions } from './common'
 import color from 'picocolors'
 import { ConfirmPrompt } from '../core'
 import {
@@ -24,6 +24,7 @@ export function confirm(opts: ConfirmOptions) {
   return new ConfirmPrompt({
     active,
     inactive,
+    signal: opts.signal,
     input: opts.input,
     output: opts.output,
     initialValue: opts.initialValue ?? true,
