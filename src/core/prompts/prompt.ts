@@ -31,6 +31,7 @@ export default class Prompt<TValue> {
   private _prevFrame = ''
   private _subscribers = new Map<string, { cb: (...args: any) => any, once?: boolean }[]>()
   protected _cursor = 0
+  private _manualLine = '' // Manual line accumulation for test environments
 
   public state: ClappState = 'initial'
   public error = ''
@@ -193,7 +194,23 @@ export default class Prompt<TValue> {
         this.rl?.write(null, { ctrl: true, name: 'h' })
       }
       this._cursor = this.rl?.cursor ?? 0
-      this._setUserInput(this.rl?.line)
+
+      // Manual character accumulation for test environments
+      // Only accumulate printable characters, not special action keys
+      const isSpecialKey = key.name === 'tab' || key.name === 'escape' || key.name === 'backspace'
+        || key.name === 'delete' || key.name === 'enter' || key.name === 'return'
+        || (key.name && ['up', 'down', 'left', 'right'].includes(key.name))
+
+      if (char && !isSpecialKey && char.length === 1 && char >= ' ') {
+        this._manualLine += char
+      }
+      else if (key.name === 'backspace' && this._manualLine.length > 0) {
+        this._manualLine = this._manualLine.slice(0, -1)
+      }
+
+      // Use manual line if it's more complete than readline line (test environment fix)
+      const effectiveLine = (this._manualLine.length >= (this.rl?.line?.length || 0)) ? this._manualLine : this.rl?.line
+      this._setUserInput(effectiveLine)
     }
 
     if (this.state === 'error') {
