@@ -1,5 +1,5 @@
-const actions = ['up', 'down', 'left', 'right', 'space', 'enter', 'cancel'] as const
-export type Action = (typeof actions)[number]
+export type Action = 'up' | 'down' | 'left' | 'right' | 'space' | 'enter' | 'cancel'
+const actions: Action[] = ['up', 'down', 'left', 'right', 'space', 'enter', 'cancel']
 
 /** Global settings for Clapp programs, stored in memory */
 interface InternalClappSettings {

@@ -11,7 +11,7 @@ export function isTTY(output: Writable): boolean {
   return (output as Writable & { isTTY?: boolean }).isTTY === true
 }
 
-export const unicodeOr: (c: string, fallback: string) => string = (c: string, fallback: string) => (unicode ? c : fallback)
+export const unicodeOr = (c: string, fallback: string): string => (unicode ? c : fallback)
 export const S_STEP_ACTIVE: string = unicodeOr('◆', '*')
 export const S_STEP_CANCEL: string = unicodeOr('■', 'x')
 export const S_STEP_ERROR: string = unicodeOr('▲', 'x')

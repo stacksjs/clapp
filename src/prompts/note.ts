@@ -19,7 +19,7 @@ export interface NoteOptions extends CommonOptions {
 
 const defaultNoteFormatter = (line: string): string => color.dim(line)
 
-export const note: (message: string, title: string, opts?: NoteOptions) => void = (message = '', title = '', opts?: NoteOptions) => {
+export function note(message = '', title = '', opts?: NoteOptions): void {
   const format = opts?.format ?? defaultNoteFormatter
   const processedMessage = processMarkdown(message)
   const processedTitle = processMarkdown(title)

@@ -20,12 +20,13 @@ export interface ProgressResult extends SpinnerResult {
   advance: (step?: number, msg?: string) => void
 }
 
-export function progress({
-  style = 'heavy',
-  max: userMax = 100,
-  size: userSize = 40,
-  ...spinnerOptions
-}: ProgressOptions = {}): ProgressResult {
+export function progress(options: ProgressOptions = {}): ProgressResult {
+  const {
+    style = 'heavy',
+    max: userMax = 100,
+    size: userSize = 40,
+    ...spinnerOptions
+  } = options
   const spin = spinner(spinnerOptions)
   let value = 0
   let previousMessage = ''

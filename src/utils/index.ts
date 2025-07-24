@@ -32,12 +32,13 @@ interface BlockOptions {
   hideCursor?: boolean
 }
 
-export function block({
-  input = stdin,
-  output = stdout,
-  overwrite = true,
-  hideCursor = true,
-}: BlockOptions = {}) {
+export function block(options?: BlockOptions): () => void {
+  const {
+    input = stdin,
+    output = stdout,
+    overwrite = true,
+    hideCursor = true,
+  } = options || {}
   const rl = readline.createInterface({
     input,
     output,
@@ -54,7 +55,7 @@ export function block({
     const str = String(data)
     if (isActionKey([str, name, sequence], 'cancel')) {
       if (hideCursor)
-        output.write(cursor.show)
+        (output as NodeJS.WriteStream).write(cursor.show)
       process.exit(0)
       return
     }
@@ -71,7 +72,7 @@ export function block({
   }
 
   if (hideCursor)
-    output.write(cursor.hide)
+    (output as NodeJS.WriteStream).write(cursor.hide)
 
   input.once('keypress', clear)
 
@@ -79,7 +80,7 @@ export function block({
     input.off('keypress', clear)
 
     if (hideCursor)
-      output.write(cursor.show)
+      (output as NodeJS.WriteStream).write(cursor.show)
 
     // Prevent Windows specific issues: https://github.com/bombshell-dev/clack/issues/176
     if (input instanceof ReadStream && input.isTTY && !isWindows) {

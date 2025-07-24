@@ -4,7 +4,10 @@ import { stripVTControlCharacters as strip } from 'node:util'
 import color from 'picocolors'
 import { S_BAR, S_ERROR, S_INFO, S_STEP_SUBMIT, S_SUCCESS, S_WARN } from './common'
 
-const prefix = `${color.gray(S_BAR)}  `
+function getPrefix(): string {
+  return `${color.gray(S_BAR)}  `
+}
+const prefix = getPrefix()
 
 interface Stream {
   message: (iterable: Iterable<string> | AsyncIterable<string>, opts?: LogMessageOptions) => Promise<void>
