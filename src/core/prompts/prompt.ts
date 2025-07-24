@@ -198,6 +198,7 @@ export default class Prompt<TValue> {
 
     if (this.state === 'error') {
       this.state = 'active'
+      this.error = ''
     }
     if (key?.name) {
       if (!this._track && settings.aliases.has(key.name)) {

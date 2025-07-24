@@ -8,6 +8,8 @@ interface TextOptions extends PromptOptions<string, TextPrompt> {
 }
 
 export default class TextPrompt extends Prompt<string> {
+  private placeholder?: string
+
   get userInputWithCursor(): string {
     if (this.state === 'submit') {
       return this.userInput
@@ -28,10 +30,27 @@ export default class TextPrompt extends Prompt<string> {
   constructor(opts: TextOptions) {
     super({ ...opts, initialUserInput: opts.initialUserInput ?? opts.initialValue } as unknown as PromptOptions<string, Prompt<string>>)
 
+    this.placeholder = opts.placeholder
+
+    this.on('key', (char) => {
+      if (char === '\t' && this.placeholder) {
+        if (!this.value) {
+          this._setValue(this.placeholder)
+          this._setUserInput(this.placeholder, true)
+        }
+      }
+    })
+
     this.on('userInput', (input) => {
       this._setValue(input)
     })
+
     this.on('finalize', () => {
+      // If no user input was provided but we have a placeholder, use it
+      if (!this.userInput && this.placeholder) {
+        this.value = this.placeholder
+      }
+      // If we still don't have a value, use the default value
       if (!this.value) {
         this.value = opts.defaultValue
       }

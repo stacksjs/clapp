@@ -38,7 +38,9 @@ export function text(opts: TextOptions) {
           )}${errorText}\n`
         }
         case 'submit': {
-          const valueText = value ? `  ${color.dim(value)}` : ''
+          // Don't show value if it's just a placeholder (no actual user input)
+          const shouldShowValue = this.userInput || value !== opts.placeholder
+          const valueText = shouldShowValue && value ? `  ${color.dim(value)}` : ''
           return `${title}${color.gray(S_BAR)}${valueText}`
         }
         case 'cancel': {
