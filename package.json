@@ -49,6 +49,7 @@
     "logsmith": "bun node_modules/@stacksjs/logsmith/dist/bin/cli.js",
     "fresh": "bunx rimraf node_modules/ bun.lock && bun i",
     "changelog": "bun logsmith --output CHANGELOG.md --theme github --exclude-authors \"dependabot[bot],github-actions[bot]\" --exclude-types \"chore\" --max-commits 50",
+    "changelog:generate": "bun logsmith --output CHANGELOG.md --theme github --exclude-authors \"dependabot[bot],github-actions[bot]\" --exclude-types \"chore\" --max-commits 50",
     "prepublishOnly": "bun --bun run build && bun run compile:all && bun run zip:all",
     "bumpx": "bun node_modules/@stacksjs/bumpx/dist/bin/cli.js ",
     "release": "bun run bumpx prompt --no-push --yes && bun run changelog:generate && git add CHANGELOG.md && git commit --amend --no-edit",
