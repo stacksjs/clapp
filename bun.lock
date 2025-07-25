@@ -4,9 +4,11 @@
     "": {
       "name": "clapp",
       "devDependencies": {
+        "@stacksjs/bumpx": "^0.1.2",
         "@stacksjs/docs": "^0.70.23",
         "@stacksjs/eslint-config": "^4.10.2-beta.3",
         "@stacksjs/gitit": "^0.2.1",
+        "@stacksjs/logsmith": "^0.1.2",
         "@types/bun": "^1.2.13",
         "bumpp": "^10.1.1",
         "bun-plugin-dtsx": "^0.21.12",
@@ -483,6 +485,8 @@
 
     "@shikijs/vscode-textmate": ["@shikijs/vscode-textmate@10.0.2", "", {}, "sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg=="],
 
+    "@stacksjs/bumpx": ["@stacksjs/bumpx@0.1.2", "", { "dependencies": { "cac": "^6.7.14" }, "bin": { "bumpx": "dist/bin/cli.js" } }, "sha512-s+WWLDsAZ2sgYP2ko17nUjMAI+orFU70JeITkyLdzn4WGgeh+REjWWUpiiuMvh+av1RD8xoLvJHhqfvb7hsDBQ=="],
+
     "@stacksjs/docs": ["@stacksjs/docs@0.70.23", "", { "dependencies": { "@iconify-json/carbon": "^1.2.8", "@shikijs/vitepress-twoslash": "^3.2.1", "@vite-pwa/assets-generator": "^1.0.0", "@vite-pwa/vitepress": "^1.0.0", "unocss": "^66.0.0", "unplugin-icons": "^22.1.0", "unplugin-vue-components": "^28.4.1", "vite-plugin-pwa": "^1.0.0", "vitepress": "1.6.3" } }, "sha512-kRk/aza/wQAAgF0fhUhG8bUHhqk3RnjBkZyoRW0fvYs3dLaAArJYX/uVquZixlQnqgizGeGZT986tEFjs5Ly+A=="],
 
     "@stacksjs/dtsx": ["@stacksjs/dtsx@0.8.3", "", { "bin": { "dtsx": "dist/cli.js" } }, "sha512-+u/PEp478qHM8s7xT0AOZowd93mZ/5ptHFyiz0B/gcxmdrdNdM6bLIK5si5Uzy1cR5TOVN4oAB3+WMKDnJ3n1w=="],
@@ -492,6 +496,8 @@
     "@stacksjs/eslint-plugin": ["@stacksjs/eslint-plugin@0.2.4", "", { "dependencies": { "@stacksjs/eslint-config": "^4.10.2-beta.1", "@typescript-eslint/utils": "^8.27.0", "@unocss/config": "66.0.0", "@unocss/core": "66.0.0", "magic-string": "^0.30.17", "synckit": "^0.10.0", "unocss": "^66.0.0" } }, "sha512-cPCi9eTeXIXI6RTNvK1QmUFNpT3aTnhLsBXpuD8hs8d+2CSn7mNZBZDn61+Se6nzy3Ot/grKc4uua3uD/+m1cQ=="],
 
     "@stacksjs/gitit": ["@stacksjs/gitit@0.2.1", "", { "dependencies": { "nanotar": "^0.2.0" }, "bin": { "gitit": "dist/bin/cli.js" } }, "sha512-LUeT9MXjVf/m1aoOCT0Y5N6LatzDaaz+YV7d3vspBWZ3pj9hqaq/T+3STKIKPKPIqs7zG60uL1Z6E0HPaJ3q/Q=="],
+
+    "@stacksjs/logsmith": ["@stacksjs/logsmith@0.1.2", "", { "dependencies": { "bunfig": "^0.10.1" }, "bin": { "@stacksjs/logsmith": "dist/bin/cli.js", "logsmith": "dist/bin/cli.js" } }, "sha512-ITZV51JUAuIWfuUZRgbHb2HMFEwcVl5XOQduzcWJI9zPjRyiGcdWEYcHVLYO2m8v7W6EDAWb9bkUH6W6zf6kcg=="],
 
     "@stylistic/eslint-plugin": ["@stylistic/eslint-plugin@4.2.0", "", { "dependencies": { "@typescript-eslint/utils": "^8.23.0", "eslint-visitor-keys": "^4.2.0", "espree": "^10.3.0", "estraverse": "^5.3.0", "picomatch": "^4.0.2" }, "peerDependencies": { "eslint": ">=9.0.0" } }, "sha512-8hXezgz7jexGHdo5WN6JBEIPHCSFyyU4vgbxevu4YLVS5vl+sxqAAGyXSzfNDyR6xMNSH5H1x67nsXcYMOHtZA=="],
 
@@ -766,6 +772,8 @@
     "bun-types": ["bun-types@1.2.13", "", { "dependencies": { "@types/node": "*" } }, "sha512-rRjA1T6n7wto4gxhAO/ErZEtOXyEZEmnIHQfl0Dt1QQSB4QV0iP6BZ9/YB5fZaHFQ2dwHFrmPaRQ9GGMX01k9Q=="],
 
     "bundle-name": ["bundle-name@4.1.0", "", { "dependencies": { "run-applescript": "^7.0.0" } }, "sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q=="],
+
+    "bunfig": ["bunfig@0.10.1", "", { "bin": { "bunfig": "bin/cli.js" } }, "sha512-4IB0Te+W0Jk8LcaCK9PhZqH9KHbYBJuTr70kVPRpnCDEq2WMixRPWSzOYNOihnSJBUBse8WIi9V5Ym2cyK+MDA=="],
 
     "c12": ["c12@3.0.3", "", { "dependencies": { "chokidar": "^4.0.3", "confbox": "^0.2.2", "defu": "^6.1.4", "dotenv": "^16.4.7", "exsolve": "^1.0.4", "giget": "^2.0.0", "jiti": "^2.4.2", "ohash": "^2.0.11", "pathe": "^2.0.3", "perfect-debounce": "^1.0.0", "pkg-types": "^2.1.0", "rc9": "^2.1.2" }, "peerDependencies": { "magicast": "^0.3.5" }, "optionalPeers": ["magicast"] }, "sha512-uC3MacKBb0Z15o5QWCHvHWj5Zv34pGQj9P+iXKSpTuSGFS0KKhUWf4t9AJ+gWjYOdmWCPEGpEzm8sS0iqbpo1w=="],
 
