@@ -29,7 +29,8 @@
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "clapp": "./dist/bin/clapp.js"
+    "clapp": "./dist/bin/cli.js",
+    "@stacksjs/clapp": "./dist/bin/cli.js"
   },
   "files": [
     "README.md",
