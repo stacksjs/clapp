@@ -5,6 +5,7 @@ await Bun.build({
   entrypoints: ['src/index.ts'],
   outdir: './dist',
   format: 'esm',
+  splitting: true, // Add splitting back to reduce bundle size
   plugins: [dts()],
   target: 'node',
 })
