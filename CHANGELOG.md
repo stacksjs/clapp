@@ -1,3 +1,17 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.12...HEAD)
+
+### Contributors
+
+- Adelino Ngomacha <Adelinob335@gmail.com>
+
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.12...HEAD)
+
+### Contributors
+
+- Adelino Ngomacha <Adelinob335@gmail.com>
+
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
 
 ### Contributors
