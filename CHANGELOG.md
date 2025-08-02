@@ -26,6 +26,13 @@
 - Adelino Ngomacha <Adelinob335@gmail.com>
 
 
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
+
+### Contributors
+
+- Adelino Ngomacha <Adelinob335@gmail.com>
+
+
 
 ## v0.1.4...main
 

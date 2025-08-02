@@ -53,7 +53,7 @@
     "changelog:generate": "bun logsmith --output CHANGELOG.md --theme github --exclude-authors \"dependabot[bot],github-actions[bot]\" --exclude-types \"chore\" --max-commits 50",
     "prepublishOnly": "bun --bun run build && bun run compile:all && bun run zip:all",
     "bumpx": "bun node_modules/@stacksjs/bumpx/dist/bin/cli.js ",
-    "release": "bun run changelog:generate && bun run bumpx prompt --no-push --yes && git add CHANGELOG.md && git commit --amend --no-edit",
+    "release": "bun run changelog:generate && git add CHANGELOG.md && git commit --amend --no-edit && bun run bumpx prompt --no-push --yes",
     "test": "bun test",
     "dev:docs": "bun --bun vitepress dev docs",
     "build:docs": "bun --bun vitepress build docs",
