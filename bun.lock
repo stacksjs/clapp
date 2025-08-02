@@ -11,6 +11,7 @@
         "@stacksjs/logsmith": "^0.1.2",
         "@types/bun": "^1.2.19",
         "buddy-bot": "^0.5.13",
+        "bun-git-hooks": "^0.2.19",
         "bun-plugin-dtsx": "^0.21.12",
         "lint-staged": "^15.5.2",
         "simple-git-hooks": "^2.13.0",
@@ -785,6 +786,8 @@
     "buffer-from": ["buffer-from@1.1.2", "", {}, "sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ=="],
 
     "builtin-modules": ["builtin-modules@4.0.0", "", {}, "sha512-p1n8zyCkt1BVrKNFymOHjcDSAl7oq/gUvfgULv2EblgpPVQlQr9yHnWjg9IJ2MhfwPqiYqMMrr01OY7yQoK2yA=="],
+
+    "bun-git-hooks": ["bun-git-hooks@0.2.19", "", { "bin": { "git-hooks": "dist/bin/cli.js", "bun-git-hooks": "dist/bin/cli.js" } }, "sha512-h+YfI+/hCojKadnC9kfk71suZsjdgKShv82+bHp6UiHwH+XDyqavfAUt4NQTGRcIq7dSo2Mfh0QgCiAkCJOl8w=="],
 
     "bun-plugin-dtsx": ["bun-plugin-dtsx@0.21.12", "", { "dependencies": { "@stacksjs/dtsx": "^0.8.1" } }, "sha512-VqGDRoTKEnkD508k9jRlcwFoEEJXtjqLMGN+brRP4/3vH0wfLZkZiWG5jc490roZOmphrQlo5NgfFB/j71+Qtg=="],
 
