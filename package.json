@@ -89,6 +89,6 @@
         "*.{js,ts,yaml,yml,md}": "bun lint:fix"
       }
     },
-    "commit-msg": "bunx gitlint .git/COMMIT_EDITMSG"
+    "commit-msg": "bunx gitlint --edit $1"
   }
 }
