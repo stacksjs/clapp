@@ -1,3 +1,11 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.14...HEAD)
+
+### Contributors
+
+- Adelino Ngomacha <Adelinob335@gmail.com>
+- zJohn <Adelinob335@gmail.com>
+
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.13...HEAD)
 
 ### Contributors

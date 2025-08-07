@@ -19,6 +19,13 @@ cli.command('version', 'Show the version of the CLI').action(() => {
   console.log(version)
 })
 
+// Add a default command (empty name) that shows help
+cli
+  .command('', 'Show help information')
+  .action(() => {
+    cli.outputHelp()
+  })
+
 cli.version(version)
 cli.help()
 cli.parse()
