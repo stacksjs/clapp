@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { version } from '../package.json'
 import { CLI } from '../src'
 
