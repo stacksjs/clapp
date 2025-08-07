@@ -9,7 +9,7 @@
         "@stacksjs/eslint-config": "^4.14.0-beta.3",
         "@stacksjs/gitit": "^0.2.1",
         "@stacksjs/gitlint": "^0.1.5",
-        "@stacksjs/logsmith": "^0.1.2",
+        "@stacksjs/logsmith": "^0.1.4",
         "@types/bun": "^1.2.19",
         "buddy-bot": "^0.6.5",
         "bun-git-hooks": "^0.2.19",
@@ -508,7 +508,7 @@
 
     "@stacksjs/logging": ["@stacksjs/logging@0.70.23", "", {}, "sha512-rm/XGj7z+one5mQqwrgxRq/ulusyz2eWVe3QUP3/V9kKkDtEhI9tnmx4PLvVQZbxJgsVzcZeuyJ12OfxfpKFdg=="],
 
-    "@stacksjs/logsmith": ["@stacksjs/logsmith@0.1.2", "", { "dependencies": { "bunfig": "^0.10.1" }, "bin": { "@stacksjs/logsmith": "dist/bin/cli.js", "logsmith": "dist/bin/cli.js" } }, "sha512-ITZV51JUAuIWfuUZRgbHb2HMFEwcVl5XOQduzcWJI9zPjRyiGcdWEYcHVLYO2m8v7W6EDAWb9bkUH6W6zf6kcg=="],
+    "@stacksjs/logsmith": ["@stacksjs/logsmith@0.1.4", "", { "dependencies": { "bunfig": "^0.10.1" }, "bin": { "@stacksjs/logsmith": "dist/bin/cli.js", "logsmith": "dist/bin/cli.js" } }, "sha512-bAPX9a4R51zbi6HFGyLb8obEPLsmT/yhLv1Szgj/C4BdxIM1hcOUnuw+JbenfiOnT4u3puys2mwFLvI9oq/WNA=="],
 
     "@stacksjs/path": ["@stacksjs/path@0.70.23", "", {}, "sha512-HqgtHcnhIVGahTR2OdzZxe0iSZwR+yKm/kwCeyjQHkW5hBhPrwcpuuVvIrJDoZ2CusC/vS7hSr5U6L8BEU+0vw=="],
 
