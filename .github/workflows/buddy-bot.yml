@@ -63,6 +63,7 @@ env:
   # Add it as a repository secret named 'BUDDY_BOT_TOKEN'
   # If BUDDY_BOT_TOKEN is not available, falls back to GITHUB_TOKEN (limited permissions)
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  BUDDY_BOT_TOKEN: ${{ secrets.BUDDY_BOT_TOKEN }}
 
 permissions:
   contents: write
@@ -126,8 +127,6 @@ jobs:
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
 
       - name: Setup PHP and Composer (if needed)
         if: ${{ hashFiles('composer.json') != '' }}
@@ -149,8 +148,8 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-  # Rebase check job
-  rebase-check:
+  # Check job (handles both rebase requests and auto-closing PRs)
+  check:
     runs-on: ubuntu-latest
     needs: [determine-jobs, setup]
     if: ${{ needs.determine-jobs.outputs.run_check == 'true' }}
@@ -165,8 +164,6 @@ jobs:
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
 
       - name: Install dependencies
         run: bun install
@@ -188,9 +185,9 @@ jobs:
             echo "✅ Using BUDDY_BOT_TOKEN (full permissions)"
           fi
 
-      - name: Check for rebase requests
+      - name: Check for PRs that need attention
         run: |
-          echo "🔍 Checking for PRs with rebase checkbox enabled..."
+          echo "🔍 Checking for PRs that need attention (rebase requests or auto-closing)..."
           echo "🔧 Environment info:"
           echo "Current directory: $(pwd)"
           echo "GITHUB_TOKEN set: $([[ -n "$GITHUB_TOKEN" ]] && echo "Yes" || echo "No")"
@@ -211,11 +208,12 @@ jobs:
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUDDY_BOT_TOKEN: ${{ secrets.BUDDY_BOT_TOKEN }}
 
-      - name: Create rebase check summary
+      - name: Create check summary
         if: always()
         run: |
-          echo "## 🔄 Rebase Check Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔍 Check Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Triggered by**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Dry run**: ${{ github.event.inputs.dry_run || 'false' }}" >> $GITHUB_STEP_SUMMARY
@@ -229,7 +227,7 @@ jobs:
           fi
 
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📋 View detailed logs above for rebase results." >> $GITHUB_STEP_SUMMARY
+          echo "📋 View detailed logs above for check results (rebase requests, auto-closing, and branch cleanup)." >> $GITHUB_STEP_SUMMARY
 
   # Dependency update job
   dependency-update:
@@ -247,8 +245,6 @@ jobs:
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
 
       - name: Setup PHP and Composer (if needed)
         if: ${{ hashFiles('composer.json') != '' }}
@@ -310,6 +306,7 @@ jobs:
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUDDY_BOT_TOKEN: ${{ secrets.BUDDY_BOT_TOKEN }}
 
       - name: Dry run notification
         if: ${{ github.event.inputs.dry_run == 'true' }}
@@ -355,8 +352,6 @@ jobs:
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
 
       - name: Install dependencies
         run: bun install
@@ -372,6 +367,31 @@ jobs:
           echo "Triggered by: ${{ github.event_name }}"
           echo "Repository: ${{ github.repository }}"
           echo "Branch: ${{ github.ref_name }}"
+
+      - name: Pre-flight dashboard check
+        if: ${{ github.event.inputs.dry_run != 'true' }}
+        run: |
+          echo "🔍 Pre-flight check: Looking for existing dashboard issues..."
+
+          # Check for existing dashboard issues to prevent duplicates
+          if command -v gh &> /dev/null; then
+            EXISTING_DASHBOARDS=$(gh issue list --label "dashboard,dependencies" --state open --json number,title,url --jq length 2>/dev/null || echo "0")
+            echo "Found $EXISTING_DASHBOARDS existing dashboard issue(s)"
+
+            if [ "$EXISTING_DASHBOARDS" -gt 1 ]; then
+              echo "⚠️ WARNING: Multiple dashboard issues detected!"
+              gh issue list --label "dashboard,dependencies" --state open --json number,title,url --jq '.[] | "  - #\(.number): \(.title) - \(.url)"' 2>/dev/null || true
+              echo ""
+              echo "🔧 Buddy Bot will attempt to update the most recent one and may close duplicates"
+            elif [ "$EXISTING_DASHBOARDS" -eq 1 ]; then
+              DASHBOARD_INFO=$(gh issue list --label "dashboard,dependencies" --state open --json number,title,url --jq '.[0] | "#\(.number): \(.title) - \(.url)"' 2>/dev/null || echo "Found 1 dashboard")
+              echo "✅ Found existing dashboard: $DASHBOARD_INFO"
+            else
+              echo "ℹ️ No existing dashboard found - a new one will be created"
+            fi
+          else
+            echo "⚠️ GitHub CLI not available - cannot perform pre-flight check"
+          fi
 
       - name: Update Dependency Dashboard
         run: |
@@ -393,10 +413,6 @@ jobs:
 
           # Build the command
           COMMAND="bunx buddy-bot dashboard"
-
-          if [ "$PIN" = "true" ]; then
-            COMMAND="$COMMAND --pin"
-          fi
 
           if [ "$TITLE" != "" ]; then
             COMMAND="$COMMAND --title \"$TITLE\""
@@ -432,6 +448,7 @@ jobs:
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUDDY_BOT_TOKEN: ${{ secrets.BUDDY_BOT_TOKEN }}
 
       - name: Dry run notification
         if: ${{ github.event.inputs.dry_run == 'true' }}
