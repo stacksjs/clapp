@@ -1,3 +1,17 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.17...HEAD)
+
+### Contributors
+
+- Chris <chrisbreuer93@gmail.com>
+
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.17...HEAD)
+
+### Contributors
+
+- Chris <chrisbreuer93@gmail.com>
+
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.16...HEAD)
 
 ### Contributors
