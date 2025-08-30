@@ -263,8 +263,18 @@ export default class Prompt<TValue> {
     setRawMode(this.input, false)
     this.rl?.close()
     this.rl = undefined
+    
+    // Emit the state event - this will trigger onCancel handlers
     this.emit(`${this.state}`, this.value)
-    this.unsubscribe()
+    
+    // Add a small delay to ensure onCancel handlers can execute before process exit
+    if (this.state === 'cancel') {
+      setTimeout(() => {
+        this.unsubscribe()
+      }, 10)
+    } else {
+      this.unsubscribe()
+    }
   }
 
   private restoreCursor(): void {
