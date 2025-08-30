@@ -66,6 +66,10 @@
     "zip:darwin-x64": "zip -j bin/clapp-darwin-x64.zip bin/clapp-darwin-x64",
     "zip:darwin-arm64": "zip -j bin/clapp-darwin-arm64.zip bin/clapp-darwin-arm64"
   },
+  "dependencies": {
+    "mri": "^1.2.0",
+    "wrap-ansi": "^9.0.0"
+  },
   "devDependencies": {
     "@stacksjs/bumpx": "^0.1.38",
     "@stacksjs/docs": "^0.70.23",
