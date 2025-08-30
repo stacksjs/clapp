@@ -1,7 +1,7 @@
 {
   "name": "@stacksjs/clapp",
   "type": "module",
-  "version": "0.1.16",
+  "version": "0.1.18",
   "description": "A toolkit for building CLI prompts in TypeScript.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
@@ -66,6 +66,10 @@
     "zip:darwin-x64": "zip -j bin/clapp-darwin-x64.zip bin/clapp-darwin-x64",
     "zip:darwin-arm64": "zip -j bin/clapp-darwin-arm64.zip bin/clapp-darwin-arm64"
   },
+  "dependencies": {
+    "mri": "^1.2.0",
+    "wrap-ansi": "^9.0.0"
+  },
   "devDependencies": {
     "@stacksjs/bumpx": "^0.1.38",
     "@stacksjs/docs": "^0.70.23",
@@ -76,7 +80,7 @@
     "@types/bun": "^1.2.21",
     "buddy-bot": "^0.8.10",
     "bun-git-hooks": "^0.2.19",
-    "bun-plugin-dtsx": "^0.21.12",
+    "bun-plugin-dtsx": "0.9.5",
     "typescript": "^5.9.2"
   },
   "overrides": {
