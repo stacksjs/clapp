@@ -68,7 +68,7 @@
   },
   "dependencies": {
     "mri": "^1.2.0",
-    "wrap-ansi": "^9.0.0"
+    "wrap-ansi": "^9.0.1"
   },
   "devDependencies": {
     "@stacksjs/bumpx": "^0.1.78",
