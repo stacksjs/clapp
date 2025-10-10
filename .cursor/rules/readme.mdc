@@ -1,0 +1,136 @@
+---
+description: General information based on the latest ./README.md content
+globs:
+---
+Update it if APIs change:
+
+# clapp
+
+An elegant, TypeScript-first CLI framework built on Bun for creating beautiful command-line applications with interactive prompts.
+
+## Features
+
+This toolkit comes packed with everything you need to build professional command-line applications:
+
+- 🛠️ **Powerful CLI Framework** - Build robust command-line applications with an elegant API
+- 💎 **Beautiful Prompts** - Create engaging user experiences through interactive CLI prompts
+- 🧠 **TypeScript-First** - Fully typed APIs for improved developer experience
+- ⚡ **Bun-Powered** - Lightning fast execution backed by Bun's runtime
+- 📚 **Documentation-Ready** - Integrate with VitePress for beautiful documentation
+- 🧪 **Testing Built-In** - Unit testing powered by Bun's test runner
+- 🐙 **CI/CD Ready** - GitHub Actions, Renovate, and more
+
+## Interactive Prompts
+
+Create beautiful, interactive command-line experiences with our pre-styled prompt components:
+
+```ts
+import { confirm, intro, multiselect, outro, select, spinner, text } from '@stacksjs/clapp'
+
+// Start an interactive session
+intro('Project Setup Wizard')
+
+// Simple text input
+const name = await text({
+  message: 'What is your project name?',
+  placeholder: 'my-awesome-project',
+  validate(value) {
+    if (value.length === 0)
+      return 'Name is required!'
+  },
+})
+
+// Yes/no confirmation
+const useTypeScript = await confirm({
+  message: 'Do you want to use TypeScript?'
+})
+
+// Single selection from a list
+const framework = await select({
+  message: 'Select a framework:',
+  options: [
+    { value: 'react', label: 'React' },
+    { value: 'vue', label: 'Vue', hint: 'recommended' },
+    { value: 'svelte', label: 'Svelte' },
+  ],
+})
+
+// Multiple selections
+const features = await multiselect({
+  message: 'Select additional features:',
+  options: [
+    { value: 'router', label: 'Router' },
+    { value: 'state', label: 'State Management' },
+    { value: 'testing', label: 'Testing' },
+  ],
+  required: false,
+})
+
+// Show a spinner for long-running tasks
+const s = spinner()
+s.start('Installing dependencies')
+
+// Simulate installation
+await new Promise(resolve => setTimeout(resolve, 2000))
+
+s.stop('Installation complete!')
+
+// End the session
+outro('You\'re all set! Happy coding!')
+```
+
+### Prompt Components
+
+- **text**: Single line text input
+- **confirm**: Yes/no confirmation
+- **select**: Single selection from a list of options
+- **multiselect**: Multiple selections from a list of options
+- **spinner**: Show a loading indicator for async operations
+- **password**: Masked input for sensitive information
+
+## CLI Framework
+
+Build powerful command-line applications with a simple and elegant API inspired by CAC:
+
+```js
+import { CLI } from '@stacksjs/clapp'
+
+const cli = new CLI('todo-app')
+  .version('1.0.0')
+  .help()
+
+cli
+  .command('add <task>', 'Add a new task')
+  .option('-p, --priority <level>', 'Priority level (high, medium, low)')
+  .action((task, options) => {
+    console.log(`Adding task: ${task} with priority: ${options.priority || 'medium'}`)
+  })
+
+cli
+  .command('list', 'List all tasks')
+  .option('-a, --all', 'Show all tasks including completed ones')
+  .action((options) => {
+    console.log(`Listing ${options.all ? 'all' : 'pending'} tasks`)
+  })
+
+cli.parse()
+```
+
+## Get Started
+
+Getting started with clapp is simple:
+
+```bash
+# Use this GitHub template or run the following command:
+bunx degit stacksjs/clapp my-cli-app
+cd my-cli-app
+
+# Install dependencies
+bun install
+
+# Build the library
+bun run build
+
+# After you commit changes, you can create a release
+bun run release # automates versioning and changelog generation
+```
