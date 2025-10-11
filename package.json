@@ -71,7 +71,7 @@
     "wrap-ansi": "^9.0.2"
   },
   "devDependencies": {
-    "@stacksjs/bumpx": "^0.1.86",
+    "@stacksjs/bumpx": "^0.2.1",
     "@stacksjs/clarity": "^0.3.23",
     "@stacksjs/docs": "^0.70.23",
     "@stacksjs/eslint-config": "^4.14.0-beta.3",
