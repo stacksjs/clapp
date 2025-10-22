@@ -1,6 +1,7 @@
 {
   "name": "@stacksjs/clapp",
   "type": "module",
+  "private": true,
   "version": "0.2.0",
   "description": "A toolkit for building CLI prompts in TypeScript.",
   "author": "Chris Breuer <chris@stacksjs.org>",
@@ -20,24 +21,8 @@
     "typescript",
     "stacks"
   ],
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    }
-  },
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "bin": {
-    "clapp": "./dist/bin/cli.js",
-    "@stacksjs/clapp": "./dist/bin/cli.js"
-  },
-  "files": [
-    "README.md",
-    "dist"
-  ],
   "scripts": {
-    "build": "bun --bun build.ts && bun run compile",
+    "build": "bun --bun build.ts",
     "compile": "bun build ./bin/cli.ts --compile --minify --outfile bin/clapp",
     "compile:all": "bun run compile:linux-x64 && bun run compile:linux-arm64 && bun run compile:windows-x64 && bun run compile:darwin-x64 && bun run compile:darwin-arm64",
     "compile:linux-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-linux-x64 --outfile bin/clapp-linux-x64",
@@ -46,7 +31,7 @@
     "compile:darwin-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-darwin-x64 --outfile bin/clapp-darwin-x64",
     "compile:darwin-arm64": "bun build ./bin/cli.ts --compile --minify --target=bun-darwin-arm64 --outfile bin/clapp-darwin-arm64",
     "fresh": "bunx rimraf node_modules/ bun.lock && bun i",
-    "prepublishOnly": "bun --bun run build && bun run compile:all && bun run zip:all",
+    "prepublishOnly": "bun --bun run build",
     "test": "bun test",
     "lint": "bunx --bun eslint .",
     "lint:fix": "bunx --bun eslint . --fix",
@@ -57,32 +42,12 @@
     "dev:docs": "bun --bun vitepress dev docs",
     "build:docs": "bun --bun vitepress build docs",
     "preview:docs": "bun --bun vitepress preview docs",
-    "typecheck": "bun --bun tsc --noEmit",
-    "zip": "bun run zip:all",
-    "zip:all": "bun run zip:linux-x64 && bun run zip:linux-arm64 && bun run zip:windows-x64 && bun run zip:darwin-x64 && bun run zip:darwin-arm64",
-    "zip:linux-x64": "zip -j bin/clapp-linux-x64.zip bin/clapp-linux-x64",
-    "zip:linux-arm64": "zip -j bin/clapp-linux-arm64.zip bin/clapp-linux-arm64",
-    "zip:windows-x64": "zip -j bin/clapp-windows-x64.zip bin/clapp-windows-x64.exe",
-    "zip:darwin-x64": "zip -j bin/clapp-darwin-x64.zip bin/clapp-darwin-x64",
-    "zip:darwin-arm64": "zip -j bin/clapp-darwin-arm64.zip bin/clapp-darwin-arm64"
-  },
-  "dependencies": {
-    "mri": "^1.2.0",
-    "wrap-ansi": "^9.0.2"
+    "typecheck": "bun --bun tsc --noEmit"
   },
   "devDependencies": {
-    "@stacksjs/bumpx": "^0.1.86",
-    "@stacksjs/clarity": "^0.3.23",
     "@stacksjs/docs": "^0.70.23",
     "@stacksjs/eslint-config": "^4.14.0-beta.3",
-    "@stacksjs/gitit": "^0.2.2",
-    "@stacksjs/gitlint": "^0.1.5",
-    "@stacksjs/logsmith": "^0.1.18",
-    "@types/bun": "^1.2.23",
-    "buddy-bot": "^0.9.8",
-    "bun-git-hooks": "^0.3.1",
-    "bun-plugin-dtsx": "0.9.5",
-    "typescript": "^5.9.3"
+    "better-dx": "^0.2.0"
   },
   "overrides": {
     "unconfig": "0.3.10"
@@ -94,5 +59,8 @@
       }
     },
     "commit-msg": "bunx gitlint --edit .git/COMMIT_EDITMSG"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
