@@ -49,18 +49,18 @@ pub fn trace(allocator: std.mem.Allocator, comptime fmt: []const u8, args: anyty
 
 pub const Timer = struct {
     name: []const u8,
-    start: i64,
+    start_time: i64,
 
     pub fn start(name: []const u8) Timer {
         return Timer{
             .name = name,
-            .start = std.time.milliTimestamp(),
+            .start_time = std.time.milliTimestamp(),
         };
     }
 
     pub fn stop(self: *const Timer, allocator: std.mem.Allocator) !void {
         const end = std.time.milliTimestamp();
-        const duration = end - self.start;
+        const duration = end - self.start_time;
 
         try debug(allocator, "{s} took {d}ms", .{ self.name, duration });
     }

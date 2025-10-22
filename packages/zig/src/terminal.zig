@@ -217,14 +217,60 @@ test "unicode support detection" {
 test "terminal width" {
     const cols = getColumns();
     try std.testing.expect(cols > 0);
+    try std.testing.expect(cols <= 1000); // Reasonable upper bound
 }
 
 test "strip VT control characters" {
     const allocator = std.testing.allocator;
 
-    const input = "\x1B[31mHello\x1B[0m World";
-    const stripped = try stripVTControlCharacters(allocator, input);
-    defer allocator.free(stripped);
+    // Test basic ANSI colors
+    const input1 = "\x1B[31mHello\x1B[0m World";
+    const stripped1 = try stripVTControlCharacters(allocator, input1);
+    defer allocator.free(stripped1);
+    try std.testing.expectEqualStrings("Hello World", stripped1);
 
-    try std.testing.expectEqualStrings("Hello World", stripped);
+    // Test multiple sequences
+    const input2 = "\x1B[1m\x1B[31mBold Red\x1B[0m\x1B[0m";
+    const stripped2 = try stripVTControlCharacters(allocator, input2);
+    defer allocator.free(stripped2);
+    try std.testing.expectEqualStrings("Bold Red", stripped2);
+
+    // Test empty string
+    const input3 = "";
+    const stripped3 = try stripVTControlCharacters(allocator, input3);
+    defer allocator.free(stripped3);
+    try std.testing.expectEqualStrings("", stripped3);
+
+    // Test string with no ANSI codes
+    const input4 = "Plain text";
+    const stripped4 = try stripVTControlCharacters(allocator, input4);
+    defer allocator.free(stripped4);
+    try std.testing.expectEqualStrings("Plain text", stripped4);
+
+    // Test cursor movement sequences
+    const input5 = "\x1B[10;5HText at position";
+    const stripped5 = try stripVTControlCharacters(allocator, input5);
+    defer allocator.free(stripped5);
+    try std.testing.expectEqualStrings("Text at position", stripped5);
+}
+
+test "raw mode enable/disable" {
+    const raw_mode = RawMode{};
+
+    // Test that original_termios starts as null
+    try std.testing.expect(raw_mode.original_termios == null);
+
+    // Note: We can't fully test raw mode without affecting the test environment
+    // But we can verify the structure is correct
+}
+
+test "block function" {
+    const start = std.time.milliTimestamp();
+    block(50); // Block for 50ms
+    const end = std.time.milliTimestamp();
+    const elapsed = end - start;
+
+    // Should be at least 50ms, with some tolerance
+    try std.testing.expect(elapsed >= 45);
+    try std.testing.expect(elapsed < 200); // Upper bound for slow systems
 }

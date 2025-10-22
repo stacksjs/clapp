@@ -48,7 +48,7 @@ pub const Theme = struct {
     secondary: AnsiCode = codes.cyan,
     success: AnsiCode = codes.green,
     warning: AnsiCode = codes.yellow,
-    error: AnsiCode = codes.red,
+    @"error": AnsiCode = codes.red,
     info: AnsiCode = codes.magenta,
     muted: AnsiCode = codes.gray,
 };
@@ -212,7 +212,7 @@ pub fn warning(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
 }
 
 pub fn err(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
-    return apply(allocator, text, global_theme.error);
+    return apply(allocator, text, global_theme.@"error");
 }
 
 pub fn info(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {

@@ -255,3 +255,104 @@ test "findLongest" {
     const result = findLongest(&strings);
     try std.testing.expectEqual(@as(usize, 13), result);
 }
+
+test "diffLines - simple changes" {
+    const allocator = std.testing.allocator;
+
+    const old = "line1\nline2\nline3";
+    const new = "line1\nmodified\nline3";
+
+    const diff = try diffLines(allocator, old, new);
+    defer freeDiffLines(allocator, diff);
+
+    try std.testing.expect(diff.len == 4);
+    try std.testing.expect(diff[0].type == .unchanged);
+    try std.testing.expect(diff[1].type == .removed);
+    try std.testing.expect(diff[2].type == .added);
+    try std.testing.expect(diff[3].type == .unchanged);
+}
+
+test "diffLines - additions" {
+    const allocator = std.testing.allocator;
+
+    const old = "line1\nline2";
+    const new = "line1\nline2\nline3";
+
+    const diff = try diffLines(allocator, old, new);
+    defer freeDiffLines(allocator, diff);
+
+    try std.testing.expect(diff.len == 3);
+    try std.testing.expect(diff[2].type == .added);
+}
+
+test "diffLines - deletions" {
+    const allocator = std.testing.allocator;
+
+    const old = "line1\nline2\nline3";
+    const new = "line1\nline2";
+
+    const diff = try diffLines(allocator, old, new);
+    defer freeDiffLines(allocator, diff);
+
+    try std.testing.expect(diff.len == 3);
+    try std.testing.expect(diff[2].type == .removed);
+}
+
+test "diffLines - empty strings" {
+    const allocator = std.testing.allocator;
+
+    const old = "";
+    const new = "";
+
+    const diff = try diffLines(allocator, old, new);
+    defer freeDiffLines(allocator, diff);
+
+    try std.testing.expect(diff.len == 0);
+}
+
+test "diffLines - one empty" {
+    const allocator = std.testing.allocator;
+
+    const old = "";
+    const new = "line1\nline2";
+
+    const diff = try diffLines(allocator, old, new);
+    defer freeDiffLines(allocator, diff);
+
+    try std.testing.expect(diff.len == 2);
+    try std.testing.expect(diff[0].type == .added);
+    try std.testing.expect(diff[1].type == .added);
+}
+
+test "camelcaseOptionName with dot notation" {
+    const allocator = std.testing.allocator;
+
+    const result = try camelcaseOptionName(allocator, "env-var.NODE_ENV");
+    defer allocator.free(result);
+    try std.testing.expectEqualStrings("envVar.NODE_ENV", result);
+}
+
+test "padRight - exact length" {
+    const allocator = std.testing.allocator;
+
+    const result = try padRight(allocator, "test", 4);
+    defer allocator.free(result);
+    try std.testing.expectEqualStrings("test", result);
+}
+
+test "padRight - longer than target" {
+    const allocator = std.testing.allocator;
+
+    const result = try padRight(allocator, "testing", 4);
+    defer allocator.free(result);
+    try std.testing.expectEqualStrings("testing", result);
+}
+
+test "padRight - shorter than target" {
+    const allocator = std.testing.allocator;
+
+    const result = try padRight(allocator, "hi", 6);
+    defer allocator.free(result);
+    try std.testing.expectEqual(@as(usize, 6), result.len);
+    try std.testing.expect(std.mem.startsWith(u8, result, "hi"));
+}

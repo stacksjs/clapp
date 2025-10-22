@@ -132,7 +132,7 @@ var global_settings: ?Settings = null;
 var settings_mutex = std.Thread.Mutex{};
 
 /// Update global settings
-pub fn updateSettings(allocator: std.mem.Allocator, new_settings: Settings) !void {
+pub fn updateSettings(_: std.mem.Allocator, new_settings: Settings) !void {
     settings_mutex.lock();
     defer settings_mutex.unlock();
 
@@ -200,4 +200,90 @@ test "settings" {
     settings.use_vim_keys = true;
     try std.testing.expect(settings.isActionKey("k", .up));
     try std.testing.expect(settings.isActionKey("j", .down));
+    try std.testing.expect(settings.isActionKey("h", .left));
+    try std.testing.expect(settings.isActionKey("l", .right));
+    try std.testing.expect(settings.isActionKey("q", .cancel));
+}
+
+test "action from key - edge cases" {
+    // Test all arrow keys
+    try std.testing.expect(Action.fromKey("\x1B[A") == .up);
+    try std.testing.expect(Action.fromKey("\x1B[B") == .down);
+    try std.testing.expect(Action.fromKey("\x1B[C") == .right);
+    try std.testing.expect(Action.fromKey("\x1B[D") == .left);
+
+    // Test home and end
+    try std.testing.expect(Action.fromKey("\x1B[H") == .home);
+    try std.testing.expect(Action.fromKey("\x1B[F") == .end);
+
+    // Test delete
+    try std.testing.expect(Action.fromKey("\x1B[3~") == .delete);
+
+    // Test single character keys
+    try std.testing.expect(Action.fromKey(" ") == .space);
+    try std.testing.expect(Action.fromKey("\n") == .enter);
+    try std.testing.expect(Action.fromKey("\r") == .enter);
+    try std.testing.expect(Action.fromKey("\t") == .tab);
+    try std.testing.expect(Action.fromKey("\x1B") == .cancel);
+    try std.testing.expect(Action.fromKey("\x7F") == .backspace);
+    try std.testing.expect(Action.fromKey("\x08") == .backspace);
+
+    // Test invalid keys
+    try std.testing.expect(Action.fromKey("") == null);
+    try std.testing.expect(Action.fromKey("a") == null);
+    try std.testing.expect(Action.fromKey("\x1B[Z") == null);
+    try std.testing.expect(Action.fromKey("\x1B[") == null);
+}
+
+test "state transitions" {
+    var current = State.initial;
+    try std.testing.expect(!current.isActive());
+    try std.testing.expect(!current.isFinished());
+
+    current = State.active;
+    try std.testing.expect(current.isActive());
+    try std.testing.expect(!current.isFinished());
+
+    current = State.submit;
+    try std.testing.expect(!current.isActive());
+    try std.testing.expect(current.isFinished());
+
+    current = State.cancel;
+    try std.testing.expect(!current.isActive());
+    try std.testing.expect(current.isFinished());
+
+    current = State.@"error";
+    try std.testing.expect(!current.isActive());
+    try std.testing.expect(current.isFinished());
+}
+
+test "settings - custom mappings override standard" {
+    const allocator = std.testing.allocator;
+
+    var settings = Settings.init(allocator);
+    defer settings.deinit();
+
+    // Map 'k' to cancel (overriding vim up)
+    try settings.mapKey("k", .cancel);
+    settings.use_vim_keys = true;
+
+    // Custom mapping should take precedence
+    try std.testing.expect(settings.isActionKey("k", .cancel));
+    try std.testing.expect(!settings.isActionKey("k", .up));
+}
+
+test "settings - multiple custom mappings" {
+    const allocator = std.testing.allocator;
+
+    var settings = Settings.init(allocator);
+    defer settings.deinit();
+
+    try settings.mapKey("a", .up);
+    try settings.mapKey("b", .down);
+    try settings.mapKey("c", .cancel);
+
+    try std.testing.expect(settings.isActionKey("a", .up));
+    try std.testing.expect(settings.isActionKey("b", .down));
+    try std.testing.expect(settings.isActionKey("c", .cancel));
+    try std.testing.expect(!settings.isActionKey("d", .up));
 }
