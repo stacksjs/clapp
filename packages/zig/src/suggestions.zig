@@ -9,17 +9,18 @@ pub fn levenshteinDistance(a: []const u8, b: []const u8) usize {
     const cols = b.len + 1;
 
     // We only need two rows at a time
-    var prev_row = std.ArrayList(usize).init(std.heap.page_allocator);
-    defer prev_row.deinit();
-    var curr_row = std.ArrayList(usize).init(std.heap.page_allocator);
-    defer curr_row.deinit();
+    const allocator = std.heap.page_allocator;
+    var prev_row: std.ArrayList(usize) = .{};
+    defer prev_row.deinit(allocator);
+    var curr_row: std.ArrayList(usize) = .{};
+    defer curr_row.deinit(allocator);
 
     // Initialize
     var i: usize = 0;
     while (i < cols) : (i += 1) {
-        prev_row.append(i) catch return 0;
+        prev_row.append(allocator, i) catch return 0;
     }
-    curr_row.resize(cols) catch return 0;
+    curr_row.resize(allocator, cols) catch return 0;
 
     // Calculate distances
     i = 1;
@@ -63,12 +64,12 @@ pub fn findSuggestions(
         distance: usize,
     };
 
-    var distances = std.ArrayList(DistancePair).init(allocator);
+    var distances: std.ArrayList(DistancePair) = .{};
     defer distances.deinit();
 
     for (candidates) |candidate| {
         const distance = levenshteinDistance(input, candidate);
-        try distances.append(.{ .word = candidate, .distance = distance });
+        try distances.append(allocator, .{ .word = candidate, .distance = distance });
     }
 
     // Sort by distance
@@ -80,7 +81,7 @@ pub fn findSuggestions(
 
     // Get top suggestions (only if distance is reasonable)
     const max_distance = @max(input.len / 2, 3);
-    var suggestions = std.ArrayList([]const u8).init(allocator);
+    var suggestions: std.ArrayList([]const u8) = .{};
     defer suggestions.deinit();
 
     var count: usize = 0;
@@ -88,11 +89,11 @@ pub fn findSuggestions(
         if (count >= max_suggestions) break;
         if (pair.distance > max_distance) break;
 
-        try suggestions.append(pair.word);
+        try suggestions.append(allocator, pair.word);
         count += 1;
     }
 
-    return try suggestions.toOwnedSlice();
+    return try suggestions.toOwnedSlice(allocator);
 }
 
 /// Find the closest match
@@ -130,16 +131,16 @@ pub fn filterByPrefix(
     prefix: []const u8,
     candidates: []const []const u8,
 ) ![][]const u8 {
-    var result = std.ArrayList([]const u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList([]const u8) = .{};
+    defer result.deinit(allocator);
 
     for (candidates) |candidate| {
         if (startsWith(candidate, prefix)) {
-            try result.append(candidate);
+            try result.append(allocator, candidate);
         }
     }
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 /// Fuzzy match score (higher is better)
@@ -181,13 +182,13 @@ pub fn fuzzyMatch(
         score: usize,
     };
 
-    var scores = std.ArrayList(ScorePair).init(allocator);
+    var scores: std.ArrayList(ScorePair) = .{};
     defer scores.deinit();
 
     for (candidates) |candidate| {
         const score = fuzzyScore(input, candidate);
         if (score > 0) {
-            try scores.append(.{ .word = candidate, .score = score });
+            try scores.append(allocator, .{ .word = candidate, .score = score });
         }
     }
 
@@ -198,15 +199,15 @@ pub fn fuzzyMatch(
         }
     }.lessThan);
 
-    var result = std.ArrayList([]const u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList([]const u8) = .{};
+    defer result.deinit(allocator);
 
     const limit = @min(max_results, scores.items.len);
     for (scores.items[0..limit]) |pair| {
-        try result.append(pair.word);
+        try result.append(allocator, pair.word);
     }
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 test "levenshtein distance" {

@@ -26,7 +26,7 @@ pub const EventEmitter = struct {
         var iter = self.listeners.iterator();
         while (iter.next()) |entry| {
             self.allocator.free(entry.key_ptr.*);
-            entry.value_ptr.deinit();
+            entry.value_ptr.deinit(self.allocator);
         }
         self.listeners.deinit();
     }
@@ -41,10 +41,10 @@ pub const EventEmitter = struct {
 
         var result = try self.listeners.getOrPut(key);
         if (!result.found_existing) {
-            result.value_ptr.* = std.ArrayList(Listener).init(self.allocator);
+            result.value_ptr.* = .{};
         }
 
-        try result.value_ptr.append(.{
+        try result.value_ptr.append(self.allocator, .{
             .callback = callback,
             .once = false,
         });
@@ -60,10 +60,10 @@ pub const EventEmitter = struct {
 
         var result = try self.listeners.getOrPut(key);
         if (!result.found_existing) {
-            result.value_ptr.* = std.ArrayList(Listener).init(self.allocator);
+            result.value_ptr.* = .{};
         }
 
-        try result.value_ptr.append(.{
+        try result.value_ptr.append(self.allocator, .{
             .callback = callback,
             .once = true,
         });

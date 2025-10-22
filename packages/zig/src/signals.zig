@@ -98,17 +98,17 @@ pub const GracefulShutdown = struct {
     pub fn init(allocator: std.mem.Allocator) GracefulShutdown {
         return GracefulShutdown{
             .allocator = allocator,
-            .cleanup_fns = std.ArrayList(*const fn () void).init(allocator),
+            .cleanup_fns = .{},
         };
     }
 
     pub fn deinit(self: *GracefulShutdown) void {
-        self.cleanup_fns.deinit();
+        self.cleanup_fns.deinit(self.allocator);
     }
 
     /// Register a cleanup function
     pub fn onShutdown(self: *GracefulShutdown, cleanup_fn: *const fn () void) !void {
-        try self.cleanup_fns.append(cleanup_fn);
+        try self.cleanup_fns.append(self.allocator, cleanup_fn);
     }
 
     /// Request shutdown

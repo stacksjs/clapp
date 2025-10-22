@@ -22,8 +22,8 @@ pub fn generateCompletion(allocator: std.mem.Allocator, cli: *const CLI, shell: 
 
 /// Generate Bash completion script
 fn generateBash(allocator: std.mem.Allocator, cli: *const CLI) ![]const u8 {
-    var result = std.ArrayList(u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    defer result.deinit(allocator);
 
     const writer = result.writer();
 
@@ -65,13 +65,13 @@ fn generateBash(allocator: std.mem.Allocator, cli: *const CLI) ![]const u8 {
     try writer.print("}}\n\n", .{});
     try writer.print("complete -F _{s} {s}\n", .{ cli.name, cli.name });
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 /// Generate Zsh completion script
 fn generateZsh(allocator: std.mem.Allocator, cli: *const CLI) ![]const u8 {
-    var result = std.ArrayList(u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    defer result.deinit(allocator);
 
     const writer = result.writer();
 
@@ -109,13 +109,13 @@ fn generateZsh(allocator: std.mem.Allocator, cli: *const CLI) ![]const u8 {
     try writer.print("}}\n\n", .{});
     try writer.print("_{s} \"$@\"\n", .{cli.name});
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 /// Generate Fish completion script
 fn generateFish(allocator: std.mem.Allocator, cli: *const CLI) ![]const u8 {
-    var result = std.ArrayList(u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    defer result.deinit(allocator);
 
     const writer = result.writer();
 
@@ -129,13 +129,13 @@ fn generateFish(allocator: std.mem.Allocator, cli: *const CLI) ![]const u8 {
         try writer.print("complete -c {s} -f -a \"{s}\" -d \"{s}\"\n", .{ cli.name, cmd.name, cmd.description });
     }
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 /// Generate PowerShell completion script
 fn generatePowerShell(allocator: std.mem.Allocator, cli: *const CLI) ![]const u8 {
-    var result = std.ArrayList(u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    defer result.deinit(allocator);
 
     const writer = result.writer();
 
@@ -151,7 +151,7 @@ fn generatePowerShell(allocator: std.mem.Allocator, cli: *const CLI) ![]const u8
     try writer.print("    $commands | Where-Object {{ $_.CompletionText -like \"$wordToComplete*\" }}\n", .{});
     try writer.print("}}\n", .{});
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 test "bash completion generation" {

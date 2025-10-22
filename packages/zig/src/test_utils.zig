@@ -10,9 +10,9 @@ pub const MockStreams = struct {
 
     pub fn init(allocator: std.mem.Allocator) MockStreams {
         return MockStreams{
-            .stdin_buffer = std.ArrayList(u8).init(allocator),
-            .stdout_buffer = std.ArrayList(u8).init(allocator),
-            .stderr_buffer = std.ArrayList(u8).init(allocator),
+            .stdin_buffer = .{},
+            .stdout_buffer = .{},
+            .stderr_buffer = .{},
         };
     }
 
@@ -24,8 +24,8 @@ pub const MockStreams = struct {
 
     /// Add input to stdin buffer
     pub fn addInput(self: *MockStreams, input: []const u8) !void {
-        try self.stdin_buffer.appendSlice(input);
-        try self.stdin_buffer.append('\n');
+        try self.stdin_buffer.appendSlice(self.allocator, input);
+        try self.stdin_buffer.append(self.allocator, '\n');
     }
 
     /// Get stdout output

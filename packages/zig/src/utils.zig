@@ -14,8 +14,8 @@ pub fn removeBrackets(allocator: std.mem.Allocator, input: []const u8) ![]const 
 
 /// Find all bracketed arguments in a command string
 pub fn findAllBrackets(allocator: std.mem.Allocator, input: []const u8) !std.ArrayList(types.CommandArg) {
-    var result = std.ArrayList(types.CommandArg).init(allocator);
-    errdefer result.deinit();
+    var result: std.ArrayList(types.CommandArg) = .{};
+    errdefer result.deinit(allocator);
 
     var i: usize = 0;
     while (i < input.len) {
@@ -41,7 +41,7 @@ pub fn findAllBrackets(allocator: std.mem.Allocator, input: []const u8) !std.Arr
                     .value = try allocator.dupe(u8, value),
                     .variadic = variadic,
                 };
-                try result.append(arg);
+                try result.append(allocator, arg);
                 i = end + 1;
                 continue;
             }
@@ -54,8 +54,8 @@ pub fn findAllBrackets(allocator: std.mem.Allocator, input: []const u8) !std.Arr
 
 /// Convert a string to camelCase
 pub fn camelcase(allocator: std.mem.Allocator, input: []const u8) ![]const u8 {
-    var result = std.ArrayList(u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    defer result.deinit(allocator);
 
     var i: usize = 0;
     var capitalize_next = false;
@@ -64,14 +64,14 @@ pub fn camelcase(allocator: std.mem.Allocator, input: []const u8) ![]const u8 {
         if (input[i] == '-' and i + 1 < input.len) {
             capitalize_next = true;
         } else if (capitalize_next) {
-            try result.append(std.ascii.toUpper(input[i]));
+            try result.append(allocator, std.ascii.toUpper(input[i]));
             capitalize_next = false;
         } else {
-            try result.append(input[i]);
+            try result.append(allocator, input[i]);
         }
     }
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 /// Convert option name to camelCase
@@ -159,22 +159,22 @@ pub const DiffLine = struct {
 
 /// Compare two strings line by line
 pub fn diffLines(allocator: std.mem.Allocator, old: []const u8, new: []const u8) ![]DiffLine {
-    var result = std.ArrayList(DiffLine).init(allocator);
-    errdefer result.deinit();
+    var result: std.ArrayList(DiffLine) = .{};
+    errdefer result.deinit(allocator);
 
     var old_lines = std.mem.splitScalar(u8, old, '\n');
     var new_lines = std.mem.splitScalar(u8, new, '\n');
 
-    var old_list = std.ArrayList([]const u8).init(allocator);
+    var old_list: std.ArrayList([]const u8) = .{};
     defer old_list.deinit();
-    var new_list = std.ArrayList([]const u8).init(allocator);
+    var new_list: std.ArrayList([]const u8) = .{};
     defer new_list.deinit();
 
     while (old_lines.next()) |line| {
-        try old_list.append(line);
+        try old_list.append(allocator, line);
     }
     while (new_lines.next()) |line| {
-        try new_list.append(line);
+        try new_list.append(allocator, line);
     }
 
     // Simple diff algorithm: find matching and non-matching lines
@@ -184,21 +184,21 @@ pub fn diffLines(allocator: std.mem.Allocator, old: []const u8, new: []const u8)
     while (i < old_list.items.len or j < new_list.items.len) {
         if (i >= old_list.items.len) {
             // Only new lines left
-            try result.append(.{
+            try result.append(allocator, .{
                 .line = try allocator.dupe(u8, new_list.items[j]),
                 .type = .added,
             });
             j += 1;
         } else if (j >= new_list.items.len) {
             // Only old lines left
-            try result.append(.{
+            try result.append(allocator, .{
                 .line = try allocator.dupe(u8, old_list.items[i]),
                 .type = .removed,
             });
             i += 1;
         } else if (std.mem.eql(u8, old_list.items[i], new_list.items[j])) {
             // Lines match
-            try result.append(.{
+            try result.append(allocator, .{
                 .line = try allocator.dupe(u8, old_list.items[i]),
                 .type = .unchanged,
             });
@@ -206,11 +206,11 @@ pub fn diffLines(allocator: std.mem.Allocator, old: []const u8, new: []const u8)
             j += 1;
         } else {
             // Lines don't match - mark as removed and added
-            try result.append(.{
+            try result.append(allocator, .{
                 .line = try allocator.dupe(u8, old_list.items[i]),
                 .type = .removed,
             });
-            try result.append(.{
+            try result.append(allocator, .{
                 .line = try allocator.dupe(u8, new_list.items[j]),
                 .type = .added,
             });
@@ -219,7 +219,7 @@ pub fn diffLines(allocator: std.mem.Allocator, old: []const u8, new: []const u8)
         }
     }
 
-    return result.toOwnedSlice();
+    return result.toOwnedSlice(allocator);
 }
 
 /// Free diff result

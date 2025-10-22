@@ -85,24 +85,24 @@ pub fn applyMultiple(allocator: std.mem.Allocator, text: []const u8, style_codes
         return try allocator.dupe(u8, text);
     }
 
-    var result = std.ArrayList(u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    defer result.deinit(allocator);
 
     // Add all opening codes
     for (style_codes) |code| {
-        try result.appendSlice(code.open);
+        try result.appendSlice(allocator, code.open);
     }
 
-    try result.appendSlice(text);
+    try result.appendSlice(allocator, text);
 
     // Add all closing codes in reverse
     var i = style_codes.len;
     while (i > 0) {
         i -= 1;
-        try result.appendSlice(style_codes[i].close);
+        try result.appendSlice(allocator, style_codes[i].close);
     }
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 // Convenience functions for common styles
@@ -257,84 +257,85 @@ pub const BoxOptions = struct {
 /// Draw a box around content
 pub fn box(allocator: std.mem.Allocator, content: []const u8, options: BoxOptions) ![]const u8 {
     var lines = std.mem.splitSequence(u8, content, "\n");
-    var line_list = std.ArrayList([]const u8).init(allocator);
-    defer line_list.deinit();
+    var line_list: std.ArrayList([]const u8) = .{};
+    defer line_list.deinit(allocator);
 
     var max_width: usize = 0;
     while (lines.next()) |line| {
-        try line_list.append(line);
+        try line_list.append(allocator, line);
         if (line.len > max_width) {
             max_width = line.len;
         }
     }
 
     const inner_width = max_width + (options.padding * 2);
-    var result = std.ArrayList(u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    defer result.deinit(allocator);
 
     // Top border
-    try result.appendSlice(box_chars.top_left);
+    try result.appendSlice(allocator, box_chars.top_left);
+    var i: usize = 0;
     if (options.title) |title| {
         const title_padding = (inner_width - title.len) / 2;
-        try result.appendSlice(box_chars.horizontal ** @min(title_padding, 100));
-        try result.appendSlice(" ");
-        try result.appendSlice(title);
-        try result.appendSlice(" ");
+        try result.appendSlice(allocator, box_chars.horizontal ** @min(title_padding, 100));
+        try result.appendSlice(allocator, " ");
+        try result.appendSlice(allocator, title);
+        try result.appendSlice(allocator, " ");
         const remaining = inner_width - title.len - title_padding - 2;
-        try result.appendSlice(box_chars.horizontal ** @min(remaining, 100));
+        try result.appendSlice(allocator, box_chars.horizontal ** @min(remaining, 100));
     } else {
-        var i: usize = 0;
+        i = 0;
         while (i < inner_width) : (i += 1) {
-            try result.appendSlice(box_chars.horizontal);
+            try result.appendSlice(allocator, box_chars.horizontal);
         }
     }
-    try result.appendSlice(box_chars.top_right);
-    try result.appendSlice("\n");
+    try result.appendSlice(allocator, box_chars.top_right);
+    try result.appendSlice(allocator, "\n");
 
     // Empty line after top border
-    try result.appendSlice(box_chars.vertical);
+    try result.appendSlice(allocator, box_chars.vertical);
     i = 0;
     while (i < inner_width) : (i += 1) {
-        try result.appendSlice(" ");
+        try result.appendSlice(allocator, " ");
     }
-    try result.appendSlice(box_chars.vertical);
-    try result.appendSlice("\n");
+    try result.appendSlice(allocator, box_chars.vertical);
+    try result.appendSlice(allocator, "\n");
 
     // Content lines
     for (line_list.items) |line| {
-        try result.appendSlice(box_chars.vertical);
+        try result.appendSlice(allocator, box_chars.vertical);
         var j: usize = 0;
         while (j < options.padding) : (j += 1) {
-            try result.appendSlice(" ");
+            try result.appendSlice(allocator, " ");
         }
-        try result.appendSlice(line);
+        try result.appendSlice(allocator, line);
         const right_padding = inner_width - line.len - options.padding;
         j = 0;
         while (j < right_padding) : (j += 1) {
-            try result.appendSlice(" ");
+            try result.appendSlice(allocator, " ");
         }
-        try result.appendSlice(box_chars.vertical);
-        try result.appendSlice("\n");
+        try result.appendSlice(allocator, box_chars.vertical);
+        try result.appendSlice(allocator, "\n");
     }
 
     // Empty line before bottom border
-    try result.appendSlice(box_chars.vertical);
+    try result.appendSlice(allocator, box_chars.vertical);
     i = 0;
     while (i < inner_width) : (i += 1) {
-        try result.appendSlice(" ");
+        try result.appendSlice(allocator, " ");
     }
-    try result.appendSlice(box_chars.vertical);
-    try result.appendSlice("\n");
+    try result.appendSlice(allocator, box_chars.vertical);
+    try result.appendSlice(allocator, "\n");
 
     // Bottom border
-    try result.appendSlice(box_chars.bottom_left);
+    try result.appendSlice(allocator, box_chars.bottom_left);
     i = 0;
     while (i < inner_width) : (i += 1) {
-        try result.appendSlice(box_chars.horizontal);
+        try result.appendSlice(allocator, box_chars.horizontal);
     }
-    try result.appendSlice(box_chars.bottom_right);
+    try result.appendSlice(allocator, box_chars.bottom_right);
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 /// Panel options
@@ -346,87 +347,87 @@ pub const PanelOptions = struct {
 /// Draw a panel (double-line box)
 pub fn panel(allocator: std.mem.Allocator, content: []const u8, options: PanelOptions) ![]const u8 {
     var lines = std.mem.splitSequence(u8, content, "\n");
-    var line_list = std.ArrayList([]const u8).init(allocator);
-    defer line_list.deinit();
+    var line_list: std.ArrayList([]const u8) = .{};
+    defer line_list.deinit(allocator);
 
     var max_width: usize = 0;
     while (lines.next()) |line| {
-        try line_list.append(line);
+        try line_list.append(allocator, line);
         if (line.len > max_width) {
             max_width = line.len;
         }
     }
 
     const inner_width = max_width + 2;
-    var result = std.ArrayList(u8).init(allocator);
-    defer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    defer result.deinit(allocator);
 
     // Top border
-    try result.appendSlice(panel_chars.top_left);
+    try result.appendSlice(allocator, panel_chars.top_left);
     if (options.title) |title| {
         const title_padding = (inner_width - title.len) / 2;
         var i: usize = 0;
         while (i < title_padding) : (i += 1) {
-            try result.appendSlice(panel_chars.horizontal);
+            try result.appendSlice(allocator, panel_chars.horizontal);
         }
-        try result.appendSlice(" ");
-        try result.appendSlice(title);
-        try result.appendSlice(" ");
+        try result.appendSlice(allocator, " ");
+        try result.appendSlice(allocator, title);
+        try result.appendSlice(allocator, " ");
         const remaining = inner_width - title.len - title_padding - 2;
         i = 0;
         while (i < remaining) : (i += 1) {
-            try result.appendSlice(panel_chars.horizontal);
+            try result.appendSlice(allocator, panel_chars.horizontal);
         }
     } else {
         var i: usize = 0;
         while (i < inner_width) : (i += 1) {
-            try result.appendSlice(panel_chars.horizontal);
+            try result.appendSlice(allocator, panel_chars.horizontal);
         }
     }
-    try result.appendSlice(panel_chars.top_right);
-    try result.appendSlice("\n");
+    try result.appendSlice(allocator, panel_chars.top_right);
+    try result.appendSlice(allocator, "\n");
 
     // Empty line
-    try result.appendSlice(panel_chars.vertical);
+    try result.appendSlice(allocator, panel_chars.vertical);
     var i: usize = 0;
     while (i < inner_width) : (i += 1) {
-        try result.appendSlice(" ");
+        try result.appendSlice(allocator, " ");
     }
-    try result.appendSlice(panel_chars.vertical);
-    try result.appendSlice("\n");
+    try result.appendSlice(allocator, panel_chars.vertical);
+    try result.appendSlice(allocator, "\n");
 
     // Content lines
     for (line_list.items) |line| {
-        try result.appendSlice(panel_chars.vertical);
-        try result.appendSlice(" ");
-        try result.appendSlice(line);
+        try result.appendSlice(allocator, panel_chars.vertical);
+        try result.appendSlice(allocator, " ");
+        try result.appendSlice(allocator, line);
         const right_padding = inner_width - line.len - 1;
         i = 0;
         while (i < right_padding) : (i += 1) {
-            try result.appendSlice(" ");
+            try result.appendSlice(allocator, " ");
         }
-        try result.appendSlice(panel_chars.vertical);
-        try result.appendSlice("\n");
+        try result.appendSlice(allocator, panel_chars.vertical);
+        try result.appendSlice(allocator, "\n");
     }
 
     // Empty line
-    try result.appendSlice(panel_chars.vertical);
+    try result.appendSlice(allocator, panel_chars.vertical);
     i = 0;
     while (i < inner_width) : (i += 1) {
-        try result.appendSlice(" ");
+        try result.appendSlice(allocator, " ");
     }
-    try result.appendSlice(panel_chars.vertical);
-    try result.appendSlice("\n");
+    try result.appendSlice(allocator, panel_chars.vertical);
+    try result.appendSlice(allocator, "\n");
 
     // Bottom border
-    try result.appendSlice(panel_chars.bottom_left);
+    try result.appendSlice(allocator, panel_chars.bottom_left);
     i = 0;
     while (i < inner_width) : (i += 1) {
-        try result.appendSlice(panel_chars.horizontal);
+        try result.appendSlice(allocator, panel_chars.horizontal);
     }
-    try result.appendSlice(panel_chars.bottom_right);
+    try result.appendSlice(allocator, panel_chars.bottom_right);
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 /// Table options

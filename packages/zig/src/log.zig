@@ -11,8 +11,8 @@ pub const LogOptions = struct {
 
 /// Process markdown-style italic text (_text_)
 fn processMarkdown(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
-    var result = std.ArrayList(u8).init(allocator);
-    errdefer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    errdefer result.deinit(allocator);
 
     var i: usize = 0;
     var in_italic = false;
@@ -21,24 +21,24 @@ fn processMarkdown(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
         if (text[i] == '_' and i + 1 < text.len and text[i + 1] != ' ') {
             // Toggle italic
             if (in_italic) {
-                try result.appendSlice(style.codes.italic.close);
+                try result.appendSlice(allocator, style.codes.italic.close);
             } else {
-                try result.appendSlice(style.codes.italic.open);
+                try result.appendSlice(allocator, style.codes.italic.open);
             }
             in_italic = !in_italic;
             i += 1;
         } else {
-            try result.append(text[i]);
+            try result.append(allocator, text[i]);
             i += 1;
         }
     }
 
     // Close italic if still open
     if (in_italic) {
-        try result.appendSlice(style.codes.italic.close);
+        try result.appendSlice(allocator, style.codes.italic.close);
     }
 
-    return result.toOwnedSlice();
+    return result.toOwnedSlice(allocator);
 }
 
 /// Generic log message with custom symbol and color
@@ -50,11 +50,11 @@ pub fn message(allocator: std.mem.Allocator, text: []const u8, options: LogOptio
 
     const symbol = options.symbol orelse "•";
 
-    var spacing = std.ArrayList(u8).init(allocator);
+    var spacing: std.ArrayList(u8) = .{};
     defer spacing.deinit();
     var i: usize = 0;
     while (i < options.spacing) : (i += 1) {
-        try spacing.append(' ');
+        try spacing.append(allocator, ' ');
     }
 
     if (options.color) |color| {
@@ -138,12 +138,12 @@ pub fn intro(allocator: std.mem.Allocator, text: []const u8) !void {
     const border_len = if (text_len + 4 < term_width) text_len + 4 else term_width;
 
     // Create border
-    var border = std.ArrayList(u8).init(allocator);
+    var border: std.ArrayList(u8) = .{};
     defer border.deinit();
 
     var i: usize = 0;
     while (i < border_len - 2) : (i += 1) {
-        try border.appendSlice(border_char);
+        try border.appendSlice(allocator, border_char);
     }
 
     const border_styled = try style.dim(allocator, border.items);
@@ -177,12 +177,12 @@ pub fn outro(allocator: std.mem.Allocator, text: []const u8) !void {
     const border_len = if (text_len + 4 < term_width) text_len + 4 else term_width;
 
     // Create border
-    var border = std.ArrayList(u8).init(allocator);
+    var border: std.ArrayList(u8) = .{};
     defer border.deinit();
 
     var i: usize = 0;
     while (i < border_len - 2) : (i += 1) {
-        try border.appendSlice(border_char);
+        try border.appendSlice(allocator, border_char);
     }
 
     const border_styled = try style.dim(allocator, border.items);

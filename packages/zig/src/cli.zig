@@ -33,12 +33,12 @@ pub const CLI = struct {
         return CLI{
             .allocator = allocator,
             .name = try allocator.dupe(u8, name),
-            .commands = std.ArrayList(Command).init(allocator),
+            .commands = .{},
             .global_command = global_cmd,
             .matched_command = null,
             .matched_command_name = null,
             .raw_args = &[_][]const u8{},
-            .args = std.ArrayList([]const u8).init(allocator),
+            .args = .{},
             .options = std.StringHashMap([]const u8).init(allocator),
             .show_help_on_exit = false,
             .show_version_on_exit = false,
@@ -68,7 +68,7 @@ pub const CLI = struct {
     pub fn command(self: *CLI, raw_name: []const u8, description: []const u8, config: types.CommandConfig) !*Command {
         var cmd = try Command.init(self.allocator, raw_name, description, config);
         cmd.cli = @ptrCast(self);
-        try self.commands.append(cmd);
+        try self.commands.append(self.allocator, cmd);
 
         // Return pointer to the command in the ArrayList
         return &self.commands.items[self.commands.items.len - 1];
@@ -139,7 +139,7 @@ pub const CLI = struct {
                     // Copy args (skipping command name)
                     self.args.clearRetainingCapacity();
                     for (parsed.args.items[1..]) |arg| {
-                        try self.args.append(try self.allocator.dupe(u8, arg));
+                        try self.args.append(self.allocator, try self.allocator.dupe(u8, arg));
                     }
 
                     // Copy options
@@ -169,7 +169,7 @@ pub const CLI = struct {
 
             self.args.clearRetainingCapacity();
             for (parsed.args.items) |arg| {
-                try self.args.append(try self.allocator.dupe(u8, arg));
+                try self.args.append(self.allocator, try self.allocator.dupe(u8, arg));
             }
 
             self.options.clearRetainingCapacity();
@@ -211,19 +211,19 @@ pub const CLI = struct {
 
     /// Parse command line arguments
     fn parseArgs(self: *CLI, argv: []const []const u8, cmd: ?*Command) !types.ParsedArgv {
-        var parsed_args = std.ArrayList([]const u8).init(self.allocator);
+        var parsed_args: std.ArrayList([]const u8) = .{};
         var parsed_options = std.StringHashMap([]const u8).init(self.allocator);
 
         // Collect all options (global + command-specific)
-        var all_options = std.ArrayList(*const Option).init(self.allocator);
+        var all_options: std.ArrayList(*const Option) = .{};
         defer all_options.deinit();
 
         for (self.global_command.options.items) |*opt| {
-            try all_options.append(opt);
+            try all_options.append(self.allocator, opt);
         }
         if (cmd) |matched_cmd| {
             for (matched_cmd.options.items) |*opt| {
-                try all_options.append(opt);
+                try all_options.append(self.allocator, opt);
             }
         }
 
@@ -287,7 +287,7 @@ pub const CLI = struct {
                 }
             } else {
                 // Regular argument
-                try parsed_args.append(try self.allocator.dupe(u8, arg));
+                try parsed_args.append(self.allocator, try self.allocator.dupe(u8, arg));
             }
         }
 

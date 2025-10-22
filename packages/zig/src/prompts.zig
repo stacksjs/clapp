@@ -217,8 +217,8 @@ pub fn multiSelect(allocator: std.mem.Allocator, options: MultiSelectOptions) ![
         return multiSelect(allocator, options);
     }
 
-    var result = std.ArrayList([]const u8).init(allocator);
-    errdefer result.deinit();
+    var result: std.ArrayList([]const u8) = .{};
+    errdefer result.deinit(allocator);
 
     var iter = std.mem.splitSequence(u8, trimmed, " ");
     while (iter.next()) |num_str| {
@@ -241,7 +241,7 @@ pub fn multiSelect(allocator: std.mem.Allocator, options: MultiSelectOptions) ![
         }
 
         const value = try allocator.dupe(u8, options.options[index - 1].value);
-        try result.append(value);
+        try result.append(allocator, value);
     }
 
     if (result.items.len == 0 and options.required) {
@@ -252,7 +252,7 @@ pub fn multiSelect(allocator: std.mem.Allocator, options: MultiSelectOptions) ![
         return multiSelect(allocator, options);
     }
 
-    return try result.toOwnedSlice();
+    return try result.toOwnedSlice(allocator);
 }
 
 /// Password prompt (masked input)

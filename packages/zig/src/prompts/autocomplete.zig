@@ -27,7 +27,7 @@ pub fn autocomplete(allocator: std.mem.Allocator, options: AutocompleteOptions) 
         try stdout.print("{s}\n", .{placeholder_text});
     }
 
-    var input_buffer = std.ArrayList(u8).init(allocator);
+    var input_buffer: std.ArrayList(u8) = .{};
     defer input_buffer.deinit();
 
     var selected_index: usize = 0;

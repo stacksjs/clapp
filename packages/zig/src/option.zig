@@ -32,7 +32,7 @@ pub const Option = struct {
             .raw_name = try allocator.dupe(u8, raw_name),
             .description = try allocator.dupe(u8, description),
             .name = undefined,
-            .names = std.ArrayList([]const u8).init(allocator),
+            .names = .{},
             .is_boolean = false,
             .required = null,
             .config = config,
@@ -63,7 +63,7 @@ pub const Option = struct {
             }
 
             const camelcased = try utils.camelcaseOptionName(allocator, trimmed);
-            try opt.names.append(camelcased);
+            try opt.names.append(allocator, camelcased);
         }
 
         // Sort names by length

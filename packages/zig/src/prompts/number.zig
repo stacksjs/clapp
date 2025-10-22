@@ -21,7 +21,7 @@ pub fn number(allocator: std.mem.Allocator, options: NumberOptions) !f64 {
 
     // Show constraints
     if (options.min != null or options.max != null) {
-        var constraints = std.ArrayList(u8).init(allocator);
+        var constraints: std.ArrayList(u8) = .{};
         defer constraints.deinit();
 
         const writer = constraints.writer();

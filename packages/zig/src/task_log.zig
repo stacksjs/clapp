@@ -80,7 +80,7 @@ pub const TaskLog = struct {
         return TaskLog{
             .allocator = allocator,
             .title = try allocator.dupe(u8, title) catch unreachable,
-            .entries = std.ArrayList(TaskLogEntry).init(allocator),
+            .entries = .{},
             .clear_on_success = true,
             .is_tty = is_tty,
         };
@@ -91,12 +91,12 @@ pub const TaskLog = struct {
         for (self.entries.items) |entry| {
             self.allocator.free(entry.message);
         }
-        self.entries.deinit();
+        self.entries.deinit(self.allocator);
     }
 
     /// Add info message to log
     pub fn info(self: *TaskLog, message: []const u8) !void {
-        try self.entries.append(.{
+        try self.entries.append(self.allocator, .{
             .level = .info,
             .message = try self.allocator.dupe(u8, message),
         });
@@ -104,7 +104,7 @@ pub const TaskLog = struct {
 
     /// Add success message to log
     pub fn success(self: *TaskLog, message: []const u8) !void {
-        try self.entries.append(.{
+        try self.entries.append(self.allocator, .{
             .level = .success,
             .message = try self.allocator.dupe(u8, message),
         });
@@ -112,7 +112,7 @@ pub const TaskLog = struct {
 
     /// Add warning message to log
     pub fn warn(self: *TaskLog, message: []const u8) !void {
-        try self.entries.append(.{
+        try self.entries.append(self.allocator, .{
             .level = .warn,
             .message = try self.allocator.dupe(u8, message),
         });
@@ -120,7 +120,7 @@ pub const TaskLog = struct {
 
     /// Add error message to log
     pub fn err(self: *TaskLog, message: []const u8) !void {
-        try self.entries.append(.{
+        try self.entries.append(self.allocator, .{
             .level = .@"error",
             .message = try self.allocator.dupe(u8, message),
         });
@@ -128,7 +128,7 @@ pub const TaskLog = struct {
 
     /// Add step message to log
     pub fn step(self: *TaskLog, message: []const u8) !void {
-        try self.entries.append(.{
+        try self.entries.append(self.allocator, .{
             .level = .step,
             .message = try self.allocator.dupe(u8, message),
         });

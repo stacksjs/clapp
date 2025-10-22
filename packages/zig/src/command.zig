@@ -53,12 +53,12 @@ pub const Command = struct {
             .description = try allocator.dupe(u8, description),
             .name = name,
             .args = args,
-            .options = std.ArrayList(Option).init(allocator),
-            .alias_names = std.ArrayList([]const u8).init(allocator),
+            .options = .{},
+            .alias_names = .{},
             .command_action = null,
             .usage_text = null,
             .version_number = null,
-            .examples = std.ArrayList(types.CommandExample).init(allocator),
+            .examples = .{},
             .help_callback = null,
             .config = config,
             .cli = null,
@@ -125,19 +125,19 @@ pub const Command = struct {
 
     /// Add an example
     pub fn example(self: *Command, ex: types.CommandExample) !void {
-        try self.examples.append(ex);
+        try self.examples.append(self.allocator, ex);
     }
 
     /// Add an option to the command
     pub fn option(self: *Command, raw_name: []const u8, description: []const u8, config: types.OptionConfig) !void {
         const opt = try Option.init(self.allocator, raw_name, description, config);
-        try self.options.append(opt);
+        try self.options.append(self.allocator, opt);
     }
 
     /// Add an alias for the command
     pub fn alias(self: *Command, name: []const u8) !void {
         const alias_copy = try self.allocator.dupe(u8, name);
-        try self.alias_names.append(alias_copy);
+        try self.alias_names.append(self.allocator, alias_copy);
     }
 
     /// Set the action callback

@@ -74,7 +74,7 @@ pub fn listDirectory(allocator: std.mem.Allocator, dir_path: []const u8) ![][]co
     var dir = try std.fs.cwd().openDir(dir_path, .{ .iterate = true });
     defer dir.close();
 
-    var entries = std.ArrayList([]const u8).init(allocator);
+    var entries: std.ArrayList([]const u8) = .{};
     errdefer {
         for (entries.items) |entry| {
             allocator.free(entry);
@@ -88,7 +88,7 @@ pub fn listDirectory(allocator: std.mem.Allocator, dir_path: []const u8) ![][]co
         try entries.append(name);
     }
 
-    return try entries.toOwnedSlice();
+    return try entries.toOwnedSlice(allocator);
 }
 
 /// Check if path is a directory

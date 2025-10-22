@@ -264,7 +264,7 @@ pub const TaskList = struct {
     pub fn init(allocator: std.mem.Allocator) TaskList {
         return TaskList{
             .allocator = allocator,
-            .tasks = std.ArrayList(Task).init(allocator),
+            .tasks = .{},
         };
     }
 
@@ -281,7 +281,7 @@ pub const TaskList = struct {
             .title = try self.allocator.dupe(u8, title),
             .status = .pending,
         };
-        try self.tasks.append(task);
+        try self.tasks.append(self.allocator, task);
         try self.render();
     }
 

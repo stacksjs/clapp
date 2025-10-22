@@ -134,8 +134,8 @@ pub fn getColumns() usize {
 
 /// Strip VT control characters from string
 pub fn stripVTControlCharacters(allocator: std.mem.Allocator, input: []const u8) ![]const u8 {
-    var result = std.ArrayList(u8).init(allocator);
-    errdefer result.deinit();
+    var result: std.ArrayList(u8) = .{};
+    errdefer result.deinit(allocator);
 
     var i: usize = 0;
     while (i < input.len) {
@@ -149,12 +149,12 @@ pub fn stripVTControlCharacters(allocator: std.mem.Allocator, input: []const u8)
                 i += 1; // Skip the final character
             }
         } else {
-            try result.append(input[i]);
+            try result.append(allocator, input[i]);
             i += 1;
         }
     }
 
-    return result.toOwnedSlice();
+    return result.toOwnedSlice(allocator);
 }
 
 /// Raw mode utilities

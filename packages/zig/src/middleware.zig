@@ -56,17 +56,17 @@ pub const MiddlewareChain = struct {
     pub fn init(allocator: std.mem.Allocator) MiddlewareChain {
         return MiddlewareChain{
             .allocator = allocator,
-            .middlewares = std.ArrayList(MiddlewareFn).init(allocator),
+            .middlewares = .{},
         };
     }
 
     pub fn deinit(self: *MiddlewareChain) void {
-        self.middlewares.deinit();
+        self.middlewares.deinit(self.allocator);
     }
 
     /// Add middleware to the chain
     pub fn use(self: *MiddlewareChain, middleware: MiddlewareFn) !void {
-        try self.middlewares.append(middleware);
+        try self.middlewares.append(self.allocator, middleware);
     }
 
     /// Execute all middlewares in order
@@ -123,12 +123,12 @@ pub const RateLimiter = struct {
             .allocator = allocator,
             .max_requests = max_requests,
             .window_ms = window_ms,
-            .requests = std.ArrayList(i64).init(allocator),
+            .requests = .{},
         };
     }
 
     pub fn deinit(self: *RateLimiter) void {
-        self.requests.deinit();
+        self.requests.deinit(self.allocator);
     }
 
     pub fn check(self: *RateLimiter) !bool {
@@ -149,7 +149,7 @@ pub const RateLimiter = struct {
             return false;
         }
 
-        try self.requests.append(now);
+        try self.requests.append(self.allocator, now);
         return true;
     }
 };

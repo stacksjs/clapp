@@ -132,7 +132,7 @@ pub const ValidatorChain = struct {
     pub fn init(allocator: std.mem.Allocator) ValidatorChain {
         return ValidatorChain{
             .allocator = allocator,
-            .validators_list = std.ArrayList(ValidatorFn).init(allocator),
+            .validators_list = .{},
         };
     }
 
@@ -142,7 +142,7 @@ pub const ValidatorChain = struct {
 
     /// Add validator to chain
     pub fn add(self: *ValidatorChain, validator: ValidatorFn) !void {
-        try self.validators_list.append(validator);
+        try self.validators_list.append(self.allocator, validator);
     }
 
     /// Validate value against all validators
