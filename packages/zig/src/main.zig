@@ -43,6 +43,11 @@ pub const PathOptions = path_prompt.PathOptions;
 pub const PathType = path_prompt.PathType;
 pub const number_prompt = @import("prompts/number.zig");
 pub const NumberOptions = number_prompt.NumberOptions;
+pub const advanced_prompts = @import("prompts/advanced.zig");
+pub const GroupResult = advanced_prompts.GroupResult;
+pub const SelectKeyOption = advanced_prompts.SelectKeyOption;
+pub const SelectKeyOptions = advanced_prompts.SelectKeyOptions;
+pub const StreamType = advanced_prompts.StreamType;
 
 // Re-export spinner and progress
 pub const spinner = @import("spinner.zig");
@@ -104,6 +109,37 @@ pub const HttpClient = http.HttpClient;
 pub const HttpMethod = http.HttpMethod;
 pub const HttpResponse = http.HttpResponse;
 
+// Re-export terminal utilities
+pub const terminal = @import("terminal.zig");
+
+// Re-export state management
+pub const state = @import("state.zig");
+pub const State = state.State;
+pub const Action = state.Action;
+pub const Settings = state.Settings;
+
+// Re-export validation
+pub const validation = @import("validation.zig");
+pub const ValidationResult = validation.ValidationResult;
+pub const ValidatorFn = validation.ValidatorFn;
+pub const ValidatorChain = validation.ValidatorChain;
+pub const FieldValidator = validation.FieldValidator;
+
+// Re-export logging
+pub const log = @import("log.zig");
+
+// Re-export events
+pub const events = @import("events.zig");
+pub const EventEmitter = events.EventEmitter;
+pub const ListenerFn = events.ListenerFn;
+
+// Re-export task log
+pub const task_log = @import("task_log.zig");
+pub const TaskExecutor = task_log.TaskExecutor;
+pub const TaskLog = task_log.TaskLog;
+pub const Task = task_log.Task;
+pub const TaskFn = task_log.TaskFn;
+
 test {
     // Run all tests in imported modules
     std.testing.refAllDecls(@This());
@@ -116,6 +152,7 @@ test {
     _ = @import("prompts/autocomplete.zig");
     _ = @import("prompts/path.zig");
     _ = @import("prompts/number.zig");
+    _ = @import("prompts/advanced.zig");
     _ = @import("spinner.zig");
     _ = @import("config.zig");
     _ = @import("completion.zig");
@@ -127,4 +164,10 @@ test {
     _ = @import("output.zig");
     _ = @import("debug.zig");
     _ = @import("http.zig");
+    _ = @import("terminal.zig");
+    _ = @import("state.zig");
+    _ = @import("validation.zig");
+    _ = @import("log.zig");
+    _ = @import("events.zig");
+    _ = @import("task_log.zig");
 }

@@ -151,6 +151,85 @@ pub fn isUnicodeSupported() bool {
     return false;
 }
 
+/// Line-by-line diff result
+pub const DiffLine = struct {
+    line: []const u8,
+    type: enum { added, removed, unchanged },
+};
+
+/// Compare two strings line by line
+pub fn diffLines(allocator: std.mem.Allocator, old: []const u8, new: []const u8) ![]DiffLine {
+    var result = std.ArrayList(DiffLine).init(allocator);
+    errdefer result.deinit();
+
+    var old_lines = std.mem.splitScalar(u8, old, '\n');
+    var new_lines = std.mem.splitScalar(u8, new, '\n');
+
+    var old_list = std.ArrayList([]const u8).init(allocator);
+    defer old_list.deinit();
+    var new_list = std.ArrayList([]const u8).init(allocator);
+    defer new_list.deinit();
+
+    while (old_lines.next()) |line| {
+        try old_list.append(line);
+    }
+    while (new_lines.next()) |line| {
+        try new_list.append(line);
+    }
+
+    // Simple diff algorithm: find matching and non-matching lines
+    var i: usize = 0;
+    var j: usize = 0;
+
+    while (i < old_list.items.len or j < new_list.items.len) {
+        if (i >= old_list.items.len) {
+            // Only new lines left
+            try result.append(.{
+                .line = try allocator.dupe(u8, new_list.items[j]),
+                .type = .added,
+            });
+            j += 1;
+        } else if (j >= new_list.items.len) {
+            // Only old lines left
+            try result.append(.{
+                .line = try allocator.dupe(u8, old_list.items[i]),
+                .type = .removed,
+            });
+            i += 1;
+        } else if (std.mem.eql(u8, old_list.items[i], new_list.items[j])) {
+            // Lines match
+            try result.append(.{
+                .line = try allocator.dupe(u8, old_list.items[i]),
+                .type = .unchanged,
+            });
+            i += 1;
+            j += 1;
+        } else {
+            // Lines don't match - mark as removed and added
+            try result.append(.{
+                .line = try allocator.dupe(u8, old_list.items[i]),
+                .type = .removed,
+            });
+            try result.append(.{
+                .line = try allocator.dupe(u8, new_list.items[j]),
+                .type = .added,
+            });
+            i += 1;
+            j += 1;
+        }
+    }
+
+    return result.toOwnedSlice();
+}
+
+/// Free diff result
+pub fn freeDiffLines(allocator: std.mem.Allocator, lines: []DiffLine) void {
+    for (lines) |line| {
+        allocator.free(line.line);
+    }
+    allocator.free(lines);
+}
+
 test "removeBrackets" {
     const allocator = std.testing.allocator;
 

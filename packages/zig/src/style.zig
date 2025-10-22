@@ -151,6 +151,52 @@ pub fn dim(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
     return apply(allocator, text, codes.dim);
 }
 
+pub fn inverse(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.inverse);
+}
+
+pub fn hidden(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.hidden);
+}
+
+pub fn strikethrough(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.strikethrough);
+}
+
+// Background color functions
+
+pub fn bgRed(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.bg_red);
+}
+
+pub fn bgGreen(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.bg_green);
+}
+
+pub fn bgBlue(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.bg_blue);
+}
+
+pub fn bgYellow(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.bg_yellow);
+}
+
+pub fn bgCyan(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.bg_cyan);
+}
+
+pub fn bgMagenta(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.bg_magenta);
+}
+
+pub fn bgWhite(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.bg_white);
+}
+
+pub fn bgBlack(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
+    return apply(allocator, text, codes.bg_black);
+}
+
 // Theme color functions
 
 pub fn primary(allocator: std.mem.Allocator, text: []const u8) ![]const u8 {
