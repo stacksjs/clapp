@@ -35,6 +35,15 @@ pub const SelectOptions = prompts.SelectOptions;
 pub const MultiSelectOptions = prompts.MultiSelectOptions;
 pub const PasswordOptions = prompts.PasswordOptions;
 
+// Re-export advanced prompts
+pub const autocomplete = @import("prompts/autocomplete.zig");
+pub const AutocompleteOptions = autocomplete.AutocompleteOptions;
+pub const path_prompt = @import("prompts/path.zig");
+pub const PathOptions = path_prompt.PathOptions;
+pub const PathType = path_prompt.PathType;
+pub const number_prompt = @import("prompts/number.zig");
+pub const NumberOptions = number_prompt.NumberOptions;
+
 // Re-export spinner and progress
 pub const spinner = @import("spinner.zig");
 pub const Spinner = spinner.Spinner;
@@ -69,6 +78,32 @@ pub const TestContext = test_utils.TestContext;
 pub const ExecResult = test_utils.ExecResult;
 pub const Expect = test_utils.Expect;
 
+// Re-export middleware
+pub const middleware = @import("middleware.zig");
+pub const MiddlewareChain = middleware.MiddlewareChain;
+pub const MiddlewareContext = middleware.MiddlewareContext;
+pub const MiddlewareFn = middleware.MiddlewareFn;
+
+// Re-export signals
+pub const signals = @import("signals.zig");
+pub const SignalHandlerFn = signals.SignalHandlerFn;
+pub const GracefulShutdown = signals.GracefulShutdown;
+
+// Re-export output
+pub const output = @import("output.zig");
+pub const OutputFormat = output.OutputFormat;
+pub const JsonOutput = output.JsonOutput;
+
+// Re-export debug
+pub const debug = @import("debug.zig");
+pub const Timer = debug.Timer;
+
+// Re-export http
+pub const http = @import("http.zig");
+pub const HttpClient = http.HttpClient;
+pub const HttpMethod = http.HttpMethod;
+pub const HttpResponse = http.HttpResponse;
+
 test {
     // Run all tests in imported modules
     std.testing.refAllDecls(@This());
@@ -78,10 +113,18 @@ test {
     _ = @import("cli.zig");
     _ = @import("style.zig");
     _ = @import("prompts.zig");
+    _ = @import("prompts/autocomplete.zig");
+    _ = @import("prompts/path.zig");
+    _ = @import("prompts/number.zig");
     _ = @import("spinner.zig");
     _ = @import("config.zig");
     _ = @import("completion.zig");
     _ = @import("suggestions.zig");
     _ = @import("errors.zig");
     _ = @import("test_utils.zig");
+    _ = @import("middleware.zig");
+    _ = @import("signals.zig");
+    _ = @import("output.zig");
+    _ = @import("debug.zig");
+    _ = @import("http.zig");
 }

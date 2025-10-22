@@ -16,3 +16,5 @@ test/__snapshots__
 test/prompts/__snapshots__
 /my-stacks-app
 /packages/zig/.zig-cache
+/packages/ts/test/__snapshots__
+/packages/ts/test/prompts/__snapshots__
