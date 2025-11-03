@@ -2,14 +2,14 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
-import { cli } from '../src'
+import { cli } from '../packages/ts/src'
 import {
   confirm,
   log,
   // note,
   // select,
   text,
-} from '../src/prompts'
+} from '../packages/ts/src/prompts'
 
 // Define the main CLI
 const stacks = cli('stacks')

@@ -3,8 +3,14 @@
     "target": "esnext",
     "lib": ["esnext"],
     "moduleDetection": "force",
+    "baseUrl": ".",
     "module": "esnext",
     "moduleResolution": "bundler",
+    "paths": {
+      "../src": ["packages/ts/src"],
+      "../src/*": ["packages/ts/src/*"],
+      "./src/*": ["packages/ts/src/*"]
+    },
     "resolveJsonModule": true,
     "types": ["bun"],
     "allowImportingTsExtensions": true,

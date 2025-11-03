@@ -2,7 +2,7 @@ import { dts } from 'bun-plugin-dtsx'
 
 // Build the main library
 await Bun.build({
-  entrypoints: ['src/index.ts'],
+  entrypoints: ['packages/ts/src/index.ts'],
   outdir: './dist',
   format: 'esm',
   splitting: true, // Add splitting back to reduce bundle size
@@ -12,7 +12,7 @@ await Bun.build({
 
 // Build the CLI binary separately
 await Bun.build({
-  entrypoints: ['bin/cli.ts'],
+  entrypoints: ['packages/ts/bin/cli.ts'],
   outdir: './dist/bin',
   target: 'node',
 })

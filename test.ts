@@ -1,8 +1,8 @@
 import pc from 'picocolors'
-import { log } from './src/prompts/log'
-import { progress } from './src/prompts/progress-bar'
-import { spinner } from './src/prompts/spinner'
-import { box, panel, setAccessibility, style, table } from './src/style'
+import { log } from './packages/ts/src/prompts/log'
+import { progress } from './packages/ts/src/prompts/progress-bar'
+import { spinner } from './packages/ts/src/prompts/spinner'
+import { box, panel, setAccessibility, style, table } from './packages/ts/src/style'
 
 // Force color support to be enabled regardless of environment
 setAccessibility({ colors: true })

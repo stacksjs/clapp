@@ -1,8 +1,8 @@
 {
   "name": "@stacksjs/clapp",
   "type": "module",
-  "private": true,
   "version": "0.2.0",
+  "private": true,
   "description": "A toolkit for building CLI prompts in TypeScript.",
   "author": "Chris Breuer <chris@stacksjs.org>",
   "license": "MIT",
