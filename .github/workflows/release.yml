@@ -21,7 +21,7 @@ jobs:
           bun-version: 1.3.1
 
       - name: Use cached node_modules
-        uses: actions/cache@v4
+        uses: actions/cache@v4.3.0
         with:
           path: node_modules
           key: node-modules-${{ hashFiles('**/bun.lock') }}
@@ -42,7 +42,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       - name: Attach Binaries
-        uses: stacksjs/action-releaser@v1.2.7
+        uses: stacksjs/action-releaser@v1.2.6
         with:
           files: |
             bin/clapp-linux-x64.zip
