@@ -1,6 +1,6 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, jest, setSystemTime, spyOn, test } from 'bun:test'
+import { EventEmitter } from 'node:events'
 import process from 'node:process'
-import { EventEmitter } from 'node:stream'
 import * as prompts from '../../src'
 import { spinner } from '../../src/prompts/spinner'
 import { MockWritable } from '../utils'

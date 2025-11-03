@@ -1,5 +1,6 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, mock, setSystemTime, spyOn } from 'bun:test'
-import { EventEmitter, Readable, Writable } from 'node:stream'
+import { EventEmitter } from 'node:events'
+import { Readable, Writable } from 'node:stream'
 import colors from 'picocolors'
 import * as prompts from '../src/prompts'
 import { isCancel } from '../src/utils/index'

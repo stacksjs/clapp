@@ -1,7 +1,7 @@
 import type { ProgressOptions } from '../../src/prompts/progress-bar'
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, setSystemTime, spyOn, test } from 'bun:test'
+import { EventEmitter } from 'node:events'
 import process from 'node:process'
-import { EventEmitter } from 'node:stream'
 import * as prompts from '../../src'
 import { progress } from '../../src/prompts/progress-bar'
 import { MockWritable } from '../utils'
