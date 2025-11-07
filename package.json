@@ -1,7 +1,7 @@
 {
   "name": "@stacksjs/clapp",
   "type": "module",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "A toolkit for building CLI prompts in TypeScript.",
   "author": "Chris Breuer <chris@stacksjs.org>",
@@ -37,7 +37,7 @@
     "lint:fix": "bunx --bun eslint . --fix",
     "changelog": "bunx logsmith --verbose",
     "changelog:generate": "bunx logsmith --output CHANGELOG.md",
-    "release": "bun run changelog:generate && bunx bumpx prompt --recursive",
+    "release": "bun --bun run changelog:generate && bunx --bun bumpx prompt --recursive",
     "dev:docs": "bun --bun vitepress dev docs",
     "build:docs": "bun --bun vitepress build docs",
     "preview:docs": "bun --bun vitepress preview docs",

@@ -1,23 +1,99 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.0...v0.2.1)
+
+### 🧹 Chores
+
+- release v0.2.1 ([88ff16e](https://github.com/stacksjs/clapp/commit/88ff16e)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([0cfb737](https://github.com/stacksjs/clapp/commit/0cfb737)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([30235fb](https://github.com/stacksjs/clapp/commit/30235fb)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([ab10c58](https://github.com/stacksjs/clapp/commit/ab10c58)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: update dependency better-dx to ^0.2.3 (#24) ([148d7a4](https://github.com/stacksjs/clapp/commit/148d7a4)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#24](https://github.com/stacksjs/clapp/issues/24), [#24](https://github.com/stacksjs/clapp/issues/24))
+- wip ([1e4cf5f](https://github.com/stacksjs/clapp/commit/1e4cf5f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([280d65f](https://github.com/stacksjs/clapp/commit/280d65f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([a54bd24](https://github.com/stacksjs/clapp/commit/a54bd24)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: update all non-major dependencies (#22) ([44877cf](https://github.com/stacksjs/clapp/commit/44877cf)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#22](https://github.com/stacksjs/clapp/issues/22), [#22](https://github.com/stacksjs/clapp/issues/22))
+- wip ([78b199c](https://github.com/stacksjs/clapp/commit/78b199c)) _(by Chris <chrisbreuer93@gmail.com>)_
+- improve cover and og-image ([d0560db](https://github.com/stacksjs/clapp/commit/d0560db)) _(by cab-mikee <mike.cabz32@gmail.com>)_
+- wip ([1c96d74](https://github.com/stacksjs/clapp/commit/1c96d74)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([e104307](https://github.com/stacksjs/clapp/commit/e104307)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([903522e](https://github.com/stacksjs/clapp/commit/903522e)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([a6ffc40](https://github.com/stacksjs/clapp/commit/a6ffc40)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([dd35633](https://github.com/stacksjs/clapp/commit/dd35633)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([3e7acf4](https://github.com/stacksjs/clapp/commit/3e7acf4)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([7765923](https://github.com/stacksjs/clapp/commit/7765923)) _(by Chris <chrisbreuer93@gmail.com>)_
+- add clarity and cursor rules ([288760c](https://github.com/stacksjs/clapp/commit/288760c)) _(by cab-mikee <mike.cabz32@gmail.com>)_
+- **deps**: update dependency actions/checkout to v5.0.0 (#15) ([20de5aa](https://github.com/stacksjs/clapp/commit/20de5aa)) _(by Chris <chrisbreuer93@gmail.com>)_ ([#15](https://github.com/stacksjs/clapp/issues/15), [#15](https://github.com/stacksjs/clapp/issues/15))
+- **deps**: update dependency buddy-bot to 0.9.8 (#17) ([ca04858](https://github.com/stacksjs/clapp/commit/ca04858)) _(by Chris <chrisbreuer93@gmail.com>)_ ([#17](https://github.com/stacksjs/clapp/issues/17), [#17](https://github.com/stacksjs/clapp/issues/17))
+- **deps**: update dependency bun-git-hooks to 0.3.1 (#18) ([3fc8e30](https://github.com/stacksjs/clapp/commit/3fc8e30)) _(by Chris <chrisbreuer93@gmail.com>)_ ([#18](https://github.com/stacksjs/clapp/issues/18), [#18](https://github.com/stacksjs/clapp/issues/18))
+- **deps**: update all non-major dependencies (#11) ([5d1ed57](https://github.com/stacksjs/clapp/commit/5d1ed57)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#11](https://github.com/stacksjs/clapp/issues/11), [#11](https://github.com/stacksjs/clapp/issues/11))
+- **deps**: update all non-major dependencies (#19) ([5d1d143](https://github.com/stacksjs/clapp/commit/5d1d143)) _(by Chris <chrisbreuer93@gmail.com>)_ ([#19](https://github.com/stacksjs/clapp/issues/19), [#19](https://github.com/stacksjs/clapp/issues/19))
+
+### 📄 Miscellaneous
+
+- Merge pull request #13 from stacksjs/renovate/actions-checkout-5.x ([c6de00d](https://github.com/stacksjs/clapp/commit/c6de00d)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#13](https://github.com/stacksjs/clapp/issues/13), [#13](https://github.com/stacksjs/clapp/issues/13))
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _[renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot])_
+- _cab-mikee <mike.cabz32@gmail.com>_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.0...HEAD)
+
+### 🧹 Chores
+
+- wip ([0cfb737](https://github.com/stacksjs/clapp/commit/0cfb737)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([30235fb](https://github.com/stacksjs/clapp/commit/30235fb)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([ab10c58](https://github.com/stacksjs/clapp/commit/ab10c58)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: update dependency better-dx to ^0.2.3 (#24) ([148d7a4](https://github.com/stacksjs/clapp/commit/148d7a4)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#24](https://github.com/stacksjs/clapp/issues/24), [#24](https://github.com/stacksjs/clapp/issues/24))
+- wip ([1e4cf5f](https://github.com/stacksjs/clapp/commit/1e4cf5f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([280d65f](https://github.com/stacksjs/clapp/commit/280d65f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([a54bd24](https://github.com/stacksjs/clapp/commit/a54bd24)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: update all non-major dependencies (#22) ([44877cf](https://github.com/stacksjs/clapp/commit/44877cf)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#22](https://github.com/stacksjs/clapp/issues/22), [#22](https://github.com/stacksjs/clapp/issues/22))
+- wip ([78b199c](https://github.com/stacksjs/clapp/commit/78b199c)) _(by Chris <chrisbreuer93@gmail.com>)_
+- improve cover and og-image ([d0560db](https://github.com/stacksjs/clapp/commit/d0560db)) _(by cab-mikee <mike.cabz32@gmail.com>)_
+- wip ([1c96d74](https://github.com/stacksjs/clapp/commit/1c96d74)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([e104307](https://github.com/stacksjs/clapp/commit/e104307)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([903522e](https://github.com/stacksjs/clapp/commit/903522e)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([a6ffc40](https://github.com/stacksjs/clapp/commit/a6ffc40)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([dd35633](https://github.com/stacksjs/clapp/commit/dd35633)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([3e7acf4](https://github.com/stacksjs/clapp/commit/3e7acf4)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([7765923](https://github.com/stacksjs/clapp/commit/7765923)) _(by Chris <chrisbreuer93@gmail.com>)_
+- add clarity and cursor rules ([288760c](https://github.com/stacksjs/clapp/commit/288760c)) _(by cab-mikee <mike.cabz32@gmail.com>)_
+- **deps**: update dependency actions/checkout to v5.0.0 (#15) ([20de5aa](https://github.com/stacksjs/clapp/commit/20de5aa)) _(by Chris <chrisbreuer93@gmail.com>)_ ([#15](https://github.com/stacksjs/clapp/issues/15), [#15](https://github.com/stacksjs/clapp/issues/15))
+- **deps**: update dependency buddy-bot to 0.9.8 (#17) ([ca04858](https://github.com/stacksjs/clapp/commit/ca04858)) _(by Chris <chrisbreuer93@gmail.com>)_ ([#17](https://github.com/stacksjs/clapp/issues/17), [#17](https://github.com/stacksjs/clapp/issues/17))
+- **deps**: update dependency bun-git-hooks to 0.3.1 (#18) ([3fc8e30](https://github.com/stacksjs/clapp/commit/3fc8e30)) _(by Chris <chrisbreuer93@gmail.com>)_ ([#18](https://github.com/stacksjs/clapp/issues/18), [#18](https://github.com/stacksjs/clapp/issues/18))
+- **deps**: update all non-major dependencies (#11) ([5d1ed57](https://github.com/stacksjs/clapp/commit/5d1ed57)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#11](https://github.com/stacksjs/clapp/issues/11), [#11](https://github.com/stacksjs/clapp/issues/11))
+- **deps**: update all non-major dependencies (#19) ([5d1d143](https://github.com/stacksjs/clapp/commit/5d1d143)) _(by Chris <chrisbreuer93@gmail.com>)_ ([#19](https://github.com/stacksjs/clapp/issues/19), [#19](https://github.com/stacksjs/clapp/issues/19))
+
+### 📄 Miscellaneous
+
+- Merge pull request #13 from stacksjs/renovate/actions-checkout-5.x ([c6de00d](https://github.com/stacksjs/clapp/commit/c6de00d)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#13](https://github.com/stacksjs/clapp/issues/13), [#13](https://github.com/stacksjs/clapp/issues/13))
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _[renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot])_
+- _cab-mikee <mike.cabz32@gmail.com>_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.18...HEAD)
 
 ### Contributors
 
 - Chris <chrisbreuer93@gmail.com>
 
-
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.17...HEAD)
 
 ### Contributors
 
 - Chris <chrisbreuer93@gmail.com>
 
-
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.17...HEAD)
 
 ### Contributors
 
 - Chris <chrisbreuer93@gmail.com>
-
 
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.16...HEAD)
 
@@ -26,14 +102,12 @@
 - Adelino Ngomacha <adelinob335@gmail.com>
 - Chris <chrisbreuer93@gmail.com>
 
-
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.16...HEAD)
 
 ### Contributors
 
 - Adelino Ngomacha <adelinob335@gmail.com>
 - Chris <chrisbreuer93@gmail.com>
-
 
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.15...HEAD)
 
@@ -41,14 +115,12 @@
 
 - Adelino Ngomacha <Adelinob335@gmail.com>
 
-
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.14...HEAD)
 
 ### Contributors
 
 - Adelino Ngomacha <Adelinob335@gmail.com>
 - zJohn <Adelinob335@gmail.com>
-
 
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.13...HEAD)
 
@@ -58,6 +130,11 @@
 - renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>
 - zJohn <Adelinob335@gmail.com>
 
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.12...HEAD)
+
+### Contributors
+
+- Adelino Ngomacha <Adelinob335@gmail.com>
 
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.12...HEAD)
 
@@ -65,13 +142,11 @@
 
 - Adelino Ngomacha <Adelinob335@gmail.com>
 
-
-[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.12...HEAD)
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
 
 ### Contributors
 
 - Adelino Ngomacha <Adelinob335@gmail.com>
-
 
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
 
@@ -79,6 +154,11 @@
 
 - Adelino Ngomacha <Adelinob335@gmail.com>
 
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
+
+### Contributors
+
+- Adelino Ngomacha <Adelinob335@gmail.com>
 
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
 
@@ -86,28 +166,11 @@
 
 - Adelino Ngomacha <Adelinob335@gmail.com>
 
-
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
 
 ### Contributors
 
 - Adelino Ngomacha <Adelinob335@gmail.com>
-
-
-[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
-
-### Contributors
-
-- Adelino Ngomacha <Adelinob335@gmail.com>
-
-
-[Compare changes](https://github.com/stacksjs/clapp/compare/v0.1.10...HEAD)
-
-### Contributors
-
-- Adelino Ngomacha <Adelinob335@gmail.com>
-
-
 
 ## v0.1.4...main
 
@@ -214,7 +277,6 @@
 
 ## ...main
 
-
 ### 🏡 Chore
 
 - Initial commit ([10424e8](https://github.com/stacksjs/clapp/commit/10424e8))
@@ -243,4 +305,3 @@
 ### ❤️ Contributors
 
 - Chris ([@chrisbbreuer](https://github.com/chrisbbreuer))
-
