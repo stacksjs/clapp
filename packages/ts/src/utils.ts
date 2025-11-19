@@ -290,3 +290,58 @@ export interface Clear {
 export const clear: Clear = {
   screen: `${ESC}c`,
 }
+
+/**
+ * Calculate Levenshtein distance between two strings
+ * Used for fuzzy command matching and "did you mean?" suggestions
+ */
+export function levenshteinDistance(a: string, b: string): number {
+  const matrix: number[][] = []
+
+  for (let i = 0; i <= b.length; i++) {
+    matrix[i] = [i]
+  }
+
+  for (let j = 0; j <= a.length; j++) {
+    matrix[0][j] = j
+  }
+
+  for (let i = 1; i <= b.length; i++) {
+    for (let j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) === a.charAt(j - 1)) {
+        matrix[i][j] = matrix[i - 1][j - 1]
+      }
+      else {
+        matrix[i][j] = Math.min(
+          matrix[i - 1][j - 1] + 1,
+          matrix[i][j - 1] + 1,
+          matrix[i - 1][j] + 1,
+        )
+      }
+    }
+  }
+
+  return matrix[b.length][a.length]
+}
+
+/**
+ * Find similar commands based on Levenshtein distance
+ * @param input - The command that was not found
+ * @param commands - List of available command names
+ * @param maxDistance - Maximum edit distance to consider (default: 2)
+ * @param maxSuggestions - Maximum number of suggestions to return (default: 3)
+ * @returns Array of suggested command names
+ */
+export function findSimilarCommands(
+  input: string,
+  commands: string[],
+  maxDistance = 2,
+  maxSuggestions = 3,
+): string[] {
+  return commands
+    .map(cmd => ({ cmd, distance: levenshteinDistance(input, cmd) }))
+    .filter(({ distance }) => distance <= maxDistance)
+    .sort((a, b) => a.distance - b.distance)
+    .slice(0, maxSuggestions)
+    .map(({ cmd }) => cmd)
+}

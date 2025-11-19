@@ -4,7 +4,8 @@ import { EventEmitter } from 'node:events'
 import mri from 'mri'
 import Command, { GlobalCommand } from './Command'
 import { processArgs } from './runtimes/node'
-import { camelcaseOptionName, getFileName, getMriOptions, setByType, setDotProp } from './utils'
+import { camelcaseOptionName, findSimilarCommands, getFileName, getMriOptions, setByType, setDotProp } from './utils'
+import { style } from './style'
 
 interface ParsedArgv {
   args: ReadonlyArray<string>
@@ -35,6 +36,7 @@ export class CLI extends EventEmitter {
 
   showHelpOnExit?: boolean
   showVersionOnExit?: boolean
+  enableDidYouMean = true
 
   /**
    * @param name The program name to display in help and version message
@@ -48,6 +50,14 @@ export class CLI extends EventEmitter {
     this.options = {}
     this.globalCommand = new GlobalCommand(this)
     this.globalCommand.usage('<command> [options]')
+  }
+
+  /**
+   * Enable or disable "did you mean?" suggestions for unknown commands
+   */
+  didYouMean(enabled = true): this {
+    this.enableDidYouMean = enabled
+    return this
   }
 
   /**
@@ -161,6 +171,36 @@ export class CLI extends EventEmitter {
   }
 
   /**
+   * Show "did you mean?" error for unknown commands
+   */
+  showCommandNotFound(input: string): void {
+    console.log(style.red(`\n✗ Command "${input}" not found.\n`))
+
+    if (this.enableDidYouMean) {
+      // Get all command names including aliases
+      const allCommandNames: string[] = []
+      for (const command of this.commands) {
+        if (command.name) {
+          allCommandNames.push(command.name)
+        }
+        if (command.aliasNames) {
+          allCommandNames.push(...command.aliasNames)
+        }
+      }
+
+      const suggestions = findSimilarCommands(input, allCommandNames)
+      if (suggestions.length > 0) {
+        console.log(style.yellow('Did you mean one of these?'))
+        suggestions.forEach(cmd => console.log(`  ${style.dim('•')} ${this.name} ${cmd}`))
+        console.log('')
+      }
+    }
+
+    console.log(style.dim('Run'), `${this.name} --help`, style.dim('to see all available commands'))
+    process.exit(1)
+  }
+
+  /**
    * Parse argv
    */
   parse(
@@ -230,6 +270,12 @@ export class CLI extends EventEmitter {
 
     if (!this.matchedCommand && this.args[0]) {
       this.emit('command:*')
+
+      // Show "did you mean?" if command not found and no listener for command:*
+      const hasWildcardListener = this.listenerCount('command:*') > 0
+      if (!hasWildcardListener) {
+        this.showCommandNotFound(this.args[0] as string)
+      }
     }
 
     return parsedArgv
