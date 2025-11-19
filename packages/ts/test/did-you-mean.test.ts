@@ -2,7 +2,7 @@ import { describe, expect, it } from 'bun:test'
 import { cli } from '../src'
 
 describe('Did You Mean Suggestions', () => {
-  it('should suggest similar commands for typos', () => {
+  it('should suggest similar commands for typos', async () => {
     const app = cli('test-app')
 
     app
@@ -34,7 +34,7 @@ describe('Did You Mean Suggestions', () => {
     }
 
     try {
-      app.parse(['node', 'test', 'buil'], { run: true })
+      await app.parse(['node', 'test', 'buil'], { run: true })
     } catch (e: any) {
       // Expected to throw due to mocked process.exit
       if (e.message !== 'process.exit called') {
@@ -56,7 +56,7 @@ describe('Did You Mean Suggestions', () => {
     expect(exitCode).toBe(1)
   })
 
-  it('should not show suggestions if no similar commands found', () => {
+  it('should not show suggestions if no similar commands found', async () => {
     const app = cli('test-app')
 
     app
@@ -77,7 +77,7 @@ describe('Did You Mean Suggestions', () => {
     }
 
     try {
-      app.parse(['node', 'test', 'xyz123'], { run: true })
+      await app.parse(['node', 'test', 'xyz123'], { run: true })
     } catch (e: any) {
       if (e.message !== 'process.exit called') {
         throw e
@@ -92,7 +92,7 @@ describe('Did You Mean Suggestions', () => {
     expect(logs.some(log => log.includes('Did you mean'))).toBe(false)
   })
 
-  it('should allow disabling did you mean feature', () => {
+  it('should allow disabling did you mean feature', async () => {
     const app = cli('test-app')
     app.didYouMean(false)
 
@@ -114,7 +114,7 @@ describe('Did You Mean Suggestions', () => {
     }
 
     try {
-      app.parse(['node', 'test', 'buil'], { run: true })
+      await app.parse(['node', 'test', 'buil'], { run: true })
     } catch (e: any) {
       if (e.message !== 'process.exit called') {
         throw e
@@ -129,7 +129,7 @@ describe('Did You Mean Suggestions', () => {
     expect(logs.some(log => log.includes('Did you mean'))).toBe(false)
   })
 
-  it('should include command aliases in suggestions', () => {
+  it('should include command aliases in suggestions', async () => {
     const app = cli('test-app')
 
     app
@@ -151,7 +151,7 @@ describe('Did You Mean Suggestions', () => {
     }
 
     try {
-      app.parse(['node', 'test-app', 'ts'], { run: true })
+      await app.parse(['node', 'test-app', 'ts'], { run: true })
     } catch (e: any) {
       if (e.message !== 'process.exit called') {
         throw e

@@ -170,6 +170,17 @@ export class ClappError extends Error {
       this.stack = new Error(message).stack
     }
   }
+
+  /**
+   * Get formatted error message with optional stack trace
+   * @param showStack Whether to include stack trace (debug mode)
+   */
+  format(showStack = false): string {
+    if (showStack && this.stack) {
+      return `${this.message}\n\nStack trace:\n${this.stack}`
+    }
+    return this.message
+  }
 }
 
 // Thank you to
