@@ -19,15 +19,16 @@ describe('Did You Mean Suggestions', () => {
 
     // Mock console.log to capture output
     const logs: string[] = []
+    // eslint-disable-next-line no-console
     const originalLog = console.log
     const originalExit = process.exit
 
+    // eslint-disable-next-line no-console
     console.log = (...args: any[]) => {
       logs.push(args.join(' '))
     }
 
     let exitCode: number | undefined
-    // @ts-expect-error - mocking process.exit
     process.exit = (code?: number) => {
       exitCode = code
       throw new Error('process.exit called')
@@ -35,12 +36,15 @@ describe('Did You Mean Suggestions', () => {
 
     try {
       await app.parse(['node', 'test', 'buil'], { run: true })
-    } catch (e: any) {
+    }
+    catch (e: any) {
       // Expected to throw due to mocked process.exit
       if (e.message !== 'process.exit called') {
         throw e
       }
-    } finally {
+    }
+    finally {
+      // eslint-disable-next-line no-console
       console.log = originalLog
       process.exit = originalExit
     }
@@ -64,25 +68,29 @@ describe('Did You Mean Suggestions', () => {
       .action(() => {})
 
     const logs: string[] = []
+    // eslint-disable-next-line no-console
     const originalLog = console.log
     const originalExit = process.exit
 
+    // eslint-disable-next-line no-console
     console.log = (...args: any[]) => {
       logs.push(args.join(' '))
     }
 
-    // @ts-expect-error - mocking process.exit
     process.exit = () => {
       throw new Error('process.exit called')
     }
 
     try {
       await app.parse(['node', 'test', 'xyz123'], { run: true })
-    } catch (e: any) {
+    }
+    catch (e: any) {
       if (e.message !== 'process.exit called') {
         throw e
       }
-    } finally {
+    }
+    finally {
+      // eslint-disable-next-line no-console
       console.log = originalLog
       process.exit = originalExit
     }
@@ -101,25 +109,29 @@ describe('Did You Mean Suggestions', () => {
       .action(() => {})
 
     const logs: string[] = []
+    // eslint-disable-next-line no-console
     const originalLog = console.log
     const originalExit = process.exit
 
+    // eslint-disable-next-line no-console
     console.log = (...args: any[]) => {
       logs.push(args.join(' '))
     }
 
-    // @ts-expect-error - mocking process.exit
     process.exit = () => {
       throw new Error('process.exit called')
     }
 
     try {
       await app.parse(['node', 'test', 'buil'], { run: true })
-    } catch (e: any) {
+    }
+    catch (e: any) {
       if (e.message !== 'process.exit called') {
         throw e
       }
-    } finally {
+    }
+    finally {
+      // eslint-disable-next-line no-console
       console.log = originalLog
       process.exit = originalExit
     }
@@ -138,25 +150,29 @@ describe('Did You Mean Suggestions', () => {
       .action(() => {})
 
     const logs: string[] = []
+    // eslint-disable-next-line no-console
     const originalLog = console.log
     const originalExit = process.exit
 
+    // eslint-disable-next-line no-console
     console.log = (...args: any[]) => {
       logs.push(args.join(' '))
     }
 
-    // @ts-expect-error - mocking process.exit
     process.exit = () => {
       throw new Error('process.exit called')
     }
 
     try {
       await app.parse(['node', 'test-app', 'ts'], { run: true })
-    } catch (e: any) {
+    }
+    catch (e: any) {
       if (e.message !== 'process.exit called') {
         throw e
       }
-    } finally {
+    }
+    finally {
+      // eslint-disable-next-line no-console
       console.log = originalLog
       process.exit = originalExit
     }

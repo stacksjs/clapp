@@ -363,11 +363,11 @@ export class Command {
     if (this.cli.args.length < minimalArgsCount) {
       const requiredArgs = this.args.filter(arg => arg.required)
       const missingArgs = requiredArgs.slice(this.cli.args.length)
-      const argNames = missingArgs.map(arg => `<${arg.name}>`).join(' ')
+      const argNames = missingArgs.map(arg => `<${arg.value}>`).join(' ')
 
       throw new ClappError(
-        `Missing required argument${missingArgs.length > 1 ? 's' : ''}: ${argNames}\n\n` +
-        `Run \`${this.cli.name} ${this.rawName} --help\` for usage information.`,
+        `Missing required argument${missingArgs.length > 1 ? 's' : ''}: ${argNames}\n\n`
+        + `Run \`${this.cli.name} ${this.rawName} --help\` for usage information.`,
       )
     }
   }
@@ -427,8 +427,8 @@ export class Command {
         )
         if (value === true || (value === false && !hasNegated)) {
           throw new ClappError(
-            `Option \`${option.rawName}\` requires a value.\n\n` +
-            `Example: ${this.cli.name} ${this.rawName} ${option.rawName} <value>`,
+            `Option \`${option.rawName}\` requires a value.\n\n`
+            + `Example: ${this.cli.name} ${this.rawName} ${option.rawName} <value>`,
           )
         }
       }

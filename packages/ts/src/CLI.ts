@@ -1,11 +1,12 @@
 import type { CommandConfig, CommandExample, HelpCallback } from './Command'
 import type { OptionConfig } from './Option'
 import { EventEmitter } from 'node:events'
+import process from 'node:process'
 import mri from 'mri'
 import Command, { GlobalCommand } from './Command'
 import { processArgs } from './runtimes/node'
-import { camelcaseOptionName, findSimilarCommands, getFileName, getMriOptions, setByType, setDotProp } from './utils'
 import { style } from './style'
+import { camelcaseOptionName, findSimilarCommands, getFileName, getMriOptions, setByType, setDotProp } from './utils'
 
 interface ParsedArgv {
   args: ReadonlyArray<string>
@@ -37,7 +38,7 @@ export class CLI extends EventEmitter {
   showHelpOnExit?: boolean
   showVersionOnExit?: boolean
   enableDidYouMean = true
-  private signalHandlersSet = false
+  signalHandlersSet = false
 
   /** Whether verbose mode is enabled */
   isVerbose = false
@@ -93,6 +94,7 @@ export class CLI extends EventEmitter {
     }
 
     const handleSignal = async (signal: string) => {
+      // eslint-disable-next-line no-console
       console.log(`\n\nReceived ${signal}, cleaning up...`)
 
       if (cleanup) {
@@ -334,6 +336,7 @@ export class CLI extends EventEmitter {
    * Show "did you mean?" error for unknown commands
    */
   showCommandNotFound(input: string): void {
+    // eslint-disable-next-line no-console
     console.log(style.red(`\n✗ Command "${input}" not found.\n`))
 
     if (this.enableDidYouMean) {
@@ -350,12 +353,16 @@ export class CLI extends EventEmitter {
 
       const suggestions = findSimilarCommands(input, allCommandNames)
       if (suggestions.length > 0) {
+        // eslint-disable-next-line no-console
         console.log(style.yellow('Did you mean one of these?'))
+        // eslint-disable-next-line no-console
         suggestions.forEach(cmd => console.log(`  ${style.dim('•')} ${this.name} ${cmd}`))
+        // eslint-disable-next-line no-console
         console.log('')
       }
     }
 
+    // eslint-disable-next-line no-console
     console.log(style.dim('Run'), `${this.name} --help`, style.dim('to see all available commands'))
     process.exit(1)
   }

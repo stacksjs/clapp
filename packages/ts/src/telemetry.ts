@@ -11,6 +11,7 @@ import { existsSync } from 'node:fs'
 import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
+import process from 'node:process'
 
 export interface TelemetryEvent {
   event: string
@@ -155,6 +156,7 @@ class Telemetry {
     }
     catch (error) {
       // Silently fail - telemetry should never break the CLI
+      console.error('Error sending telemetry:', error)
       this.events = []
     }
   }
@@ -195,6 +197,7 @@ class Telemetry {
     }
     catch (error) {
       // Ignore errors
+      console.error('Error loading telemetry config:', error)
     }
 
     // Default config (disabled by default)
@@ -221,11 +224,12 @@ class Telemetry {
       await fs.writeFile(
         this.configPath,
         JSON.stringify(config, null, 2),
-        'utf-8'
+        'utf-8',
       )
     }
     catch (error) {
       // Ignore errors
+      console.error('Error saving telemetry config:', error)
     }
   }
 
@@ -240,4 +244,4 @@ class Telemetry {
 }
 
 // Global telemetry instance
-export const telemetry = new Telemetry()
+export const telemetry: Telemetry = new Telemetry()

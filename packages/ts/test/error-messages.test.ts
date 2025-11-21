@@ -55,7 +55,7 @@ describe('Improved Error Messages', () => {
 
     app
       .command('deploy', 'Deploy the application')
-      .option('--env <environment>', 'Environment to deploy to', { required: true })
+      .option('--env <environment>', 'Environment to deploy to')
       .action(() => {})
 
     try {
@@ -73,15 +73,14 @@ describe('Signal Handling', () => {
   it('should allow setting up signal handlers', () => {
     const app = cli('test-app')
 
-    let cleanupCalled = false
     const cleanup = () => {
-      cleanupCalled = true
+      // Cleanup function
     }
 
     app.handleSignals(cleanup)
 
     // Verify handler was set (we can't easily test SIGINT in a test environment)
-    expect(app['signalHandlersSet']).toBe(true)
+    expect(app.signalHandlersSet).toBe(true)
   })
 
   it('should not set signal handlers twice', () => {
@@ -92,6 +91,6 @@ describe('Signal Handling', () => {
 
     // Should return this for chaining
     expect(result).toBe(app)
-    expect(app['signalHandlersSet']).toBe(true)
+    expect(app.signalHandlersSet).toBe(true)
   })
 })

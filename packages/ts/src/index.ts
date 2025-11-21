@@ -1,10 +1,9 @@
 import { cli } from './CLI'
 
+export * from './cache'
 export * from './CLI'
 export * from './Command'
 export * from './Option'
-
-export * from './cache'
 export * from './prompts'
 export * from './style'
 export * from './telemetry'

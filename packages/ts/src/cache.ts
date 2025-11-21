@@ -141,7 +141,7 @@ class CLICache {
 }
 
 // Global cache instance
-export const cliCache = new CLICache()
+export const cliCache: CLICache = new CLICache()
 
 // Auto cleanup every 30 seconds
 setInterval(() => {

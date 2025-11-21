@@ -19,7 +19,7 @@ describe('Command Hooks', () => {
 
     app
       .command('test', 'Test command')
-      .before(async ({ command }) => {
+      .before(async () => {
         logs.push('before')
       })
       .action(() => {
@@ -41,7 +41,7 @@ describe('Command Hooks', () => {
       .action(() => {
         logs.push('action')
       })
-      .after(async ({ command }) => {
+      .after(async () => {
         logs.push('after')
       })
 
@@ -78,8 +78,12 @@ describe('Command Hooks', () => {
 
     app
       .command('test', 'Test command')
-      .before(() => logs.push('before1'))
-      .before(() => logs.push('before2'))
+      .before(() => {
+        logs.push('before1')
+      })
+      .before(() => {
+        logs.push('before2')
+      })
       .use(async ({ next }) => {
         logs.push('middleware1-before')
         await next!()
@@ -90,9 +94,15 @@ describe('Command Hooks', () => {
         await next!()
         logs.push('middleware2-after')
       })
-      .action(() => logs.push('action'))
-      .after(() => logs.push('after1'))
-      .after(() => logs.push('after2'))
+      .action(() => {
+        logs.push('action')
+      })
+      .after(() => {
+        logs.push('after1')
+      })
+      .after(() => {
+        logs.push('after2')
+      })
 
     app.parse(['node', 'cli', 'test'], { run: true })
     await new Promise(resolve => setTimeout(resolve, 10))
