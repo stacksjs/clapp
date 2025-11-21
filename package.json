@@ -47,7 +47,7 @@
     "@stacksjs/docs": "^0.70.23",
     "@stacksjs/eslint-config": "^4.14.0-beta.3",
     "@stacksjs/gitit": "^0.2.2",
-    "better-dx": "^0.2.3"
+    "better-dx": "^0.2.4"
   },
   "overrides": {
     "unconfig": "0.3.10"
