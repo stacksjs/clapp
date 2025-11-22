@@ -1,10 +1,12 @@
 import type { CommandConfig, CommandExample, HelpCallback } from './Command'
 import type { OptionConfig } from './Option'
 import { EventEmitter } from 'node:events'
+import process from 'node:process'
 import mri from 'mri'
 import Command, { GlobalCommand } from './Command'
 import { processArgs } from './runtimes/node'
-import { camelcaseOptionName, getFileName, getMriOptions, setByType, setDotProp } from './utils'
+import { style } from './style'
+import { camelcaseOptionName, findSimilarCommands, getFileName, getMriOptions, setByType, setDotProp } from './utils'
 
 interface ParsedArgv {
   args: ReadonlyArray<string>
@@ -35,6 +37,38 @@ export class CLI extends EventEmitter {
 
   showHelpOnExit?: boolean
   showVersionOnExit?: boolean
+  enableDidYouMean = true
+  signalHandlersSet = false
+
+  /** Whether verbose mode is enabled */
+  isVerbose = false
+
+  /** Whether quiet mode is enabled */
+  isQuiet = false
+
+  /** Whether debug mode is enabled */
+  isDebug = false
+
+  /** Whether no-interaction mode is enabled (for CI/CD) */
+  isNoInteraction = false
+
+  /** Target environment */
+  environment?: string
+
+  /** Whether dry-run mode is enabled */
+  isDryRun = false
+
+  /** Whether force mode is enabled (skip confirmations) */
+  isForce = false
+
+  /** Whether emoji output is enabled */
+  useEmoji = true
+
+  /** Active color theme */
+  theme?: string
+
+  /** Whether caching is disabled */
+  isNoCache = false
 
   /**
    * @param name The program name to display in help and version message
@@ -48,6 +82,144 @@ export class CLI extends EventEmitter {
     this.options = {}
     this.globalCommand = new GlobalCommand(this)
     this.globalCommand.usage('<command> [options]')
+  }
+
+  /**
+   * Set up graceful signal handling for SIGINT and SIGTERM
+   * @param cleanup Optional cleanup function to run before exit
+   */
+  handleSignals(cleanup?: () => void | Promise<void>): this {
+    if (this.signalHandlersSet) {
+      return this
+    }
+
+    const handleSignal = async (signal: string) => {
+      // eslint-disable-next-line no-console
+      console.log(`\n\nReceived ${signal}, cleaning up...`)
+
+      if (cleanup) {
+        try {
+          await cleanup()
+        }
+        catch (error) {
+          console.error('Error during cleanup:', error)
+        }
+      }
+
+      process.exit(0)
+    }
+
+    process.on('SIGINT', () => handleSignal('SIGINT'))
+    process.on('SIGTERM', () => handleSignal('SIGTERM'))
+
+    this.signalHandlersSet = true
+    return this
+  }
+
+  /**
+   * Enable or disable "did you mean?" suggestions for unknown commands
+   */
+  didYouMean(enabled = true): this {
+    this.enableDidYouMean = enabled
+    return this
+  }
+
+  /**
+   * Enable verbose mode global option (-v, --verbose)
+   * This adds a global --verbose flag and sets isVerbose when used
+   */
+  verbose(): this {
+    this.globalCommand.option('-v, --verbose', 'Enable verbose output')
+    return this
+  }
+
+  /**
+   * Enable quiet mode global option (-q, --quiet)
+   * This adds a global --quiet flag and sets isQuiet when used
+   */
+  quiet(): this {
+    this.globalCommand.option('-q, --quiet', 'Suppress non-essential output')
+    return this
+  }
+
+  /**
+   * Enable debug mode global option (--debug)
+   * This adds a global --debug flag and sets isDebug when used
+   * Provides detailed stack traces and diagnostic information
+   */
+  debug(): this {
+    this.globalCommand.option('--debug', 'Enable debug mode with detailed error information')
+    return this
+  }
+
+  /**
+   * Enable no-interaction mode global option (-n, --no-interaction)
+   * This adds a global flag for CI/CD environments and sets isNoInteraction when used
+   * Disables all interactive prompts and confirmations
+   */
+  noInteraction(): this {
+    this.globalCommand.option('-n, --no-interaction', 'Do not ask any interactive questions (for CI/CD)')
+    return this
+  }
+
+  /**
+   * Enable environment selection global option (--env)
+   * This adds a global --env flag and sets environment when used
+   * Allows targeting specific environments (e.g., production, staging, local)
+   */
+  env(): this {
+    this.globalCommand.option('--env <environment>', 'Target environment (e.g., production, staging, local)')
+    return this
+  }
+
+  /**
+   * Enable dry-run mode global option (--dry-run)
+   * This adds a global --dry-run flag and sets isDryRun when used
+   * Allows previewing actions without executing them
+   */
+  dryRun(): this {
+    this.globalCommand.option('--dry-run', 'Preview actions without executing them')
+    return this
+  }
+
+  /**
+   * Enable force mode global option (-f, --force)
+   * This adds a global flag and sets isForce when used
+   * Skips confirmation prompts for destructive operations
+   */
+  force(): this {
+    this.globalCommand.option('-f, --force', 'Skip confirmation prompts')
+    return this
+  }
+
+  /**
+   * Enable emoji control global option (--no-emoji)
+   * This adds a global flag and sets useEmoji when used
+   * Allows disabling emoji in output
+   */
+  emoji(): this {
+    this.globalCommand.option('--no-emoji', 'Disable emoji in output')
+    return this
+  }
+
+  /**
+   * Enable theme selection global option (--theme)
+   * This adds a global --theme flag and sets theme when used
+   * Allows selecting color themes (default, dracula, nord, solarized, monokai)
+   */
+  themes(): this {
+    this.globalCommand.option('--theme <theme>', 'Color theme (default, dracula, nord, solarized, monokai)')
+    return this
+  }
+
+  /**
+   * Enable cache control global option (--no-cache)
+   * This adds a global flag and sets isNoCache when used
+   * Allows disabling caching for command metadata and help text
+   */
+  cache(): this {
+    this.globalCommand.option('--no-cache', 'Disable caching')
+    return this
   }
 
   /**
@@ -161,15 +333,50 @@ export class CLI extends EventEmitter {
   }
 
   /**
+   * Show "did you mean?" error for unknown commands
+   */
+  showCommandNotFound(input: string): void {
+    // eslint-disable-next-line no-console
+    console.log(style.red(`\n✗ Command "${input}" not found.\n`))
+
+    if (this.enableDidYouMean) {
+      // Get all command names including aliases
+      const allCommandNames: string[] = []
+      for (const command of this.commands) {
+        if (command.name) {
+          allCommandNames.push(command.name)
+        }
+        if (command.aliasNames) {
+          allCommandNames.push(...command.aliasNames)
+        }
+      }
+
+      const suggestions = findSimilarCommands(input, allCommandNames)
+      if (suggestions.length > 0) {
+        // eslint-disable-next-line no-console
+        console.log(style.yellow('Did you mean one of these?'))
+        // eslint-disable-next-line no-console
+        suggestions.forEach(cmd => console.log(`  ${style.dim('•')} ${this.name} ${cmd}`))
+        // eslint-disable-next-line no-console
+        console.log('')
+      }
+    }
+
+    // eslint-disable-next-line no-console
+    console.log(style.dim('Run'), `${this.name} --help`, style.dim('to see all available commands'))
+    process.exit(1)
+  }
+
+  /**
    * Parse argv
    */
-  parse(
+  async parse(
     argv: string[] = processArgs,
     {
       /** Whether to run the action for matched command */
       run = true,
     }: { run?: boolean } = {},
-  ): ParsedArgv {
+  ): Promise<ParsedArgv> {
     this.rawArgs = argv
     if (!this.name) {
       this.name = argv[1] ? getFileName(argv[1]) : 'cli'
@@ -210,6 +417,38 @@ export class CLI extends EventEmitter {
       this.setParsedInfo(parsed)
     }
 
+    // Set verbose, quiet, and debug modes based on parsed options
+    if (this.options.verbose) {
+      this.isVerbose = true
+    }
+    if (this.options.quiet) {
+      this.isQuiet = true
+    }
+    if (this.options.debug) {
+      this.isDebug = true
+    }
+    if (this.options.noInteraction) {
+      this.isNoInteraction = true
+    }
+    if (this.options.env) {
+      this.environment = this.options.env
+    }
+    if (this.options.dryRun) {
+      this.isDryRun = true
+    }
+    if (this.options.force) {
+      this.isForce = true
+    }
+    if (this.options.noEmoji !== undefined) {
+      this.useEmoji = !this.options.noEmoji
+    }
+    if (this.options.theme) {
+      this.theme = this.options.theme
+    }
+    if (this.options.noCache !== undefined) {
+      this.isNoCache = this.options.noCache
+    }
+
     if (this.options.help && this.showHelpOnExit) {
       this.outputHelp()
       run = false
@@ -225,11 +464,17 @@ export class CLI extends EventEmitter {
     const parsedArgv = { args: this.args, options: this.options }
 
     if (run) {
-      this.runMatchedCommand()
+      await this.runMatchedCommand()
     }
 
     if (!this.matchedCommand && this.args[0]) {
       this.emit('command:*')
+
+      // Show "did you mean?" if command not found and no listener for command:*
+      const hasWildcardListener = this.listenerCount('command:*') > 0
+      if (!hasWildcardListener) {
+        this.showCommandNotFound(this.args[0] as string)
+      }
     }
 
     return parsedArgv
@@ -313,7 +558,7 @@ export class CLI extends EventEmitter {
     }
   }
 
-  runMatchedCommand(): void {
+  async runMatchedCommand(): Promise<any> {
     const { args, options, matchedCommand: command } = this
 
     if (!command || !command.commandAction)
@@ -335,7 +580,55 @@ export class CLI extends EventEmitter {
 
     actionArgs.push(options)
 
-    return command.commandAction.apply(this, actionArgs)
+    const context = {
+      command,
+      args: actionArgs,
+      options,
+    }
+
+    // Run before hooks
+    for (const hook of command.beforeHooks) {
+      await hook(context)
+    }
+
+    let actionResult: any
+
+    // Build middleware chain
+    const executeAction = async () => {
+      const result = command.commandAction!.apply(this, actionArgs)
+      if (result instanceof Promise) {
+        actionResult = await result
+      }
+      else {
+        actionResult = result
+      }
+      return actionResult
+    }
+
+    // Execute middleware chain
+    if (command.middleware.length > 0) {
+      let index = 0
+      const next = async (): Promise<void> => {
+        if (index < command.middleware.length) {
+          const middleware = command.middleware[index++]
+          await middleware({ ...context, next })
+        }
+        else {
+          await executeAction()
+        }
+      }
+      await next()
+    }
+    else {
+      await executeAction()
+    }
+
+    // Run after hooks
+    for (const hook of command.afterHooks) {
+      await hook(context)
+    }
+
+    return actionResult
   }
 }
 

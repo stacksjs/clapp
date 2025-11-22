@@ -81,6 +81,55 @@ export const codes: Record<string, [string, string]> = {
   strikethrough: ['\x1B[9m', '\x1B[29m'],
 }
 
+// Available predefined themes
+export const themes = {
+  default: {
+    primary: 'blue',
+    secondary: 'cyan',
+    success: 'green',
+    warning: 'yellow',
+    error: 'red',
+    info: 'magenta',
+    muted: 'gray',
+  },
+  dracula: {
+    primary: 'magenta',
+    secondary: 'cyan',
+    success: 'green',
+    warning: 'yellow',
+    error: 'red',
+    info: 'blue',
+    muted: 'gray',
+  },
+  nord: {
+    primary: 'blue',
+    secondary: 'cyan',
+    success: 'green',
+    warning: 'yellow',
+    error: 'red',
+    info: 'cyan',
+    muted: 'gray',
+  },
+  solarized: {
+    primary: 'cyan',
+    secondary: 'blue',
+    success: 'green',
+    warning: 'yellow',
+    error: 'red',
+    info: 'magenta',
+    muted: 'gray',
+  },
+  monokai: {
+    primary: 'magenta',
+    secondary: 'blue',
+    success: 'green',
+    warning: 'yellow',
+    error: 'red',
+    info: 'cyan',
+    muted: 'gray',
+  },
+} as const
+
 // Theme defaults (populated via setTheme)
 const theme = {
   primary: 'blue',
@@ -173,6 +222,18 @@ export function setTheme(customTheme: Partial<Record<string, string>>): void {
       theme[key] = customTheme[key] as string
     }
   }
+}
+
+// Function to apply a predefined theme by name
+export function applyTheme(themeName: keyof typeof themes): void {
+  if (themeName in themes) {
+    setTheme(themes[themeName])
+  }
+}
+
+// Function to get list of available themes
+export function getAvailableThemes(): string[] {
+  return Object.keys(themes)
 }
 
 // Function to set accessibility options

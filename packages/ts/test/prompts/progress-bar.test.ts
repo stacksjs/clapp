@@ -9,6 +9,7 @@ import { MockWritable } from '../utils'
 describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
   let originalCI: string | undefined
   let output: MockWritable
+  let currentProgress: ReturnType<typeof progress> | null = null
 
   beforeAll(() => {
     originalCI = process.env.CI
@@ -21,44 +22,55 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
 
   beforeEach(() => {
     output = new MockWritable()
+    currentProgress = null
     // Use setSystemTime for time-based tests
     setSystemTime(new Date())
   })
 
   afterEach(() => {
+    // Clean up any active progress
+    if (currentProgress) {
+      try {
+        currentProgress.stop()
+      }
+      catch {
+        // Ignore errors if already stopped
+      }
+      currentProgress = null
+    }
     // Restore system time
     setSystemTime()
   })
 
   test('returns progress API', () => {
-    const api = progress({ output })
+    currentProgress = progress({ output })
 
-    expect(api.stop).toBeTypeOf('function')
-    expect(api.start).toBeTypeOf('function')
-    expect(api.message).toBeTypeOf('function')
-    expect(api.advance).toBeTypeOf('function')
+    expect(currentProgress.stop).toBeTypeOf('function')
+    expect(currentProgress.start).toBeTypeOf('function')
+    expect(currentProgress.message).toBeTypeOf('function')
+    expect(currentProgress.advance).toBeTypeOf('function')
   })
 
   describe('start', () => {
     test('renders frames at interval', () => {
-      const result = progress({ output })
-      result.start()
+      currentProgress = progress({ output })
+      currentProgress.start()
       // Simulate time passing without using vi.advanceTimersByTime
       setSystemTime(new Date(Date.now() + 320)) // 80ms * 4
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders message', () => {
-      const result = progress({ output })
-      result.start('foo')
+      currentProgress = progress({ output })
+      currentProgress.start('foo')
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders timer when indicator is "timer"', () => {
-      const result = progress({ output, indicator: 'timer' })
-      result.start()
+      currentProgress = progress({ output, indicator: 'timer' })
+      currentProgress.start()
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
       expect(output.buffer).toMatchSnapshot()
@@ -67,59 +79,59 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
 
   describe('stop', () => {
     test('renders submit symbol and stops progress', () => {
-      const result = progress({ output })
-      result.start()
+      currentProgress = progress({ output })
+      currentProgress.start()
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
-      result.stop()
+      currentProgress.stop()
       setSystemTime(new Date(Date.now() + 80))
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders cancel symbol if code = 1', () => {
-      const result = progress({ output })
-      result.start()
+      currentProgress = progress({ output })
+      currentProgress.start()
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
-      result.stop('', 1)
+      currentProgress.stop('', 1)
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders error symbol if code > 1', () => {
-      const result = progress({ output })
-      result.start()
+      currentProgress = progress({ output })
+      currentProgress.start()
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
-      result.stop('', 2)
+      currentProgress.stop('', 2)
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders message', () => {
-      const result = progress({ output })
-      result.start()
+      currentProgress = progress({ output })
+      currentProgress.start()
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
-      result.stop('foo')
+      currentProgress.stop('foo')
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders message without removing dots', () => {
-      const result = progress({ output })
-      result.start()
+      currentProgress = progress({ output })
+      currentProgress.start()
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
-      result.stop('foo.')
+      currentProgress.stop('foo.')
       expect(output.buffer).toMatchSnapshot()
     })
   })
 
   describe('message', () => {
     test('sets message for next frame', () => {
-      const result = progress({ output })
-      result.start()
+      currentProgress = progress({ output })
+      currentProgress.start()
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
-      result.message('foo')
+      currentProgress.message('foo')
       // Simulate time passing
       setSystemTime(new Date(Date.now() + 80))
       expect(output.buffer).toMatchSnapshot()
@@ -148,8 +160,8 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
     })
 
     test('uses default cancel message', () => {
-      const result = progress({ output })
-      result.start('Test operation')
+      currentProgress = progress({ output })
+      currentProgress.start('Test operation')
 
       processEmitter.emit('SIGINT')
 
@@ -157,11 +169,11 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
     })
 
     test('uses custom cancel message when provided directly', () => {
-      const result = progress({
+      currentProgress = progress({
         output,
         cancelMessage: 'Custom cancel message',
       })
-      result.start('Test operation')
+      currentProgress.start('Test operation')
 
       processEmitter.emit('SIGINT')
 
@@ -169,11 +181,11 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
     })
 
     test('uses custom error message when provided directly', () => {
-      const result = progress({
+      currentProgress = progress({
         output,
         errorMessage: 'Custom error message',
       })
-      result.start('Test operation')
+      currentProgress.start('Test operation')
 
       processEmitter.emit('exit', 2)
 
@@ -187,8 +199,8 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
         // Set custom message
         prompts.settings.messages.cancel = 'Global cancel message'
 
-        const result = progress({ output })
-        result.start('Test operation')
+        currentProgress = progress({ output })
+        currentProgress.start('Test operation')
 
         processEmitter.emit('SIGINT')
 
@@ -207,8 +219,8 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
         // Set custom message
         prompts.settings.messages.error = 'Global error message'
 
-        const result = progress({ output })
-        result.start('Test operation')
+        currentProgress = progress({ output })
+        currentProgress.start('Test operation')
 
         processEmitter.emit('exit', 2)
 
@@ -228,11 +240,11 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
         // Set custom global messages
         prompts.settings.messages.error = 'Global error message'
 
-        const result = progress({
+        currentProgress = progress({
           output,
           errorMessage: 'Progress error message',
         })
-        result.start('Test operation')
+        currentProgress.start('Test operation')
 
         processEmitter.emit('exit', 2)
         expect(output.buffer).toMatchSnapshot()
@@ -251,11 +263,11 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
         // Set custom global messages
         prompts.settings.messages.cancel = 'Global cancel message'
 
-        const result = progress({
+        currentProgress = progress({
           output,
           cancelMessage: 'Progress cancel message',
         })
-        result.start('Test operation')
+        currentProgress.start('Test operation')
 
         processEmitter.emit('SIGINT')
         expect(output.buffer).toMatchSnapshot()
@@ -271,12 +283,12 @@ describe.each(['true', 'false'])('prompts - progress (isCI = %s)', (isCI) => {
     test.each(['block', 'heavy', 'light'] satisfies Array<ProgressOptions['style']>)(
       'renders %s progressbar',
       (style) => {
-        const result = progress({ output, style, max: 2, size: 10 })
-        result.start()
+        currentProgress = progress({ output, style, max: 2, size: 10 })
+        currentProgress.start()
         setSystemTime(new Date(Date.now() + 160))
-        result.advance()
+        currentProgress.advance()
         setSystemTime(new Date(Date.now() + 160))
-        result.stop()
+        currentProgress.stop()
 
         expect(output.buffer).toMatchSnapshot()
       },

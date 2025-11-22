@@ -6,7 +6,13 @@ await Bun.build({
   outdir: './dist',
   format: 'esm',
   splitting: true, // Add splitting back to reduce bundle size
-  plugins: [dts()],
+  plugins: [dts({
+    build: {
+      config: {
+        root: './packages/ts',
+      },
+    },
+  })],
   target: 'node',
 })
 

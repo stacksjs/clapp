@@ -174,8 +174,8 @@ export async function execCommand(
         cliInstance.showHelpOnExit = false
         cliInstance.showVersionOnExit = false
 
-        // Parse arguments and run command
-        cliInstance.parse(['node', 'cli', ...argv])
+        // Parse arguments (but don't run yet, we'll run manually to capture result)
+        await cliInstance.parse(['node', 'cli', ...argv], { run: false })
 
         // If help flag is present, manually call help
         if (isHelpCommand) {
@@ -183,7 +183,7 @@ export async function execCommand(
         }
 
         // Get the result from command execution
-        result = cliInstance.runMatchedCommand()
+        result = await cliInstance.runMatchedCommand()
         return result
       }
       catch (error: any) {
@@ -415,4 +415,63 @@ export async function cleanupTestFS(testDir: string): Promise<void> {
   }
 
   await deleteDirRecursive(testDir)
+}
+
+/**
+ * Assertion helpers for command testing
+ */
+export const expect = {
+  /**
+   * Assert that output contains a specific string
+   */
+  outputToContain(result: ExecCommandResult, expected: string): void {
+    if (!result.stdout.includes(expected)) {
+      throw new Error(`Expected output to contain "${expected}", but got:\n${result.stdout}`)
+    }
+  },
+
+  /**
+   * Assert that output matches a regex pattern
+   */
+  outputToMatch(result: ExecCommandResult, pattern: RegExp): void {
+    if (!pattern.test(result.stdout)) {
+      throw new Error(`Expected output to match ${pattern}, but got:\n${result.stdout}`)
+    }
+  },
+
+  /**
+   * Assert that command exited with specific code
+   */
+  exitCode(result: ExecCommandResult, expected: number): void {
+    if (result.exitCode !== expected) {
+      throw new Error(`Expected exit code ${expected}, but got ${result.exitCode}`)
+    }
+  },
+
+  /**
+   * Assert that command completed within time limit
+   */
+  completedWithin(result: ExecCommandResult, maxDuration: number): void {
+    if (result.duration > maxDuration) {
+      throw new Error(`Expected command to complete within ${maxDuration}ms, but took ${result.duration}ms`)
+    }
+  },
+
+  /**
+   * Assert that output does not contain a string
+   */
+  outputNotToContain(result: ExecCommandResult, unexpected: string): void {
+    if (result.stdout.includes(unexpected)) {
+      throw new Error(`Expected output not to contain "${unexpected}", but it did`)
+    }
+  },
+
+  /**
+   * Assert that stderr contains an error message
+   */
+  stderrToContain(result: ExecCommandResult, expected: string): void {
+    if (!result.stderr.includes(expected)) {
+      throw new Error(`Expected stderr to contain "${expected}", but got:\n${result.stderr}`)
+    }
+  },
 }

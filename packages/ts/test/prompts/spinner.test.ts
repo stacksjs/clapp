@@ -8,6 +8,7 @@ import { MockWritable } from '../utils'
 describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
   let originalCI: string | undefined
   let output: MockWritable
+  let currentSpinner: ReturnType<typeof spinner> | null = null
 
   beforeAll(() => {
     originalCI = process.env.CI
@@ -20,29 +21,40 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
 
   beforeEach(() => {
     output = new MockWritable()
+    currentSpinner = null
     // Use setSystemTime for time-based tests
     setSystemTime(new Date())
   })
 
   afterEach(() => {
+    // Clean up any active spinner
+    if (currentSpinner) {
+      try {
+        currentSpinner.stop()
+      }
+      catch {
+        // Ignore errors if already stopped
+      }
+      currentSpinner = null
+    }
     // Restore system time
     setSystemTime()
     jest.restoreAllMocks()
   })
 
   test('returns spinner API', () => {
-    const api = spinner({ output })
+    currentSpinner = spinner({ output })
 
-    expect(api.stop).toBeTypeOf('function')
-    expect(api.start).toBeTypeOf('function')
-    expect(api.message).toBeTypeOf('function')
+    expect(currentSpinner.stop).toBeTypeOf('function')
+    expect(currentSpinner.start).toBeTypeOf('function')
+    expect(currentSpinner.message).toBeTypeOf('function')
   })
 
   describe('start', () => {
     test('renders frames at interval', () => {
-      const result = spinner({ output })
+      currentSpinner = spinner({ output })
 
-      result.start()
+      currentSpinner.start()
 
       // there are 4 frames
       for (let i = 0; i < 4; i++) {
@@ -53,9 +65,9 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
     })
 
     test('renders message', () => {
-      const result = spinner({ output })
+      currentSpinner = spinner({ output })
 
-      result.start('foo')
+      currentSpinner.start('foo')
 
       setSystemTime(new Date(Date.now() + 80))
 
@@ -63,9 +75,9 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
     })
 
     test('renders timer when indicator is "timer"', () => {
-      const result = spinner({ output, indicator: 'timer' })
+      currentSpinner = spinner({ output, indicator: 'timer' })
 
-      result.start()
+      currentSpinner.start()
 
       setSystemTime(new Date(Date.now() + 80))
 
@@ -75,13 +87,13 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
 
   describe('stop', () => {
     test('renders submit symbol and stops spinner', () => {
-      const result = spinner({ output })
+      currentSpinner = spinner({ output })
 
-      result.start()
+      currentSpinner.start()
 
       setSystemTime(new Date(Date.now() + 80))
 
-      result.stop()
+      currentSpinner.stop()
 
       setSystemTime(new Date(Date.now() + 80))
 
@@ -89,49 +101,49 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
     })
 
     test('renders cancel symbol if code = 1', () => {
-      const result = spinner({ output })
+      currentSpinner = spinner({ output })
 
-      result.start()
+      currentSpinner.start()
 
       setSystemTime(new Date(Date.now() + 80))
 
-      result.stop('', 1)
+      currentSpinner.stop('', 1)
 
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders error symbol if code > 1', () => {
-      const result = spinner({ output })
+      currentSpinner = spinner({ output })
 
-      result.start()
+      currentSpinner.start()
 
       setSystemTime(new Date(Date.now() + 80))
 
-      result.stop('', 2)
+      currentSpinner.stop('', 2)
 
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders message', () => {
-      const result = spinner({ output })
+      currentSpinner = spinner({ output })
 
-      result.start()
+      currentSpinner.start()
 
       setSystemTime(new Date(Date.now() + 80))
 
-      result.stop('foo')
+      currentSpinner.stop('foo')
 
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('renders message without removing dots', () => {
-      const result = spinner({ output })
+      currentSpinner = spinner({ output })
 
-      result.start()
+      currentSpinner.start()
 
       setSystemTime(new Date(Date.now() + 80))
 
-      result.stop('foo.')
+      currentSpinner.stop('foo.')
 
       expect(output.buffer).toMatchSnapshot()
     })
@@ -139,19 +151,19 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
 
   describe('message', () => {
     test('sets message for next frame', () => {
-      const result = spinner({ output })
+      currentSpinner = spinner({ output })
 
-      result.start()
+      currentSpinner.start()
 
       setSystemTime(new Date(Date.now() + 80))
 
-      result.message('foo')
+      currentSpinner.message('foo')
 
       setSystemTime(new Date(Date.now() + 80))
 
       expect(output.buffer).toMatchSnapshot()
 
-      result.stop()
+      currentSpinner.stop()
 
       expect(output.buffer).toMatchSnapshot()
     })
@@ -159,31 +171,31 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
 
   describe('indicator customization', () => {
     test('custom frames', () => {
-      const result = prompts.spinner({ output, frames: ['🐴', '🦋', '🐙', '🐶'] })
+      currentSpinner = prompts.spinner({ output, frames: ['🐴', '🦋', '🐙', '🐶'] })
 
-      result.start()
+      currentSpinner.start()
 
       // there are 4 frames
       for (let i = 0; i < 4; i++) {
         setSystemTime(new Date(Date.now() + 80))
       }
 
-      result.stop()
+      currentSpinner.stop()
 
       expect(output.buffer).toMatchSnapshot()
     })
 
     test('custom delay', () => {
-      const result = prompts.spinner({ output, delay: 200 })
+      currentSpinner = prompts.spinner({ output, delay: 200 })
 
-      result.start()
+      currentSpinner.start()
 
       // there are 4 frames
       for (let i = 0; i < 4; i++) {
         setSystemTime(new Date(Date.now() + 200))
       }
 
-      result.stop()
+      currentSpinner.stop()
 
       expect(output.buffer).toMatchSnapshot()
     })
@@ -211,8 +223,8 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
     })
 
     test('uses default cancel message', () => {
-      const result = spinner({ output })
-      result.start('Test operation')
+      currentSpinner = spinner({ output })
+      currentSpinner.start('Test operation')
 
       processEmitter.emit('SIGINT')
 
@@ -220,11 +232,11 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
     })
 
     test('uses custom cancel message when provided directly', () => {
-      const result = spinner({
+      currentSpinner = spinner({
         output,
         cancelMessage: 'Custom cancel message',
       })
-      result.start('Test operation')
+      currentSpinner.start('Test operation')
 
       processEmitter.emit('SIGINT')
 
@@ -232,11 +244,11 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
     })
 
     test('uses custom error message when provided directly', () => {
-      const result = spinner({
+      currentSpinner = spinner({
         output,
         errorMessage: 'Custom error message',
       })
-      result.start('Test operation')
+      currentSpinner.start('Test operation')
 
       processEmitter.emit('exit', 2)
 
@@ -250,8 +262,8 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
         // Set custom message
         prompts.settings.messages.cancel = 'Global cancel message'
 
-        const result = spinner({ output })
-        result.start('Test operation')
+        currentSpinner = spinner({ output })
+        currentSpinner.start('Test operation')
 
         processEmitter.emit('SIGINT')
 
@@ -271,8 +283,8 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
         // Set custom message
         prompts.settings.messages.error = 'Global error message'
 
-        const result = spinner({ output })
-        result.start('Test operation')
+        currentSpinner = spinner({ output })
+        currentSpinner.start('Test operation')
 
         processEmitter.emit('exit', 2)
 
@@ -292,11 +304,11 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
         // Set custom global messages
         prompts.settings.messages.error = 'Global error message'
 
-        const result = spinner({
+        currentSpinner = spinner({
           output,
           errorMessage: 'Spinner error message',
         })
-        result.start('Test operation')
+        currentSpinner.start('Test operation')
 
         processEmitter.emit('exit', 2)
         expect(output.buffer).toMatchSnapshot()
@@ -315,11 +327,11 @@ describe.each(['true', 'false'])('spinner (isCI = %s)', (isCI) => {
         // Set custom global messages
         prompts.settings.messages.cancel = 'Global cancel message'
 
-        const result = spinner({
+        currentSpinner = spinner({
           output,
           cancelMessage: 'Spinner cancel message',
         })
-        result.start('Test operation')
+        currentSpinner.start('Test operation')
 
         processEmitter.emit('SIGINT')
         expect(output.buffer).toMatchSnapshot()

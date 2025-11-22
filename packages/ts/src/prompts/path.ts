@@ -72,7 +72,8 @@ export function path(opts: PathOptions): Promise<string | symbol> {
           value: item.path,
         }))
       }
-      catch {
+      catch (error) {
+        console.error('Error reading directory:', error)
         return []
       }
     },
