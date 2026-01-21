@@ -105,14 +105,15 @@ export function camelcase(input: string): string {
 }
 
 export function setDotProp(
-  obj: { [k: string]: any },
+  obj: Record<string, unknown>,
   keys: string[],
-  val: any,
+  val: unknown,
 ): void {
   let i = 0
   const length = keys.length
-  let t = obj
-  let x
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let t: any = obj
+  let x: unknown
   for (; i < length; ++i) {
     x = t[keys[i]]
     t = t[keys[i]]
@@ -126,9 +127,14 @@ export function setDotProp(
   }
 }
 
+export interface TransformConfig {
+  shouldTransform: boolean
+  transformFunction?: (value: string) => unknown
+}
+
 export function setByType(
-  obj: { [k: string]: any },
-  transforms: { [k: string]: any },
+  obj: Record<string, unknown>,
+  transforms: Record<string, TransformConfig>,
 ): void {
   for (const key of Object.keys(transforms)) {
     const transform = transforms[key]
@@ -137,7 +143,7 @@ export function setByType(
       obj[key] = Array.prototype.concat.call([], obj[key])
 
       if (typeof transform.transformFunction === 'function') {
-        obj[key] = obj[key].map(transform.transformFunction)
+        obj[key] = (obj[key] as string[]).map(transform.transformFunction)
       }
     }
   }

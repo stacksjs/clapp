@@ -32,6 +32,9 @@ class Telemetry {
   private configPath: string
   private config: TelemetryConfig | null = null
   private events: TelemetryEvent[] = []
+  private retryCount = 0
+  private maxRetries = 3
+  private retryDelayMs = 1000
 
   constructor() {
     // Store config in user's home directory
@@ -129,13 +132,13 @@ class Telemetry {
   }
 
   /**
-   * Send collected telemetry data
+   * Send collected telemetry data with retry logic
    */
-  async send(): Promise<void> {
+  async send(): Promise<boolean> {
     const enabled = await this.isEnabled()
 
     if (!enabled || this.events.length === 0) {
-      return
+      return true
     }
 
     try {
@@ -148,17 +151,48 @@ class Telemetry {
       // })
 
       this.events = []
+      this.retryCount = 0
 
       // Update last sent timestamp
       const config = await this.loadConfig()
       config.lastSent = Date.now()
       await this.saveConfig(config)
+
+      return true
     }
-    catch (error) {
+    catch {
       // Silently fail - telemetry should never break the CLI
-      console.error('Error sending telemetry:', error)
+      // Retry with exponential backoff if under max retries
+      if (this.retryCount < this.maxRetries) {
+        this.retryCount++
+        const delay = this.retryDelayMs * 2 ** (this.retryCount - 1)
+        await this.sleep(delay)
+        return this.send()
+      }
+
+      // Max retries exceeded, clear events to prevent memory buildup
       this.events = []
+      this.retryCount = 0
+      return false
     }
+  }
+
+  /**
+   * Force flush all pending events immediately
+   * Useful for ensuring all events are sent before process exit
+   */
+  async flush(): Promise<boolean> {
+    if (this.events.length === 0) {
+      return true
+    }
+    return this.send()
+  }
+
+  /**
+   * Sleep for specified milliseconds
+   */
+  private sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms))
   }
 
   /**
@@ -195,9 +229,8 @@ class Telemetry {
         return this.config!
       }
     }
-    catch (error) {
-      // Ignore errors
-      console.error('Error loading telemetry config:', error)
+    catch {
+      // Silently ignore errors - telemetry should never break the CLI
     }
 
     // Default config (disabled by default)
@@ -227,9 +260,8 @@ class Telemetry {
         'utf-8',
       )
     }
-    catch (error) {
-      // Ignore errors
-      console.error('Error saving telemetry config:', error)
+    catch {
+      // Silently ignore errors - telemetry should never break the CLI
     }
   }
 

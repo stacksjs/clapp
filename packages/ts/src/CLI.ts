@@ -6,13 +6,15 @@ import mri from 'mri'
 import Command, { GlobalCommand } from './Command'
 import { processArgs } from './runtimes/node'
 import { style } from './style'
+import type { TransformConfig } from './utils'
 import { camelcaseOptionName, findSimilarCommands, getFileName, getMriOptions, setByType, setDotProp } from './utils'
+
+/** Parsed command-line options */
+export type ParsedOptions = Record<string, unknown>
 
 interface ParsedArgv {
   args: ReadonlyArray<string>
-  options: {
-    [k: string]: any
-  }
+  options: ParsedOptions
 }
 
 export class CLI extends EventEmitter {
@@ -431,7 +433,7 @@ export class CLI extends EventEmitter {
       this.isNoInteraction = true
     }
     if (this.options.env) {
-      this.environment = this.options.env
+      this.environment = String(this.options.env)
     }
     if (this.options.dryRun) {
       this.isDryRun = true
@@ -443,10 +445,10 @@ export class CLI extends EventEmitter {
       this.useEmoji = !this.options.noEmoji
     }
     if (this.options.theme) {
-      this.theme = this.options.theme
+      this.theme = String(this.options.theme)
     }
     if (this.options.noCache !== undefined) {
-      this.isNoCache = this.options.noCache
+      this.isNoCache = Boolean(this.options.noCache)
     }
 
     if (this.options.help && this.showHelpOnExit) {
@@ -512,7 +514,7 @@ export class CLI extends EventEmitter {
 
     const args = parsed._
 
-    const options: { [k: string]: any } = {
+    const options: ParsedOptions = {
       '--': argsAfterDoubleDashes,
     }
 
@@ -522,7 +524,7 @@ export class CLI extends EventEmitter {
         ? command.config.ignoreOptionDefaultValue
         : this.globalCommand.config.ignoreOptionDefaultValue
 
-    const transforms = Object.create(null)
+    const transforms: Record<string, TransformConfig> = Object.create(null)
 
     for (const cliOption of cliOptions) {
       if (!ignoreDefault && cliOption.config.default !== undefined) {
@@ -534,11 +536,10 @@ export class CLI extends EventEmitter {
       // If options type is defined
       if (Array.isArray(cliOption.config.type)) {
         if (transforms[cliOption.name] === undefined) {
-          transforms[cliOption.name] = Object.create(null)
-
-          transforms[cliOption.name].shouldTransform = true
-          transforms[cliOption.name].transformFunction
-            = cliOption.config.type[0]
+          transforms[cliOption.name] = {
+            shouldTransform: true,
+            transformFunction: cliOption.config.type[0],
+          }
         }
       }
     }
@@ -558,7 +559,7 @@ export class CLI extends EventEmitter {
     }
   }
 
-  async runMatchedCommand(): Promise<any> {
+  async runMatchedCommand(): Promise<unknown> {
     const { args, options, matchedCommand: command } = this
 
     if (!command || !command.commandAction)
@@ -568,7 +569,7 @@ export class CLI extends EventEmitter {
     command.checkOptionValue()
     command.checkRequiredArgs()
 
-    const actionArgs: any[] = []
+    const actionArgs: unknown[] = []
     command.args.forEach((arg, index) => {
       if (arg.variadic) {
         actionArgs.push(args.slice(index))
@@ -591,7 +592,7 @@ export class CLI extends EventEmitter {
       await hook(context)
     }
 
-    let actionResult: any
+    let actionResult: unknown
 
     // Build middleware chain
     const executeAction = async () => {
@@ -629,6 +630,36 @@ export class CLI extends EventEmitter {
     }
 
     return actionResult
+  }
+
+  /**
+   * Remove signal handlers registered by handleSignals()
+   * Call this when you want to clean up before the process exits
+   */
+  removeSignalHandlers(): this {
+    if (!this.signalHandlersSet) {
+      return this
+    }
+
+    process.removeAllListeners('SIGINT')
+    process.removeAllListeners('SIGTERM')
+    this.signalHandlersSet = false
+    return this
+  }
+
+  /**
+   * Clean up and destroy the CLI instance
+   * This removes signal handlers and clears internal state
+   */
+  destroy(): void {
+    this.removeSignalHandlers()
+    this.commands = []
+    this.rawArgs = []
+    this.args = []
+    this.options = {}
+    this.matchedCommand = undefined
+    this.matchedCommandName = undefined
+    this.removeAllListeners()
   }
 }
 

@@ -32,12 +32,15 @@ type HelpCallback = (sections: HelpSection[]) => void | HelpSection[]
 
 type CommandExample = ((bin: string) => string) | string
 
+/** Parsed command-line options */
+type ParsedOptions = Record<string, unknown>
+
 export type HookHandler = (context: HookContext) => void | Promise<void>
 
 export interface HookContext {
   command: Command
-  args: any[]
-  options: any
+  args: unknown[]
+  options: ParsedOptions
   next?: () => void | Promise<void>
 }
 
@@ -49,7 +52,7 @@ export class Command {
   /* Command namespace (e.g., 'make' for 'make:model') */
   namespace?: string
   args: CommandArg[]
-  commandAction?: (...args: any[]) => any
+  commandAction?: (...args: unknown[]) => unknown
   usageText?: string
   versionNumber?: string
   examples: CommandExample[]
@@ -132,7 +135,7 @@ export class Command {
     return this
   }
 
-  action(callback: (...args: any[]) => any): this {
+  action(callback: (...args: unknown[]) => unknown): this {
     this.commandAction = callback
     return this
   }
@@ -344,14 +347,8 @@ export class Command {
     const { name } = this.cli
     const { versionNumber } = this.cli.globalCommand
     if (versionNumber) {
-      // first, check if bun is used
-      let platformInfo
-      if (Bun) {
-        platformInfo = bunPlatformInfo
-      }
-      else {
-        platformInfo = nodePlatformInfo
-      }
+      // Check if Bun runtime is available (typeof check prevents ReferenceError in Node.js)
+      const platformInfo = typeof Bun !== 'undefined' ? bunPlatformInfo : nodePlatformInfo
       // eslint-disable-next-line no-console
       console.log(`${name}/${versionNumber} ${platformInfo}`)
     }

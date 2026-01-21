@@ -1,8 +1,10 @@
 import { camelcaseOptionName, removeBrackets } from './utils'
 
+type OptionTransformFn = (value: string) => unknown
+
 interface OptionConfig {
-  default?: any
-  type?: any[]
+  default?: unknown
+  type?: OptionTransformFn[]
 }
 
 export default class Option {

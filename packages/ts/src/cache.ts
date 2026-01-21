@@ -8,13 +8,48 @@ interface CacheEntry<T> {
   ttl: number
 }
 
+interface CacheStats {
+  size: number
+  enabled: boolean
+  hits: number
+  misses: number
+}
+
 class CLICache {
-  private cache: Map<string, CacheEntry<any>>
+  private cache: Map<string, CacheEntry<unknown>>
   private enabled: boolean
+  private cleanupInterval: ReturnType<typeof setInterval> | null = null
+  private hits = 0
+  private misses = 0
 
   constructor() {
     this.cache = new Map()
     this.enabled = true
+    this.startCleanupInterval()
+  }
+
+  /**
+   * Start the automatic cleanup interval
+   */
+  private startCleanupInterval(): void {
+    if (this.cleanupInterval) {
+      return
+    }
+    this.cleanupInterval = setInterval(() => {
+      this.cleanup()
+    }, 30000)
+    // Allow the process to exit even if the interval is running
+    this.cleanupInterval.unref()
+  }
+
+  /**
+   * Stop the automatic cleanup interval
+   */
+  stopCleanup(): void {
+    if (this.cleanupInterval) {
+      clearInterval(this.cleanupInterval)
+      this.cleanupInterval = null
+    }
   }
 
   /**
@@ -29,12 +64,14 @@ class CLICache {
    */
   get<T>(key: string): T | undefined {
     if (!this.enabled) {
+      this.misses++
       return undefined
     }
 
     const entry = this.cache.get(key)
 
     if (!entry) {
+      this.misses++
       return undefined
     }
 
@@ -42,9 +79,11 @@ class CLICache {
     const now = Date.now()
     if (now - entry.timestamp > entry.ttl) {
       this.cache.delete(key)
+      this.misses++
       return undefined
     }
 
+    this.hits++
     return entry.value as T
   }
 
@@ -119,11 +158,28 @@ class CLICache {
   /**
    * Get cache statistics
    */
-  stats(): { size: number, enabled: boolean } {
+  stats(): CacheStats {
     return {
       size: this.cache.size,
       enabled: this.enabled,
+      hits: this.hits,
+      misses: this.misses,
     }
+  }
+
+  /**
+   * Reset statistics
+   */
+  resetStats(): void {
+    this.hits = 0
+    this.misses = 0
+  }
+
+  /**
+   * Get all cache keys
+   */
+  keys(): string[] {
+    return Array.from(this.cache.keys())
   }
 
   /**
@@ -138,12 +194,16 @@ class CLICache {
       }
     }
   }
+
+  /**
+   * Destroy the cache and stop cleanup interval
+   */
+  destroy(): void {
+    this.stopCleanup()
+    this.clear()
+    this.resetStats()
+  }
 }
 
 // Global cache instance
 export const cliCache: CLICache = new CLICache()
-
-// Auto cleanup every 30 seconds
-setInterval(() => {
-  cliCache.cleanup()
-}, 30000)
