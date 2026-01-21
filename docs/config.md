@@ -1,221 +1,168 @@
 # Configuration
 
-Clapp provides various ways to configure your CLI application behavior.
+Clapp provides various ways to configure your CLI application behavior through chainable methods and runtime options.
 
 ## Application Configuration
 
-When creating a CLI application, you can pass configuration options to customize its behavior:
+Create a CLI application using the `cli()` function with an optional name parameter:
 
 ```ts
 import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  // Basic application info
-  name: 'mycli',
-  version: '1.0.0',
-  description: 'My awesome CLI application',
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+```
 
-  // Customize the binary name when installed globally
-  bin: 'mycli',
+### Setting Version and Help
 
-  // Enable strict mode for commands and options
-  strictCommands: true,
-  strictOptions: true,
+```ts
+const app = cli('mycli')
+  .version('1.0.0')                    // Enables -v, --version
+  .version('1.0.0', '-V, --version')   // Custom version flags
+  .help()                              // Enables -h, --help
+  .help((sections) => {                // Custom help callback
+    // Modify help sections
+    return sections
+  })
+```
 
-  // Help and version flags
-  autoHelp: true,
-  autoVersion: true,
-  helpCommand: true,
+### Usage and Examples
 
-  // Process behavior
-  exitProcess: true,
+```ts
+const app = cli('mycli')
+  .usage('<command> [options]')
+  .example('mycli build --watch')
+  .example((bin) => `${bin} deploy --env production`)
+```
+
+## Global Options
+
+### Built-in Option Helpers
+
+Clapp provides convenient methods to add commonly-used global options:
+
+```ts
+const app = cli('mycli')
+  .verbose()       // -v, --verbose    Sets app.isVerbose
+  .quiet()         // -q, --quiet      Sets app.isQuiet
+  .debug()         // --debug          Sets app.isDebug
+  .dryRun()        // --dry-run        Sets app.isDryRun
+  .force()         // -f, --force      Sets app.isForce
+  .noInteraction() // -n, --no-interaction  Sets app.isNoInteraction
+  .env()           // --env <env>      Sets app.environment
+  .emoji()         // --no-emoji       Sets app.useEmoji
+  .themes()        // --theme <theme>  Sets app.theme
+  .cache()         // --no-cache       Sets app.isNoCache
+```
+
+### Custom Global Options
+
+Add your own global options that apply to all commands:
+
+```ts
+const app = cli('mycli')
+  .option('--config <path>', 'Path to config file')
+  .option('--no-color', 'Disable colored output')
+  .option('-o, --output <dir>', 'Output directory', './dist')
+```
+
+## Command Configuration
+
+### Basic Command Setup
+
+```ts
+app.command('build', 'Build the project')
+  .option('-w, --watch', 'Watch for changes')
+  .option('-m, --mode <mode>', 'Build mode', 'development')
+  .action((options) => {
+    console.log(`Building in ${options.mode} mode`)
+  })
+```
+
+### Command with Arguments
+
+```ts
+app.command('greet <name>', 'Greet someone')
+  .option('-l, --loud', 'Use uppercase')
+  .action((name, options) => {
+    const greeting = options.loud ? name.toUpperCase() : name
+    console.log(`Hello, ${greeting}!`)
+  })
+```
+
+### Command Configuration Options
+
+```ts
+app.command('deploy', 'Deploy application', {
+  allowUnknownOptions: true,      // Don't error on unknown options
+  ignoreOptionDefaultValue: true, // Ignore default values from global options
 })
 ```
 
-### Options
-
-| Option | Type | Description | Default |
-| ------ | ---- | ----------- | ------- |
-| `name` | `string` | The name of the CLI application | Required |
-| `version` | `string` | The version of the CLI application | Required |
-| `description` | `string` | A description of the CLI application | `''` |
-| `bin` | `string` | The binary name to use when the CLI is installed globally | Same as `name` |
-| `strictCommands` | `boolean` | Whether to error for unknown commands | `false` |
-| `strictOptions` | `boolean` | Whether to error for unknown options | `false` |
-| `autoHelp` | `boolean` | Whether to automatically show help for unknown commands | `true` |
-| `autoVersion` | `boolean` | Whether to automatically add a version command | `true` |
-| `helpCommand` | `boolean` | Whether to add a help command | `true` |
-| `exitProcess` | `boolean` | Whether to exit the process when a command fails | `true` |
-| `noDefaultHelp` | `boolean` | Whether to disable the default help output | `false` |
-
-## Prompt Configuration
-
-### Global Prompt Settings
-
-Configure default behavior for all prompts:
+### Command Aliases
 
 ```ts
-import { configPrompts } from '@stacksjs/clapp'
-
-configPrompts({
-  // Symbols used in prompts
-  symbols: {
-    pointer: '→',
-    check: '✓',
-    cross: '✗',
-    bullet: '•',
-  },
-
-  // Colors for different prompt elements
-  colors: {
-    primary: 'blue',
-    success: 'green',
-    error: 'red',
-    muted: 'dim',
-  },
-
-  // Custom messages
-  messages: {
-    submit: 'Submitted',
-    cancel: 'Cancelled',
-    error: 'Error',
-    required: 'Required',
-  },
-
-  // Default behaviors
-  defaults: {
-    showCursor: true,
-    clearAfterSubmit: true,
-    required: true,
-  },
-})
+app.command('install', 'Install dependencies')
+  .alias('i')
+  .alias('add')
 ```
 
-### Per-Prompt Configuration
+## Lifecycle Hooks
 
-Each prompt type also accepts specific configuration options:
+### Before and After Hooks
 
 ```ts
-import { prompt } from '@stacksjs/clapp'
-
-// Text prompt with custom configuration
-const name = await prompt.text('What is your name?', {
-  placeholder: 'Enter your full name',
-  defaultValue: 'Guest',
-  validate: value => value.length > 0 || 'Name cannot be empty',
-})
-
-// Select prompt with custom configuration
-const option = await prompt.select('Choose an option:', [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-], {
-  pointer: '>',
-  maxItems: 5,
-})
+app.command('deploy')
+  .before((context) => {
+    console.log('Pre-deployment checks...')
+  })
+  .action(() => {
+    console.log('Deploying...')
+  })
+  .after((context) => {
+    console.log('Deployment complete!')
+  })
 ```
 
-## Style Configuration
-
-### Global Style Configuration
-
-Configure the default styling for your CLI:
+### Middleware
 
 ```ts
-import { configStyle } from '@stacksjs/clapp'
-
-configStyle({
-  // Enable or disable color output
-  colors: true,
-
-  // Use Unicode or ASCII characters
-  unicode: true,
-
-  // Theme configuration
-  theme: {
-    primary: 'blue',
-    secondary: 'cyan',
-    success: 'green',
-    warning: 'yellow',
-    error: 'red',
-    info: 'magenta',
-    muted: 'gray',
-  },
-})
+app.command('deploy')
+  .use(async (context) => {
+    console.log('Checking authentication...')
+    await context.next()
+    console.log('Done!')
+  })
+  .use(async (context) => {
+    console.log('Validating config...')
+    await context.next()
+  })
+  .action(() => {
+    console.log('Deploying...')
+  })
 ```
 
-### Terminal Capabilities
+## Signal Handling
 
-Clapp can automatically detect terminal capabilities, but you can also configure them manually:
+Configure graceful shutdown handling:
 
 ```ts
-import { setTerminalCapabilities } from '@stacksjs/clapp'
-
-setTerminalCapabilities({
-  // Color support level (0-3)
-  colors: 3,
-
-  // Whether the terminal supports Unicode
-  unicode: true,
-
-  // Terminal dimensions
-  columns: 80,
-  rows: 24,
-
-  // Whether interactive mode is supported
-  interactive: true,
-})
+const app = cli('mycli')
+  .handleSignals(async () => {
+    console.log('Cleaning up...')
+    await cleanup()
+  })
 ```
 
-## Project Configuration
+## "Did You Mean" Suggestions
 
-For more complex CLIs, you can define configuration in a dedicated file:
-
-```ts
-// clapp.config.ts
-import { defineConfig } from '@stacksjs/clapp/config'
-
-export default defineConfig({
-  // CLI application config
-  cli: {
-    name: 'mycli',
-    version: '1.0.0',
-    description: 'My awesome CLI application',
-  },
-
-  // Commands configuration
-  commands: {
-    strict: true,
-    autoHelp: true,
-  },
-
-  // Prompts configuration
-  prompts: {
-    symbols: {
-      pointer: '→',
-    },
-    colors: {
-      primary: 'blue',
-    },
-  },
-
-  // Style configuration
-  style: {
-    colors: true,
-    theme: {
-      primary: 'blue',
-    },
-  },
-})
-```
-
-Then import and use this configuration:
+Enable or disable command suggestions for typos:
 
 ```ts
-import { cli } from '@stacksjs/clapp'
-import config from './clapp.config'
-
-const app = cli(config.cli)
+const app = cli('mycli')
+  .didYouMean(true)  // enabled by default
+  .didYouMean(false) // disable suggestions
 ```
 
 ## Environment Variables
@@ -224,12 +171,13 @@ Clapp respects certain environment variables:
 
 | Variable | Description |
 | -------- | ----------- |
-| `NO_COLOR` | If set to any value, disables color output |
-| `FORCE_COLOR` | If set to `1`, `2`, or `3`, forces color output at the specified level |
-| `TERM` | Used to detect terminal capabilities |
-| `CI` | If set, automatically adjusts output for CI environments |
+| `NO_COLOR` | If set, disables color output |
+| `FORCE_COLOR` | If set to `1`, `2`, or `3`, forces color output |
+| `CI` | If set, adjusts behavior for CI environments |
+| `DO_NOT_TRACK` | If set to `1`, disables telemetry |
+| `NO_TELEMETRY` | If set to `1`, disables telemetry |
 
-Example of using environment variables:
+Example:
 
 ```bash
 # Disable color output
@@ -237,50 +185,125 @@ NO_COLOR=1 mycli build
 
 # Force color output level 3 (true color)
 FORCE_COLOR=3 mycli build
+
+# Disable telemetry
+DO_NOT_TRACK=1 mycli build
 ```
 
-## Configuration File Location
+## Runtime State
 
-By default, Clapp looks for configuration files in the following locations:
+Access CLI state in your command actions:
 
-1. `clapp.config.js` or `clapp.config.ts` in the current directory
-2. `.clapp/config.js` or `.clapp/config.ts` in the current directory
-3. `.clapprc.js` or `.clapprc.json` in the current directory
-4. `clapp` property in `package.json`
+```ts
+app.command('deploy')
+  .action((options) => {
+    // Access global option states
+    if (app.isVerbose) {
+      console.log('Verbose output enabled')
+    }
 
-You can also specify a custom configuration file:
+    if (app.isDryRun) {
+      console.log('[DRY RUN] Would deploy...')
+      return
+    }
+
+    if (app.isNoInteraction) {
+      console.log('Running in non-interactive mode')
+    }
+
+    const env = app.environment || 'production'
+    console.log(`Deploying to ${env}...`)
+  })
+```
+
+## Cache Configuration
+
+The built-in cache can be controlled programmatically:
+
+```ts
+import { cliCache } from '@stacksjs/clapp'
+
+// Disable caching
+cliCache.disable()
+
+// Re-enable caching
+cliCache.enable()
+
+// Check cache stats
+const stats = cliCache.stats()
+console.log(`Cache: ${stats.size} entries, ${stats.hits} hits, ${stats.misses} misses`)
+```
+
+## Telemetry Configuration
+
+Configure the opt-in telemetry system:
+
+```ts
+import { telemetry } from '@stacksjs/clapp'
+
+// Enable telemetry (opt-in)
+await telemetry.enable()
+
+// Disable telemetry
+await telemetry.disable()
+
+// Check status
+const status = await telemetry.status()
+console.log(`Telemetry enabled: ${status.enabled}`)
+```
+
+## Complete Example
 
 ```ts
 import { cli } from '@stacksjs/clapp'
-import { loadConfig } from '@stacksjs/clapp/config'
 
-const config = loadConfig('./path/to/custom-config.js')
-const app = cli(config.cli)
-```
+const app = cli('mycli')
+  // Version and help
+  .version('1.0.0')
+  .help()
 
-## Runtime Configuration
+  // Global options
+  .verbose()
+  .quiet()
+  .debug()
+  .dryRun()
+  .force()
+  .env()
+  .noInteraction()
 
-You can also update configuration at runtime:
-
-```ts
-import { cli, updateConfig } from '@stacksjs/clapp'
-
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-})
-
-// Update configuration based on runtime conditions
-if (process.env.CI) {
-  updateConfig({
-    prompts: {
-      colors: false,
-    },
+  // Signal handling
+  .handleSignals(async () => {
+    console.log('Shutting down gracefully...')
   })
-}
 
-// Continue with CLI setup
-// ...
+// Define commands
+app.command('build', 'Build the project')
+  .option('-w, --watch', 'Watch mode')
+  .option('-m, --mode <mode>', 'Build mode', 'development')
+  .before((ctx) => {
+    if (app.isVerbose) {
+      console.log('Starting build with options:', ctx.options)
+    }
+  })
+  .action((options) => {
+    if (app.isDryRun) {
+      console.log('[DRY RUN] Would build in', options.mode, 'mode')
+      return
+    }
+    console.log(`Building in ${options.mode} mode...`)
+  })
+
+app.command('deploy', 'Deploy the application')
+  .option('-t, --target <target>', 'Deploy target')
+  .use(async (ctx) => {
+    console.log('Checking permissions...')
+    await ctx.next()
+  })
+  .action((options) => {
+    const env = app.environment || 'production'
+    console.log(`Deploying to ${env}...`)
+  })
+
+// Run the CLI
+await app.parse()
 ```
-
-This flexible configuration system allows you to customize Clapp to perfectly match your application's needs.

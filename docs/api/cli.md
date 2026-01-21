@@ -4,123 +4,85 @@ The `cli` module is the foundation of the clapp framework, providing methods for
 
 ## Creating a CLI Application
 
-### cli(options)
+### cli(name?)
 
 Creates a new CLI application instance.
 
 ```ts
 import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-  description: 'My CLI application',
-})
+const app = cli('mycli')
 ```
 
-#### Options
+#### Parameters
 
-| Option | Type | Description | Default |
-| ------ | ---- | ----------- | ------- |
-| `name` | `string` | The name of the CLI application | Required |
-| `version` | `string` | The version of the CLI application | Required |
-| `description` | `string` | A description of the CLI application | `''` |
-| `bin` | `string` | The binary name to use when the CLI is installed | Same as `name` |
-| `strictCommands` | `boolean` | Whether to error for unknown commands | `false` |
-| `strictOptions` | `boolean` | Whether to error for unknown options | `false` |
-| `autoHelp` | `boolean` | Whether to automatically show help for unknown commands | `true` |
-| `autoVersion` | `boolean` | Whether to automatically add a version command | `true` |
-| `helpCommand` | `boolean` | Whether to add a help command | `true` |
-| `exitProcess` | `boolean` | Whether to exit the process when a command fails | `true` |
-| `noDefaultHelp` | `boolean` | Whether to disable the default help output | `false` |
+| Parameter | Type | Description | Default |
+| --------- | ---- | ----------- | ------- |
+| `name` | `string` | The name of the CLI application | `''` |
+
+#### Returns
+
+Returns a new CLI instance.
 
 ## CLI Instance Methods
 
-### run(argv?)
+### command(name, description?, config?)
 
-Runs the CLI application with the given arguments.
+Creates and registers a new command.
+
+```ts
+app.command('build', 'Build the project')
+  .option('-w, --watch', 'Watch for changes')
+  .action((options) => {
+    console.log('Building...')
+  })
+```
+
+#### Parameters
+
+| Parameter | Type | Description | Default |
+| --------- | ---- | ----------- | ------- |
+| `name` | `string` | The command name | Required |
+| `description` | `string` | Command description | `''` |
+| `config` | `CommandConfig` | Command configuration | `{}` |
+
+#### Returns
+
+Returns the Command instance for chaining.
+
+### parse(argv?, options?)
+
+Parses the arguments and runs the matched command.
 
 ```ts
 // Parse process.argv
-app.run()
+await app.parse()
 
 // Parse custom arguments
-app.run(['--version'])
+await app.parse(['build', '--watch'])
+
+// Parse without running the action
+await app.parse(['build'], { run: false })
 ```
 
 #### Parameters
 
 | Parameter | Type | Description | Default |
 | --------- | ---- | ----------- | ------- |
-| `argv` | `string[]` | The arguments to parse | `process.argv.slice(2)` |
-
-### option(flags, description, defaultValue?)
-
-Adds a global option to the CLI application.
-
-```ts
-app.option('-v, --verbose', 'Enable verbose output')
-app.option('--config <path>', 'Path to config file', './config.json')
-```
-
-#### Parameters
-
-| Parameter | Type | Description | Default |
-| --------- | ---- | ----------- | ------- |
-| `flags` | `string` | The option flags | Required |
-| `description` | `string` | A description of the option | `''` |
-| `defaultValue` | `any` | The default value for the option | `undefined` |
+| `argv` | `string[]` | The arguments to parse | `process.argv` |
+| `options.run` | `boolean` | Whether to run the matched command | `true` |
 
 #### Returns
 
-Returns the CLI instance for chaining.
+Returns a Promise resolving to `{ args, options }`.
 
-### beforeRun(fn)
+### version(version, flags?)
 
-Registers a function to run before any command is executed.
-
-```ts
-app.beforeRun(() => {
-  console.log('Starting CLI...')
-})
-```
-
-#### Parameters
-
-| Parameter | Type | Description | Default |
-| --------- | ---- | ----------- | ------- |
-| `fn` | `Function` | The function to run | Required |
-
-#### Returns
-
-Returns the CLI instance for chaining.
-
-### afterRun(fn)
-
-Registers a function to run after all commands have executed.
-
-```ts
-app.afterRun(() => {
-  console.log('CLI execution complete')
-})
-```
-
-#### Parameters
-
-| Parameter | Type | Description | Default |
-| --------- | ---- | ----------- | ------- |
-| `fn` | `Function` | The function to run | Required |
-
-#### Returns
-
-Returns the CLI instance for chaining.
-
-### version(version)
-
-Sets the version of the CLI application.
+Sets the version and enables the version flag.
 
 ```ts
 app.version('1.0.0')
+app.version('1.0.0', '-V, --version') // custom flags
 ```
 
 #### Parameters
@@ -128,24 +90,23 @@ app.version('1.0.0')
 | Parameter | Type | Description | Default |
 | --------- | ---- | ----------- | ------- |
 | `version` | `string` | The version string | Required |
+| `flags` | `string` | Custom version flags | `'-v, --version'` |
 
 #### Returns
 
 Returns the CLI instance for chaining.
 
-### help(options)
+### help(callback?)
 
-Customizes the help output for the CLI application.
+Enables the help flag and optionally customizes help output.
 
 ```ts
-app.help({
-  header: 'Custom header',
-  description: 'Custom description',
-  examples: [
-    'mycli command --option value',
-    'mycli other-command',
-  ],
-  footer: 'For more information, visit our website.',
+app.help()
+
+// With custom callback
+app.help((sections) => {
+  // Modify sections array
+  return sections
 })
 ```
 
@@ -153,170 +114,339 @@ app.help({
 
 | Parameter | Type | Description | Default |
 | --------- | ---- | ----------- | ------- |
-| `options` | `object` | Help configuration options | Required |
-
-#### Options Object
-
-| Option | Type | Description | Default |
-| ------ | ---- | ----------- | ------- |
-| `header` | `string` | Text to display at the top of the help output | CLI name |
-| `description` | `string` | The description to display | CLI description |
-| `examples` | `string[]` | Example usage patterns | `[]` |
-| `footer` | `string` | Text to display at the bottom of the help output | `''` |
-| `includeOptions` | `boolean` | Whether to include options in the help output | `true` |
-| `includeCommands` | `boolean` | Whether to include commands in the help output | `true` |
+| `callback` | `HelpCallback` | Optional callback to customize help | `undefined` |
 
 #### Returns
 
 Returns the CLI instance for chaining.
 
-## CLI Class Properties
+### option(flags, description, config?)
 
-### name
-
-Gets the name of the CLI application.
+Adds a global option available to all commands.
 
 ```ts
-console.log(app.name) // 'mycli'
+app.option('--config <path>', 'Path to config file')
+app.option('--no-color', 'Disable colored output')
 ```
 
-### version
+#### Parameters
 
-Gets the version of the CLI application.
+| Parameter | Type | Description | Default |
+| --------- | ---- | ----------- | ------- |
+| `flags` | `string` | The option flags | Required |
+| `description` | `string` | Option description | Required |
+| `config` | `OptionConfig` | Option configuration | `{}` |
+
+#### Returns
+
+Returns the CLI instance for chaining.
+
+### usage(text)
+
+Sets the global usage text.
 
 ```ts
-console.log(app.version) // '1.0.0'
+app.usage('<command> [options]')
 ```
 
-### description
+#### Returns
 
-Gets the description of the CLI application.
+Returns the CLI instance for chaining.
+
+### example(example)
+
+Adds a global example.
 
 ```ts
-console.log(app.description) // 'My CLI application'
+app.example('mycli build --watch')
+app.example((bin) => `${bin} deploy --env production`)
 ```
 
-### commands
+#### Returns
 
-Gets the registered commands.
+Returns the CLI instance for chaining.
+
+## Global Option Helpers
+
+These methods add commonly-used global options with a single call.
+
+### verbose()
+
+Adds `-v, --verbose` flag. Sets `cli.isVerbose` when used.
 
 ```ts
-console.log(app.commands) // [Command, Command, ...]
+app.verbose()
+
+// In command action
+if (app.isVerbose) {
+  console.log('Detailed output...')
+}
 ```
 
-### options
+### quiet()
 
-Gets the registered global options.
+Adds `-q, --quiet` flag. Sets `cli.isQuiet` when used.
 
 ```ts
-console.log(app.options) // [Option, Option, ...]
+app.quiet()
 ```
+
+### debug()
+
+Adds `--debug` flag. Sets `cli.isDebug` when used.
+
+```ts
+app.debug()
+```
+
+### noInteraction()
+
+Adds `-n, --no-interaction` flag for CI/CD environments. Sets `cli.isNoInteraction` when used.
+
+```ts
+app.noInteraction()
+```
+
+### env()
+
+Adds `--env <environment>` option. Sets `cli.environment` when used.
+
+```ts
+app.env()
+
+// In command action
+console.log(`Deploying to ${app.environment}`)
+```
+
+### dryRun()
+
+Adds `--dry-run` flag. Sets `cli.isDryRun` when used.
+
+```ts
+app.dryRun()
+```
+
+### force()
+
+Adds `-f, --force` flag. Sets `cli.isForce` when used.
+
+```ts
+app.force()
+```
+
+### emoji()
+
+Adds `--no-emoji` flag. Sets `cli.useEmoji` when used.
+
+```ts
+app.emoji()
+```
+
+### themes()
+
+Adds `--theme <theme>` option. Sets `cli.theme` when used.
+
+```ts
+app.themes()
+```
+
+### cache()
+
+Adds `--no-cache` flag. Sets `cli.isNoCache` when used.
+
+```ts
+app.cache()
+```
+
+## Signal Handling
+
+### handleSignals(cleanup?)
+
+Sets up graceful signal handling for SIGINT and SIGTERM.
+
+```ts
+app.handleSignals(async () => {
+  console.log('Cleaning up...')
+  await cleanup()
+})
+```
+
+#### Parameters
+
+| Parameter | Type | Description | Default |
+| --------- | ---- | ----------- | ------- |
+| `cleanup` | `() => void \| Promise<void>` | Optional cleanup function | `undefined` |
+
+#### Returns
+
+Returns the CLI instance for chaining.
+
+### removeSignalHandlers()
+
+Removes signal handlers registered by `handleSignals()`.
+
+```ts
+app.removeSignalHandlers()
+```
+
+#### Returns
+
+Returns the CLI instance for chaining.
+
+## Utility Methods
+
+### didYouMean(enabled?)
+
+Enables or disables "did you mean?" suggestions for unknown commands.
+
+```ts
+app.didYouMean(false) // disable suggestions
+```
+
+#### Returns
+
+Returns the CLI instance for chaining.
+
+### outputHelp()
+
+Outputs the help message for the matched command or global help.
+
+```ts
+app.outputHelp()
+```
+
+### outputVersion()
+
+Outputs the version number.
+
+```ts
+app.outputVersion()
+```
+
+### destroy()
+
+Cleans up and destroys the CLI instance. Removes signal handlers and clears internal state.
+
+```ts
+app.destroy()
+```
+
+## CLI Instance Properties
+
+| Property | Type | Description |
+| -------- | ---- | ----------- |
+| `name` | `string` | The CLI application name |
+| `commands` | `Command[]` | Registered commands |
+| `args` | `string[]` | Parsed positional arguments |
+| `options` | `ParsedOptions` | Parsed options |
+| `matchedCommand` | `Command \| undefined` | The matched command |
+| `isVerbose` | `boolean` | Whether verbose mode is enabled |
+| `isQuiet` | `boolean` | Whether quiet mode is enabled |
+| `isDebug` | `boolean` | Whether debug mode is enabled |
+| `isNoInteraction` | `boolean` | Whether no-interaction mode is enabled |
+| `environment` | `string \| undefined` | Target environment |
+| `isDryRun` | `boolean` | Whether dry-run mode is enabled |
+| `isForce` | `boolean` | Whether force mode is enabled |
+| `useEmoji` | `boolean` | Whether emoji output is enabled |
+| `theme` | `string \| undefined` | Active color theme |
+| `isNoCache` | `boolean` | Whether caching is disabled |
 
 ## Usage Examples
 
 ### Basic CLI
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-  description: 'My CLI application',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-command('hello')
-  .description('Say hello')
+app.command('hello', 'Say hello')
   .action(() => {
     console.log('Hello, world!')
   })
 
-app.run()
+await app.parse()
 ```
 
 ### CLI with Global Options
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+  .verbose()
+  .quiet()
+  .debug()
 
-// Add global options
-app.option('-v, --verbose', 'Enable verbose output')
-app.option('--no-color', 'Disable colored output')
-
-command('build')
-  .description('Build the project')
+app.command('build', 'Build the project')
+  .option('-w, --watch', 'Watch for changes')
   .action((options) => {
-    if (options.verbose) {
+    if (app.isVerbose) {
       console.log('Verbose mode enabled')
     }
-
-    console.log(`Color output: ${options.color ? 'enabled' : 'disabled'}`)
+    if (app.isDebug) {
+      console.log('Debug mode enabled')
+    }
     console.log('Building project...')
   })
 
-app.run()
+await app.parse()
 ```
 
-### CLI with Lifecycle Hooks
+### CLI with Signal Handling
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-})
-
-// Add lifecycle hooks
-app.beforeRun(() => {
-  console.log('Starting CLI...')
-})
-
-app.afterRun(() => {
-  console.log('CLI execution complete')
-})
-
-command('hello')
-  .description('Say hello')
-  .action(() => {
-    console.log('Hello, world!')
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+  .handleSignals(async () => {
+    console.log('Gracefully shutting down...')
+    // Clean up resources
   })
 
-app.run()
+app.command('serve', 'Start the server')
+  .action(async () => {
+    console.log('Server running. Press Ctrl+C to stop.')
+    // Long-running server
+  })
+
+await app.parse()
 ```
 
-### CLI with Custom Help
+### Complete Example
 
 ```ts
-import { cli, command, style } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+  .verbose()
+  .quiet()
+  .debug()
+  .dryRun()
+  .force()
+  .env()
+  .noInteraction()
+  .handleSignals()
 
-// Customize help output
-app.help({
-  header: style.bold.blue('MYCLI HELP'),
-  description: 'A powerful CLI application',
-  examples: [
-    'mycli hello',
-    'mycli build --watch',
-    'mycli deploy --env production',
-  ],
-  footer: style.dim('For more information, visit https://example.com'),
-})
-
-command('hello')
-  .description('Say hello')
-  .action(() => {
-    console.log('Hello, world!')
+app.command('deploy', 'Deploy the application')
+  .option('-t, --target <target>', 'Deployment target')
+  .before((context) => {
+    if (app.isDryRun) {
+      console.log('[DRY RUN] Would deploy to:', context.options.target)
+    }
+  })
+  .action((options) => {
+    const env = app.environment || 'production'
+    console.log(`Deploying to ${env}...`)
   })
 
-app.run()
+await app.parse()
 ```

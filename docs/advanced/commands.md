@@ -96,18 +96,23 @@ command('resize')
   })
 ```
 
-### Option Dependencies
+### Option Validation
 
-Create options that depend on other options:
+Validate options in your action or with middleware:
 
 ```ts
 command('deploy')
   .description('Deploy application')
   .option('-e, --environment <env>', 'Deployment environment')
   .option('-c, --config <path>', 'Config file')
-  .dependsOn('config', ['environment'])
+  .before((context) => {
+    // Validate that --environment is provided when --config is used
+    if (context.options.config && !context.options.environment) {
+      console.error('Error: --environment is required when using --config')
+      process.exit(1)
+    }
+  })
   .action((options) => {
-    // Requires --environment if --config is provided
     console.log(`Deploying with config: ${options.config}`)
   })
 ```
@@ -141,35 +146,47 @@ migrateCmd.command('down')
 
 ### Shared Options
 
-Share options across related commands:
+Share options across related commands using helper functions or global options:
 
 ```ts
-import { cli, command, createOption } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+  // Add global verbose option available to all commands
+  .verbose()
 
-// Create a shared option
-const verboseOption = createOption('-v, --verbose', 'Enable verbose output')
-
-// Apply to multiple commands
-command('build')
-  .description('Build project')
-  .addOption(verboseOption)
+// Both commands have access to app.isVerbose
+app.command('build', 'Build project')
   .action((options) => {
-    if (options.verbose)
+    if (app.isVerbose)
       console.log('Verbose mode enabled for build')
     // Build logic...
   })
 
-command('deploy')
-  .description('Deploy project')
-  .addOption(verboseOption)
+app.command('deploy', 'Deploy project')
   .action((options) => {
-    if (options.verbose)
+    if (app.isVerbose)
       console.log('Verbose mode enabled for deploy')
     // Deploy logic...
+  })
+```
+
+You can also create helper functions to add common options:
+
+```ts
+// Helper to add common options
+function withCommonOptions(cmd) {
+  return cmd
+    .option('-o, --output <dir>', 'Output directory')
+    .option('--config <path>', 'Config file path')
+}
+
+const buildCmd = app.command('build', 'Build project')
+withCommonOptions(buildCmd)
+  .action((options) => {
+    console.log('Output:', options.output)
   })
 ```
 
@@ -178,43 +195,39 @@ command('deploy')
 Use middleware to run code before or after commands:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-// Authentication middleware
-async function requireAuth(next) {
-  console.log('Checking authentication...')
-  // Check authentication logic here
-  const isAuthenticated = true
+app.command('deploy', 'Deploy application')
+  // Middleware wraps command execution
+  .use(async (context) => {
+    console.log('Checking authentication...')
+    const isAuthenticated = true
 
-  if (isAuthenticated) {
-    // Continue to the command
-    await next()
-  }
-  else {
-    console.error('Authentication failed')
-    process.exit(1)
-  }
-}
-
-// Timing middleware
-async function timeExecution(next) {
-  const start = Date.now()
-  await next()
-  const end = Date.now()
-  console.log(`Command executed in ${end - start}ms`)
-}
-
-// Apply middleware to a command
-command('deploy')
-  .description('Deploy application')
-  .middleware([requireAuth, timeExecution])
+    if (isAuthenticated) {
+      // Continue to the next middleware or action
+      await context.next()
+    }
+    else {
+      console.error('Authentication failed')
+      process.exit(1)
+    }
+  })
+  // Add another middleware for timing
+  .use(async (context) => {
+    const start = Date.now()
+    await context.next()
+    const end = Date.now()
+    console.log(`Command executed in ${end - start}ms`)
+  })
   .action(() => {
     console.log('Deploying application...')
   })
+
+await app.parse()
 ```
 
 ## Dynamic Commands
@@ -223,19 +236,18 @@ Create commands dynamically at runtime:
 
 ```ts
 import * as fs from 'node:fs'
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
 // Generate commands from configuration
 function loadCommands() {
   const config = JSON.parse(fs.readFileSync('./commands.json', 'utf8'))
 
   config.commands.forEach((cmd) => {
-    command(cmd.name)
-      .description(cmd.description)
+    app.command(cmd.name, cmd.description)
       .action(() => {
         console.log(`Executing ${cmd.name}: ${cmd.script}`)
         // Execute cmd.script
@@ -244,7 +256,7 @@ function loadCommands() {
 }
 
 loadCommands()
-app.run()
+await app.parse()
 ```
 
 ## Command Aliases
@@ -252,15 +264,14 @@ app.run()
 Create aliases for commonly used commands:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-command('install')
+app.command('install', 'Install dependencies')
   .alias('i') // shorthand alias
-  .description('Install dependencies')
   .action(() => {
     console.log('Installing dependencies...')
   })
@@ -268,6 +279,8 @@ command('install')
 // Users can now use either:
 // $ mycli install
 // $ mycli i
+
+await app.parse()
 ```
 
 ## Command Hooks
@@ -275,25 +288,26 @@ command('install')
 Register hooks that run at different points in the command lifecycle:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-command('deploy')
-  .description('Deploy application')
-  .beforeRun(() => {
+app.command('deploy', 'Deploy application')
+  .before((context) => {
     console.log('Before deploy...')
     // Run setup tasks
   })
-  .afterRun(() => {
+  .after((context) => {
     console.log('After deploy...')
     // Run cleanup tasks
   })
   .action(() => {
     console.log('Deploying application...')
   })
+
+await app.parse()
 ```
 
 ## Command Composition
@@ -301,7 +315,11 @@ command('deploy')
 Compose complex commands from smaller, reusable parts:
 
 ```ts
-import { cli, command, createOption } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
+
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
 // Reusable command parts
 function withVerboseOption(cmd) {
@@ -314,17 +332,16 @@ function withForceOption(cmd) {
 
 function withLogging(cmd) {
   return cmd
-    .beforeRun(() => {
-      console.log(`Running ${cmd.name}...`)
+    .before((context) => {
+      console.log(`Running command...`)
     })
-    .afterRun(() => {
-      console.log(`${cmd.name} completed`)
+    .after((context) => {
+      console.log(`Command completed`)
     })
 }
 
 // Create a command with composition
-const buildCmd = command('build')
-  .description('Build the project')
+const buildCmd = app.command('build', 'Build the project')
   .action((options) => {
     console.log(`Building with options:`, options)
   })
@@ -333,6 +350,8 @@ const buildCmd = command('build')
 withVerboseOption(buildCmd)
 withForceOption(buildCmd)
 withLogging(buildCmd)
+
+await app.parse()
 ```
 
 ## Error Handling
@@ -340,14 +359,13 @@ withLogging(buildCmd)
 Handle command errors gracefully:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-command('risky')
-  .description('Run a risky operation')
+app.command('risky', 'Run a risky operation')
   .action(async () => {
     try {
       // Attempt risky operation
@@ -367,7 +385,7 @@ command('risky')
     }
   })
 
-app.run()
+await app.parse()
 ```
 
 ## Command Customization

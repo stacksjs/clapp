@@ -219,72 +219,46 @@ command('secret')
 
 Returns the Command instance for chaining.
 
-### addOption(option)
+### use(fn)
 
-Adds a pre-configured option to the command.
+Adds a middleware function that wraps command execution.
 
 ```ts
-import { command, createOption } from '@stacksjs/clapp'
-
-// Create a reusable option
-const verboseOption = createOption('-v, --verbose', 'Enable verbose output')
-
-// Add it to multiple commands
-command('build')
-  .addOption(verboseOption)
-
 command('deploy')
-  .addOption(verboseOption)
+  .use(async (context) => {
+    console.log('Checking authentication...')
+    await context.next()
+    console.log('Deployment complete!')
+  })
+  .use(async (context) => {
+    console.log('Starting deployment...')
+    await context.next()
+  })
 ```
 
 #### Parameters
 
 | Parameter | Type | Description | Default |
 | --------- | ---- | ----------- | ------- |
-| `option` | `Option` | The option to add | Required |
+| `fn` | `HookHandler` | Middleware function | Required |
+
+The middleware function receives a context object with:
+- `command`: The Command instance
+- `args`: Array of parsed arguments
+- `options`: Parsed options object
+- `next`: Function to call to continue execution
 
 #### Returns
 
 Returns the Command instance for chaining.
 
-### middleware(fns)
+### before(fn)
 
-Adds middleware functions to run before the command action.
-
-```ts
-command('deploy')
-  .middleware([
-    async (next) => {
-      console.log('Checking authentication...')
-      await next()
-    },
-    async (next) => {
-      console.log('Starting deployment...')
-      await next()
-      console.log('Deployment complete!')
-    },
-  ])
-```
-
-#### Parameters
-
-| Parameter | Type | Description | Default |
-| --------- | ---- | ----------- | ------- |
-| `fns` | `Function[]` | Array of middleware functions | Required |
-
-Each middleware function receives a `next` function that should be called to continue execution.
-
-#### Returns
-
-Returns the Command instance for chaining.
-
-### beforeRun(fn)
-
-Registers a function to run before the command is executed.
+Registers a hook to run before the command action is executed.
 
 ```ts
 command('build')
-  .beforeRun(() => {
+  .before((context) => {
     console.log('Preparing to build...')
   })
 ```
@@ -293,19 +267,21 @@ command('build')
 
 | Parameter | Type | Description | Default |
 | --------- | ---- | ----------- | ------- |
-| `fn` | `Function` | The function to run | Required |
+| `fn` | `HookHandler` | The hook function | Required |
+
+The hook function receives a context object with `command`, `args`, and `options`.
 
 #### Returns
 
 Returns the Command instance for chaining.
 
-### afterRun(fn)
+### after(fn)
 
-Registers a function to run after the command is executed.
+Registers a hook to run after the command action is executed.
 
 ```ts
 command('build')
-  .afterRun(() => {
+  .after((context) => {
     console.log('Build completed!')
   })
 ```
@@ -314,7 +290,9 @@ command('build')
 
 | Parameter | Type | Description | Default |
 | --------- | ---- | ----------- | ------- |
-| `fn` | `Function` | The function to run | Required |
+| `fn` | `HookHandler` | The hook function | Required |
+
+The hook function receives a context object with `command`, `args`, and `options`.
 
 #### Returns
 
@@ -437,13 +415,13 @@ db.command('seed')
 ```ts
 command('deploy')
   .description('Deploy application')
-  .beforeRun(() => {
+  .before((context) => {
     console.log('Preparing deployment...')
   })
   .action(() => {
     console.log('Deploying application...')
   })
-  .afterRun(() => {
+  .after((context) => {
     console.log('Deployment complete!')
   })
 ```

@@ -7,25 +7,21 @@ Learn how to create your first CLI application with clapp.
 Creating a simple CLI application is straightforward:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
 // Create a CLI application
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-  description: 'My awesome CLI application',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
 // Add a simple command
-command('hello')
-  .description('Say hello to someone')
-  .argument('[name]', 'Name to greet', 'world')
-  .action((name) => {
+app.command('hello [name]', 'Say hello to someone')
+  .action((name = 'world') => {
     console.log(`Hello, ${name}!`)
   })
 
 // Run the CLI
-app.run()
+await app.parse()
 ```
 
 ## Adding Interactive Prompts
@@ -33,35 +29,40 @@ app.run()
 Enhance your CLI with interactive prompts:
 
 ```ts
-import { cli, command, prompt } from '@stacksjs/clapp'
+import { cli, text, select, multiselect } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-command('init')
-  .description('Initialize a new project')
+app.command('init', 'Initialize a new project')
   .action(async () => {
     // Ask for project name
-    const name = await prompt.text('Project name:', {
-      default: 'my-app',
+    const name = await text({
+      message: 'Project name:',
+      defaultValue: 'my-app',
       validate: value => value.length > 0 || 'Name cannot be empty',
     })
 
     // Choose a template
-    const template = await prompt.select('Select a template:', [
-      { value: 'default', label: 'Default Project' },
-      { value: 'api', label: 'API Service' },
-      { value: 'fullstack', label: 'Full-Stack App' },
-    ])
+    const template = await select({
+      message: 'Select a template:',
+      options: [
+        { value: 'default', label: 'Default Project' },
+        { value: 'api', label: 'API Service' },
+        { value: 'fullstack', label: 'Full-Stack App' },
+      ],
+    })
 
     // Select features
-    const features = await prompt.multiselect('Select features:', [
-      { name: 'TypeScript', value: 'typescript', checked: true },
-      { name: 'ESLint', value: 'eslint' },
-      { name: 'Testing', value: 'testing' },
-    ])
+    const features = await multiselect({
+      message: 'Select features:',
+      options: [
+        { value: 'typescript', label: 'TypeScript' },
+        { value: 'eslint', label: 'ESLint' },
+        { value: 'testing', label: 'Testing' },
+      ],
+    })
 
     console.log(`Creating ${template} project: ${name}`)
     console.log(`Selected features: ${features.join(', ')}`)
@@ -69,7 +70,7 @@ command('init')
     // Implementation would go here...
   })
 
-app.run()
+await app.parse()
 ```
 
 ## Command Structure
@@ -77,39 +78,32 @@ app.run()
 Structure your commands for better organization:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-// Create a parent command
-const db = command('db')
-  .description('Database operations')
-
-// Add subcommands
-db.command('migrate')
-  .description('Run database migrations')
+// Database commands with namespace
+app.command('db:migrate', 'Run database migrations')
   .option('--dry-run', 'Show migrations without executing')
   .action((options) => {
     console.log(`Running migrations ${options.dryRun ? '(dry run)' : ''}`)
   })
 
-db.command('seed')
-  .description('Seed the database')
+app.command('db:seed', 'Seed the database')
   .action(() => {
     console.log('Seeding database')
   })
 
 // Another top-level command
-command('build')
-  .description('Build the project')
-  .option('-m, --mode <mode>', 'Build mode', 'production')
+app.command('build', 'Build the project')
+  .option('-m, --mode <mode>', 'Build mode', { default: 'production' })
   .action((options) => {
     console.log(`Building in ${options.mode} mode`)
   })
 
-app.run()
+await app.parse()
 ```
 
 ## Using Styles
@@ -117,14 +111,13 @@ app.run()
 Enhance your CLI's appearance with styling:
 
 ```ts
-import { cli, command, style } from '@stacksjs/clapp'
+import { cli, style } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-command('status')
-  .description('Show system status')
+app.command('status', 'Show system status')
   .action(() => {
     console.log(style.bold.blue('System Status:'))
     console.log(`Database: ${style.green('Connected')}`)
@@ -136,7 +129,7 @@ command('status')
     console.log(`- Run ${style.cyan('mycli logs')} to view logs`)
   })
 
-app.run()
+await app.parse()
 ```
 
 ## Using Progress Indicators
@@ -144,18 +137,17 @@ app.run()
 Show progress for long-running tasks:
 
 ```ts
-import { cli, command, spinner } from '@stacksjs/clapp'
+import { cli, spinner } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-command('install')
-  .description('Install dependencies')
+app.command('install', 'Install dependencies')
   .action(async () => {
-    // Create a spinner
-    const spin = spinner('Installing dependencies')
-    spin.start()
+    // Create and start a spinner
+    const spin = spinner()
+    spin.start('Installing dependencies')
 
     // Simulate work
     await new Promise(resolve => setTimeout(resolve, 2000))
@@ -170,7 +162,37 @@ command('install')
     spin.stop('Dependencies installed successfully')
   })
 
-app.run()
+await app.parse()
+```
+
+## Global Options
+
+Add global options that apply to all commands:
+
+```ts
+import { cli } from '@stacksjs/clapp'
+
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+  .verbose()  // -v, --verbose
+  .quiet()    // -q, --quiet
+  .debug()    // --debug
+  .dryRun()   // --dry-run
+
+app.command('deploy', 'Deploy the application')
+  .action(() => {
+    if (app.isVerbose) {
+      console.log('Verbose output enabled')
+    }
+    if (app.isDryRun) {
+      console.log('[DRY RUN] Would deploy...')
+      return
+    }
+    console.log('Deploying...')
+  })
+
+await app.parse()
 ```
 
 ## Building and Distribution

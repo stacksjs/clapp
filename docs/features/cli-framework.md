@@ -6,10 +6,10 @@ clapp provides a powerful framework for building command-line interfaces with cl
 
 - **Elegant API**: Simple, chainable API for creating commands and options
 - **Type Safety**: Built with TypeScript for type checking and autocompletion
-- **Subcommands**: Create nested command hierarchies
+- **Subcommands**: Create nested command hierarchies using namespaced commands
 - **Input Validation**: Validate command arguments and options
 - **Help Generation**: Automatic generation of help text and usage information
-- **Error Handling**: Clean error reporting and handling
+- **Error Handling**: Clean error reporting and "did you mean?" suggestions
 
 ## Creating a CLI Application
 
@@ -18,15 +18,13 @@ The foundation of any clapp application is the CLI object:
 ```ts
 import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-  description: 'My awesome CLI application',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
 // ... add commands here
 
-app.run()
+await app.parse()
 ```
 
 ## Command Definition
@@ -34,22 +32,25 @@ app.run()
 Commands are the primary interface for users to interact with your application:
 
 ```ts
-import { command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
+
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
 // Basic command
-command('hello')
-  .description('Say hello')
+app.command('hello', 'Say hello')
   .action(() => {
     console.log('Hello, world!')
   })
 
 // Command with arguments
-command('greet')
-  .description('Greet a user')
-  .argument('<name>', 'Name of the person to greet')
+app.command('greet <name>', 'Greet a user')
   .action((name) => {
     console.log(`Hello, ${name}!`)
   })
+
+await app.parse()
 ```
 
 ## Command Options
@@ -57,9 +58,8 @@ command('greet')
 Customize command behavior with options:
 
 ```ts
-command('build')
-  .description('Build the project')
-  .option('-m, --mode <mode>', 'Build mode', 'production')
+app.command('build', 'Build the project')
+  .option('-m, --mode <mode>', 'Build mode', { default: 'production' })
   .option('-w, --watch', 'Watch for changes')
   .option('-o, --output <dir>', 'Output directory')
   .action((options) => {
@@ -71,27 +71,30 @@ command('build')
   })
 ```
 
-## Subcommands
+## Namespaced Commands
 
-Organize related commands into hierarchies:
+Organize related commands using namespaces:
 
 ```ts
-// Parent command
-const db = command('db')
-  .description('Database operations')
+import { cli } from '@stacksjs/clapp'
 
-// Child commands
-db.command('migrate')
-  .description('Run database migrations')
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+
+// Database commands with namespace
+app.command('db:migrate', 'Run database migrations')
   .action(() => {
     console.log('Running migrations...')
   })
 
-db.command('seed')
-  .description('Seed database with data')
+app.command('db:seed', 'Seed database with data')
   .action(() => {
     console.log('Seeding database...')
   })
+
+// Help output will group these under "db:"
+await app.parse()
 ```
 
 ## Help and Documentation
@@ -103,21 +106,24 @@ clapp automatically generates help text for your commands:
 // $ mycli --help
 // $ mycli <command> --help
 
-// You can also customize help text
-command('hello')
-  .description('Say hello')
-  .help('Examples:\n  $ mycli hello\n  $ mycli hello --uppercase')
+// You can add examples
+app.command('hello', 'Say hello')
+  .example('mycli hello')
+  .example('mycli hello --uppercase')
 ```
 
 ## Error Handling
 
-Handle errors gracefully with built-in error utilities:
+Handle errors gracefully:
 
 ```ts
-import { command, error } from '@stacksjs/clapp'
+import { cli, ClappError } from '@stacksjs/clapp'
 
-command('read')
-  .argument('<file>', 'File to read')
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+
+app.command('read <file>', 'Read a file')
   .action((file) => {
     try {
       // Attempt to read file
@@ -125,66 +131,101 @@ command('read')
       console.log(contents)
     }
     catch (err) {
-      // Handle file not found
-      error(`Could not read file: ${file}`, {
-        exitCode: 1,
-        suggestions: [
-          'Check that the file exists',
-          'Ensure you have permission to read the file',
-        ],
-      })
+      throw new ClappError(`Could not read file: ${file}`)
     }
   })
 ```
 
 ## Global Options
 
-Define options that apply to all commands:
+Define options that apply to all commands using built-in helpers:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+  .verbose()  // -v, --verbose
+  .quiet()    // -q, --quiet
+  .debug()    // --debug
+  .dryRun()   // --dry-run
+  .force()    // -f, --force
 
-// Add a global verbosity option
-app.option('-v, --verbose', 'Enable verbose output')
-
-// Commands can access global options
-command('process')
+// Commands can access global options via the app instance
+app.command('process', 'Process something')
   .action((options) => {
-    if (options.verbose) {
+    if (app.isVerbose) {
       console.log('Verbose mode enabled')
+    }
+    if (app.isDryRun) {
+      console.log('[DRY RUN] Would process...')
+      return
     }
     // Process command...
   })
+
+await app.parse()
+```
+
+You can also add custom global options:
+
+```ts
+app.option('--config <path>', 'Path to config file')
 ```
 
 ## Lifecycle Hooks
 
-Register hooks that run at different points in the command lifecycle:
+Register hooks that run before or after command execution:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
-const app = cli({
-  name: 'mycli',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
 
-// Before any command runs
-app.beforeRun(() => {
-  console.log('Starting CLI...')
-})
-
-// After all commands complete
-app.afterRun(() => {
-  console.log('CLI execution complete')
-})
-
-command('hello')
+app.command('deploy', 'Deploy the application')
+  .before((context) => {
+    console.log('Preparing deployment...')
+  })
   .action(() => {
-    console.log('Hello, world!')
+    console.log('Deploying...')
+  })
+  .after((context) => {
+    console.log('Deployment complete!')
+  })
+
+await app.parse()
+```
+
+## Middleware
+
+Use middleware for cross-cutting concerns:
+
+```ts
+app.command('deploy', 'Deploy the application')
+  .use(async (context) => {
+    console.log('Checking authentication...')
+    await context.next()
+    console.log('Done!')
+  })
+  .action(() => {
+    console.log('Deploying...')
+  })
+```
+
+## Signal Handling
+
+Handle graceful shutdown:
+
+```ts
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+  .handleSignals(async () => {
+    console.log('Cleaning up...')
+    await cleanup()
   })
 ```
 
@@ -193,25 +234,21 @@ command('hello')
 Here's a more complete example showing various features:
 
 ```ts
-import { cli, command } from '@stacksjs/clapp'
+import { cli } from '@stacksjs/clapp'
 
 // Create the CLI application
-const app = cli({
-  name: 'mycli',
-  version: '1.0.0',
-  description: 'Example CLI application',
-})
+const app = cli('mycli')
+  .version('1.0.0')
+  .help()
+  .verbose()
+  .debug()
+  .dryRun()
+  .handleSignals()
 
-// Global options
-app.option('--no-color', 'Disable colored output')
-app.option('-v, --verbose', 'Enable verbose logging')
-
-// Base commands
-command('hello')
-  .description('Say hello')
-  .argument('[name]', 'Name to greet', 'world')
+// Simple command
+app.command('hello [name]', 'Say hello')
   .option('-u, --uppercase', 'Convert to uppercase')
-  .action((name, options) => {
+  .action((name = 'world', options) => {
     let message = `Hello, ${name}!`
     if (options.uppercase) {
       message = message.toUpperCase()
@@ -219,25 +256,23 @@ command('hello')
     console.log(message)
   })
 
-// Command with subcommands
-const config = command('config')
-  .description('Manage configuration')
-
-config.command('get')
-  .argument('<key>', 'Config key to retrieve')
+// Namespaced commands
+app.command('config:get <key>', 'Get a config value')
   .action((key) => {
     console.log(`Getting config for: ${key}`)
   })
 
-config.command('set')
-  .argument('<key>', 'Config key to set')
-  .argument('<value>', 'Value to set')
+app.command('config:set <key> <value>', 'Set a config value')
   .action((key, value) => {
+    if (app.isDryRun) {
+      console.log(`[DRY RUN] Would set ${key} to ${value}`)
+      return
+    }
     console.log(`Setting ${key} to ${value}`)
   })
 
 // Run the application
-app.run()
+await app.parse()
 ```
 
 For more detailed information, check the [Commands](../commands) and [API Reference](../api/cli) sections.
