@@ -1,6 +1,6 @@
 import type { CommonOptions } from './common'
 import process from 'node:process'
-import color from 'picocolors'
+import color from '../colors'
 import { cursor, erase } from '../utils'
 import { block, settings } from '../utils/index'
 import {

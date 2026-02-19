@@ -89,9 +89,7 @@ export function getMriOptions(options: Option[]): MriOptions {
 }
 
 export function findLongest(arr: string[]): string {
-  return arr.sort((a, b) => {
-    return a.length > b.length ? -1 : 1
-  })[0]
+  return arr.reduce((a, b) => (a.length >= b.length ? a : b), '')
 }
 
 export function padRight(str: string, length: number): string {

@@ -1,6 +1,6 @@
 import type { CommonOptions } from './common'
 import process from 'node:process'
-import pc from 'picocolors'
+import pc from '../colors'
 import {
   processMarkdown,
   S_BAR,

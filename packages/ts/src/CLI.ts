@@ -2,7 +2,7 @@ import type { CommandConfig, CommandExample, HelpCallback } from './Command'
 import type { OptionConfig } from './Option'
 import { EventEmitter } from 'node:events'
 import process from 'node:process'
-import mri from 'mri'
+import { parseArgv } from './parse-argv'
 import Command, { GlobalCommand } from './Command'
 import { processArgs } from './runtimes/node'
 import { style } from './style'
@@ -385,20 +385,23 @@ export class CLI extends EventEmitter {
     }
 
     let shouldParse = true
+    const slicedArgv = argv.slice(2)
+    const candidateName = slicedArgv[0]
 
-    // Search sub-commands
-    for (const command of this.commands) {
-      const parsed = this.mri(argv.slice(2), command)
-
-      const commandName = parsed.args[0]
-      if (command.isMatched(commandName)) {
-        shouldParse = false
-        const parsedInfo = {
-          ...parsed,
-          args: parsed.args.slice(1),
+    // Search sub-commands — fast name check first, then parse only the match
+    if (candidateName && !candidateName.startsWith('-')) {
+      for (const command of this.commands) {
+        if (command.isMatched(candidateName)) {
+          const parsed = this.mri(slicedArgv, command)
+          shouldParse = false
+          const parsedInfo = {
+            ...parsed,
+            args: parsed.args.slice(1),
+          }
+          this.setParsedInfo(parsedInfo, command, candidateName)
+          this.emit(`command:${candidateName}`, command)
+          break
         }
-        this.setParsedInfo(parsedInfo, command, commandName)
-        this.emit(`command:${commandName}`, command)
       }
     }
 
@@ -407,9 +410,10 @@ export class CLI extends EventEmitter {
       for (const command of this.commands) {
         if (command.name === '') {
           shouldParse = false
-          const parsed = this.mri(argv.slice(2), command)
+          const parsed = this.mri(slicedArgv, command)
           this.setParsedInfo(parsed, command)
           this.emit(`command:!`, command)
+          break
         }
       }
     }
@@ -493,7 +497,7 @@ export class CLI extends EventEmitter {
     ]
     const mriOptions = getMriOptions(cliOptions)
 
-    // Extract everything after `--` since mri doesn't support it
+    // Extract everything after `--`
     let argsAfterDoubleDashes: string[] = []
     const doubleDashesIndex = argv.indexOf('--')
     if (doubleDashesIndex > -1) {
@@ -501,18 +505,15 @@ export class CLI extends EventEmitter {
       argv = argv.slice(0, doubleDashesIndex)
     }
 
-    let parsed = mri(argv, mriOptions)
-    parsed = Object.keys(parsed).reduce(
-      (res, name) => {
-        return {
-          ...res,
-          [camelcaseOptionName(name)]: parsed[name],
-        }
-      },
-      { _: [] },
-    )
+    const raw = parseArgv(argv, mriOptions)
+    const parsed: Record<string, unknown> = { _: raw._ }
+    for (const name of Object.keys(raw)) {
+      if (name !== '_') {
+        parsed[camelcaseOptionName(name)] = raw[name]
+      }
+    }
 
-    const args = parsed._
+    const args = parsed._ as string[]
 
     const options: ParsedOptions = {
       '--': argsAfterDoubleDashes,

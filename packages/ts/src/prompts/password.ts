@@ -1,5 +1,5 @@
 import type { CommonOptions } from './common'
-import color from 'picocolors'
+import color from '../colors'
 import { PasswordPrompt } from '../core/prompts/password'
 import { S_BAR, S_BAR_END, S_PASSWORD_MASK, symbol } from './common'
 

@@ -1,7 +1,7 @@
 import type { Writable } from 'node:stream'
 import type { CommonOptions } from './common'
 import process from 'node:process'
-import * as color from 'picocolors'
+import * as color from '../colors'
 import { erase } from '../utils'
 import { getColumns } from '../utils/index'
 import { isCI as isCIFn, isTTY as isTTYFn, S_BAR, S_STEP_SUBMIT } from './common'

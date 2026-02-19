@@ -1,5 +1,5 @@
 import type { Option, SelectOptions } from './select'
-import color from 'picocolors'
+import color from '../colors'
 import { SelectKeyPrompt } from '../core'
 import { S_BAR, S_BAR_END, symbol } from './common'
 

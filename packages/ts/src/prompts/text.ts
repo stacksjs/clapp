@@ -1,5 +1,5 @@
 import type { CommonOptions } from './common'
-import color from 'picocolors'
+import color from '../colors'
 import { TextPrompt } from '../core'
 import { processMarkdown, S_BAR, S_BAR_END, symbol } from './common'
 

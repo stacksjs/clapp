@@ -2,7 +2,7 @@ import type { Writable } from 'node:stream'
 import type { CommonOptions } from './common'
 import process from 'node:process'
 import { stripVTControlCharacters as strip } from 'node:util'
-import color from 'picocolors'
+import color from '../colors'
 import {
   processMarkdown,
   S_BAR,

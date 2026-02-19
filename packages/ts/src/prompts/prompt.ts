@@ -5,7 +5,6 @@ import type { Action } from '../utils/index'
 import process, { stdin, stdout } from 'node:process'
 import readline from 'node:readline'
 import { Writable } from 'node:stream'
-import wrap from 'wrap-ansi'
 import { cursor, erase } from '../utils'
 import { CANCEL_SYMBOL, diffLines, isActionKey, setRawMode, settings } from '../utils/index'
 
@@ -246,12 +245,12 @@ export default class Prompt {
   }
 
   private restoreCursor(): void {
-    const lines = wrap(this._prevFrame, process.stdout.columns, { hard: true }).split('\n').length - 1
+    const lines = Bun.wrapAnsi(this._prevFrame, process.stdout.columns, { hard: true }).split('\n').length - 1
     this.output.write(cursor.move(-999, lines * -1))
   }
 
   private render() {
-    const frame = wrap(this._render(this) ?? '', process.stdout.columns, { hard: true })
+    const frame = Bun.wrapAnsi(this._render(this) ?? '', process.stdout.columns, { hard: true })
     if (frame === this._prevFrame)
       return
 

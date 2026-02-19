@@ -1,7 +1,7 @@
 import type { Writable } from 'node:stream'
 import type { CommonOptions } from './common'
 import process from 'node:process'
-import color from 'picocolors'
+import color from '../colors'
 import { S_BAR, S_BAR_END, S_BAR_START } from './common'
 
 export function cancel(message = '', opts?: CommonOptions): void {

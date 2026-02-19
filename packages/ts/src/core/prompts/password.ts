@@ -1,5 +1,5 @@
 import type { PromptOptions } from './prompt'
-import color from 'picocolors'
+import color from '../../colors'
 import Prompt from './prompt'
 
 interface PasswordOptions extends PromptOptions<string, PasswordPrompt> {

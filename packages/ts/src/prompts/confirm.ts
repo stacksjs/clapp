@@ -1,5 +1,5 @@
 import type { CommonOptions } from './common'
-import color from 'picocolors'
+import color from '../colors'
 import { ConfirmPrompt } from '../core'
 import {
   processMarkdown,

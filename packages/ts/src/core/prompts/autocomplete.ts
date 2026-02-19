@@ -1,6 +1,6 @@
 import type { Key } from 'node:readline'
 import type { PromptOptions } from './prompt'
-import color from 'picocolors'
+import color from '../../colors'
 import Prompt from './prompt'
 
 interface OptionLike {

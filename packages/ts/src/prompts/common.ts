@@ -1,7 +1,7 @@
 import type { Readable, Writable } from 'node:stream'
 import type { PromptState as State } from '../types'
 import process from 'node:process'
-import color from 'picocolors'
+import color from '../colors'
 import { style } from '../style'
 import { isUnicodeSupported } from '../utils'
 

@@ -4,7 +4,6 @@ import type { Action } from '../../utils/index'
 import type { ClappEvents, ClappState } from '../types'
 import process, { stdin, stdout } from 'node:process'
 import readline from 'node:readline'
-import wrap from 'wrap-ansi'
 import { cursor, erase } from '../../utils'
 import { CANCEL_SYMBOL, diffLines, isActionKey, setRawMode, settings } from '../../utils/index'
 
@@ -279,12 +278,12 @@ export default class Prompt<TValue> {
   }
 
   private restoreCursor(): void {
-    const lines = wrap(this._prevFrame, process.stdout.columns, { hard: true, trim: false }).split('\n').length - 1
+    const lines = Bun.wrapAnsi(this._prevFrame, process.stdout.columns, { hard: true, trim: false }).split('\n').length - 1
     this.output.write(cursor.move(-999, lines * -1))
   }
 
   private render() {
-    const frame = wrap(this._render(this) ?? '', process.stdout.columns, {
+    const frame = Bun.wrapAnsi(this._render(this) ?? '', process.stdout.columns, {
       hard: true,
       trim: false,
     })

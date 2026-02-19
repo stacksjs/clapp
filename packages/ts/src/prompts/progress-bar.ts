@@ -1,6 +1,6 @@
 import type { PromptState as State } from '../types'
 import type { SpinnerOptions, SpinnerResult } from './spinner'
-import color from 'picocolors'
+import color from '../colors'
 import { unicodeOr } from './common'
 import { spinner } from './spinner'
 
