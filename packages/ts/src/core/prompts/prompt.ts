@@ -278,12 +278,12 @@ export default class Prompt<TValue> {
   }
 
   private restoreCursor(): void {
-    const lines = Bun.wrapAnsi(this._prevFrame, process.stdout.columns, { hard: true, trim: false }).split('\n').length - 1
+    const lines = (Bun as any).wrapAnsi(this._prevFrame, process.stdout.columns, { hard: true, trim: false }).split('\n').length - 1
     this.output.write(cursor.move(-999, lines * -1))
   }
 
   private render() {
-    const frame = Bun.wrapAnsi(this._render(this) ?? '', process.stdout.columns, {
+    const frame = (Bun as any).wrapAnsi(this._render(this) ?? '', process.stdout.columns, {
       hard: true,
       trim: false,
     })

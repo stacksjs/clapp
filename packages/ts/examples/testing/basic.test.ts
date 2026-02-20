@@ -11,7 +11,10 @@ describe('Basic CLI Testing', () => {
     // Add a simple command
     testCLI.command('greet')
       .option('-n, --name <name>', 'Name to greet')
-      .action(({ name }) => `Hello, ${name || 'world'}!`)
+      .action((...args: unknown[]) => {
+        const { name } = args[0] as { name: any }
+        return `Hello, ${name || 'world'}!`
+      })
 
     // Execute the command with options
     const result = await execCommand(testCLI, ['greet', '--name', 'Alice'])

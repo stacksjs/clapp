@@ -1,11 +1,12 @@
 {
   "lockfileVersion": 1,
-  "configVersion": 1,
   "workspaces": {
     "": {
       "name": "@stacksjs/clapp",
       "devDependencies": {
         "better-dx": "^0.2.5",
+        "picocolors": "^1.1.1",
+        "typescript": "^5.9.3",
       },
     },
     "packages/ts": {
@@ -153,6 +154,8 @@
     "parse-entities": ["parse-entities@4.0.2", "", { "dependencies": { "@types/unist": "^2.0.0", "character-entities-legacy": "^3.0.0", "character-reference-invalid": "^2.0.0", "decode-named-character-reference": "^1.0.0", "is-alphanumerical": "^2.0.0", "is-decimal": "^2.0.0", "is-hexadecimal": "^2.0.0" } }, "sha512-GG2AQYWoLgL877gQIKeRPGO1xF9+eG1ujIb5soS5gPvLQ1y2o8FL90w2QWNdf9I361Mpp7726c+lj3U0qK1uGw=="],
 
     "pickier": ["pickier@0.1.7", "", { "dependencies": { "@stacksjs/clapp": "^0.1.16", "tinyglobby": "^0.2.14" }, "bin": { "pickier": "dist/bin/cli.js" } }, "sha512-U+Xz+tW47HFeIEIK+a2pSwb89k62YWAn5S0BGKUOl0YmPdoKgNk5+8uPSJTonWQ9HhCxfk/ezJYG/dxhpJdDwg=="],
+
+    "picocolors": ["picocolors@1.1.1", "", {}, "sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA=="],
 
     "picomatch": ["picomatch@4.0.3", "", {}, "sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q=="],
 

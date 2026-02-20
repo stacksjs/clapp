@@ -12,7 +12,8 @@ cli
   .command('start', 'Start the Reverse Proxy Server')
   .option('--verbose', 'Enable verbose logging')
   .example('reverse-proxy start --from localhost:5173 --to my-project.localhost')
-  .action(async (options?: CliOption) => {
+  .action(async (...args: unknown[]) => {
+    const options = args[0] as CliOption | undefined
     console.log('Options:', options)
   })
 

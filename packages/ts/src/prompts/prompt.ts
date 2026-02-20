@@ -245,12 +245,12 @@ export default class Prompt {
   }
 
   private restoreCursor(): void {
-    const lines = Bun.wrapAnsi(this._prevFrame, process.stdout.columns, { hard: true }).split('\n').length - 1
+    const lines = (Bun as any).wrapAnsi(this._prevFrame, process.stdout.columns, { hard: true }).split('\n').length - 1
     this.output.write(cursor.move(-999, lines * -1))
   }
 
   private render() {
-    const frame = Bun.wrapAnsi(this._render(this) ?? '', process.stdout.columns, { hard: true })
+    const frame = (Bun as any).wrapAnsi(this._render(this) ?? '', process.stdout.columns, { hard: true })
     if (frame === this._prevFrame)
       return
 
