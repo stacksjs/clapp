@@ -45,8 +45,7 @@
   },
   "devDependencies": {
     "better-dx": "^0.2.5",
-    "picocolors": "^1.1.1",
-    "typescript": "^5.9.3"
+    "picocolors": "^1.1.1"
   },
   "git-hooks": {
     "pre-commit": {
