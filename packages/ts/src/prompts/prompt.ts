@@ -7,11 +7,7 @@ import readline from 'node:readline'
 import { Writable } from 'node:stream'
 import { cursor, erase } from '../utils'
 import { CANCEL_SYMBOL, diffLines, isActionKey, setRawMode, settings } from '../utils/index'
-
-const wrapAnsi: (text: string, cols: number, opts?: any) => string
-  = typeof (globalThis as any).Bun !== 'undefined' && typeof (globalThis as any).Bun.wrapAnsi === 'function'
-    ? (globalThis as any).Bun.wrapAnsi
-    : (text: string, _cols: number, _opts?: any) => text
+import { wrapAnsi } from '../utils/wrap-ansi'
 
 export interface PromptOptions<Self extends Prompt> {
   render: (this: Omit<Self, 'prompt'>) => string | undefined
