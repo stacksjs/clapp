@@ -50,6 +50,7 @@ interface AutocompleteSharedOptions<Value> extends CommonOptions {
   /**
    * Available options for the autocomplete prompt.
    */
+  // eslint-disable-next-line no-unused-vars
   options: Option<Value>[] | ((this: AutocompletePrompt<Option<Value>>) => Option<Value>[])
   /**
    * Maximum number of items to display at once.

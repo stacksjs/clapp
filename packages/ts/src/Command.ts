@@ -28,14 +28,14 @@ interface CommandConfig {
   ignoreOptionDefaultValue?: boolean
 }
 
-type HelpCallback = (sections: HelpSection[]) => void | HelpSection[]
+type HelpCallback = (_sections: HelpSection[]) => void | HelpSection[]
 
-type CommandExample = ((bin: string) => string) | string
+type CommandExample = ((_bin: string) => string) | string
 
 /** Parsed command-line options */
 type ParsedOptions = Record<string, unknown>
 
-export type HookHandler = (context: HookContext) => void | Promise<void>
+export type HookHandler = (_context: HookContext) => void | Promise<void>
 
 export interface HookContext {
   command: Command

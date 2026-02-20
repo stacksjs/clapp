@@ -12,7 +12,7 @@ export interface PromptOptions<Self extends Prompt> {
   render: (this: Omit<Self, 'prompt'>) => string | undefined
   placeholder?: string
   initialValue?: any
-  validate?: ((value: any) => string | Error | undefined) | undefined
+  validate?: ((_value: any) => string | Error | undefined) | undefined
   input?: Readable
   output?: Writable
   debug?: boolean
@@ -132,7 +132,7 @@ export default class Prompt {
       }
 
       const sink = new Writable()
-      sink._write = (chunk, encoding, done) => {
+      sink._write = (_chunk, _encoding, done) => {
         if (this._track) {
           this.value = this.rl?.line.replace(/\t/g, '')
           this._cursor = this.rl?.cursor ?? 0

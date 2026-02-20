@@ -8,7 +8,7 @@ interface OptionLike {
   label?: string
 }
 
-type FilterFunction<T extends OptionLike> = (search: string, opt: T) => boolean
+type FilterFunction<T extends OptionLike> = (_search: string, _opt: T) => boolean
 
 function getCursorForValue<T extends OptionLike>(
   selected: T['value'] | undefined,
@@ -47,6 +47,7 @@ function normalisedValue<T>(multiple: boolean, values: T[] | undefined): T | T[]
 
 interface AutocompleteOptions<T extends OptionLike>
   extends PromptOptions<T['value'] | T['value'][], AutocompletePrompt<T>> {
+  // eslint-disable-next-line no-unused-vars
   options: T[] | ((this: AutocompletePrompt<T>) => T[])
   filter?: FilterFunction<T>
   multiple?: boolean

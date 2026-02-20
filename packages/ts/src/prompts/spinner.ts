@@ -28,6 +28,7 @@ export interface SpinnerResult {
   readonly isCancelled: boolean
 }
 
+// eslint-disable-next-line no-unused-vars
 export function spinner({
   indicator = 'dots',
   onCancel,

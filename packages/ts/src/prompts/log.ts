@@ -28,7 +28,7 @@ export interface Log {
   custom: (
     symbol: string,
     message: string | string[],
-    color: string | ((text: string) => string),
+    color: string | ((_text: string) => string),
     opts?: LogMessageOptions,
   ) => void
 }
@@ -100,7 +100,7 @@ export const log: Log = {
   custom: (
     symbol: string,
     message: string | string[],
-    color: string | ((text: string) => string),
+    color: string | ((_text: string) => string),
     opts?: LogMessageOptions,
   ) => {
     // Convert string color name to picocolors function
