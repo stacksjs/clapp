@@ -7,7 +7,7 @@
 import process from 'node:process'
 import tty from 'node:tty'
 
-type ColorFn = (text: string) => string
+type ColorFn = (_text: string) => string
 
 function detectColorSupport(): boolean {
   if ('FORCE_COLOR' in process.env) {
