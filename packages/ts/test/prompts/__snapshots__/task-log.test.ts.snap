@@ -1,0 +1,1175 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`taskLog (isCI = true) writes message header 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) message can write line by line 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = true) message can write multiple lines 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) message enforces limit if set 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = true) message raw = true appends message text until newline 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = true) message raw = true works when mixed with non-raw messages 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = true) message raw = true works when started with non-raw messages 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = true) message prints empty lines 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = true) error renders output with message 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  some error!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) error clears output if showLog = false 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  some error!
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) success clears output and renders message 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  success!
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) success renders output if showLog = true 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  success!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog error retainLog = true outputs full log 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog error retainLog = true outputs full log with limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog error retainLog = false outputs full log without limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog error retainLog = false outputs limited log with limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog error outputs limited log with limit by default 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog success retainLog = true outputs full log 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog success retainLog = true outputs full log with limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog success retainLog = false outputs full log without limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog success retainLog = false outputs limited log with limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = true) retainLog success outputs limited log with limit by default 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) writes message header 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) message can write line by line 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = false) message can write multiple lines 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) message enforces limit if set 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = false) message raw = true appends message text until newline 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = false) message raw = true works when mixed with non-raw messages 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = false) message raw = true works when started with non-raw messages 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = false) message prints empty lines 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+]
+`;
+
+exports[`taskLog (isCI = false) error renders output with message 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  some error!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) error clears output if showLog = false 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  some error!
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) success clears output and renders message 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  success!
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) success renders output if showLog = true 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  success!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog error retainLog = true outputs full log 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog error retainLog = true outputs full log with limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog error retainLog = false outputs full log without limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog error retainLog = false outputs limited log with limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog error outputs limited log with limit by default 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+■  woo!
+"
+,
+  
+"│
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog success retainLog = true outputs full log 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog success retainLog = true outputs full log with limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog success retainLog = false outputs full log without limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 0
+│  line 1
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog success retainLog = false outputs limited log with limit 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 2
+│  line 3
+"
+,
+]
+`;
+
+exports[`taskLog (isCI = false) retainLog success outputs limited log with limit by default 1`] = `
+[
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  
+"│
+"
+,
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  "\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[1A\x1B[2K\x1B[G",
+  
+"│
+◆  woo!
+"
+,
+  
+"│
+│  line 2
+│  line 3
+"
+,
+]
+`;

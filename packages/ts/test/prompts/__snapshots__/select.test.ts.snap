@@ -1,0 +1,369 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`select (isCI = true) renders options and message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = true) down arrow selects next option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ○ opt0
+│  ● opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = true) up arrow selects previous option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ○ opt0
+│  ● opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = true) can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  opt0
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = true) renders option labels 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Option 0
+│  ○ Option 1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Option 0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = true) renders option hints 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0 (Hint 0)
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = false) renders options and message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = false) down arrow selects next option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ○ opt0
+│  ● opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = false) up arrow selects previous option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ○ opt0
+│  ● opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = false) can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  opt0
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = false) renders option labels 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Option 0
+│  ○ Option 1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Option 0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`select (isCI = false) renders option hints 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0 (Hint 0)
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;

@@ -1,0 +1,535 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`text (isCI = true) renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = true) renders placeholder if set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  bar
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = true) can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = true) renders cancelled value if one set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  xy█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  xy
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = true) renders submitted value 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  xy█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = true) defaultValue sets the value but does not render 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  bar"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = true) validation errors render and clear 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  x█
+└  should be xy
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  xy
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = true) validation errors render and clear (using Error) 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  x█
+└  should be xy
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  xy
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = false) renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = false) renders placeholder if set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  bar
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = false) can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = false) renders cancelled value if one set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  xy█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  xy
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = false) renders submitted value 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  xy█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = false) defaultValue sets the value but does not render 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  bar"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = false) validation errors render and clear 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  x█
+└  should be xy
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  xy
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`text (isCI = false) validation errors render and clear (using Error) 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  x█
+└  should be xy
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  xy
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;

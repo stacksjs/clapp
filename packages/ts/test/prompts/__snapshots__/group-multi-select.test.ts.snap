@@ -1,0 +1,1059 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`groupMultiselect (isCI = true) renders message with options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[8A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[5B",
+  "\x1B[999D\x1B[8A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) can select multiple options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  │ ◻ group1value1
+│  └ ◻ group1value2
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[7A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) can select a group 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) can select a group by selecting all members 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) can deselect an option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◻ group1
+│  │ ◼ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) renders error when nothing selected 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└  Please select at least one option.
+   Press  space  to select,  enter  to submit
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) selectableGroups = false cannot select groups 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│   group1
+│    ◻ group1value0
+│    ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) selectableGroups = false selecting all members of group does not select group 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│   group1
+│    ◻ group1value0
+│    ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) can submit empty selection when require = false 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) cursorAt sets initial selection 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  └ ◼ group1value1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) initial values can be set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) values can be non-primitive 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ value0
+│  └ ◻ value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) groupSpacing renders spaced groups 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│
+│
+│  ◻ group1
+│  └ ◻ group1value0
+│
+│
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[11A",
+  "\x1B[4B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  └ ◼ group1value0
+│
+│
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[11A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = true) groupSpacing negative spacing is ignored 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  └ ◻ group1value0
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  └ ◼ group1value0
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) renders message with options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[8A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[5B",
+  "\x1B[999D\x1B[8A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) can select multiple options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  │ ◻ group1value1
+│  └ ◻ group1value2
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[7A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) can select a group 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) can select a group by selecting all members 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) can deselect an option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◻ group1
+│  │ ◼ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) renders error when nothing selected 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└  Please select at least one option.
+   Press  space  to select,  enter  to submit
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) selectableGroups = false cannot select groups 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│   group1
+│    ◻ group1value0
+│    ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) selectableGroups = false selecting all members of group does not select group 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│   group1
+│    ◻ group1value0
+│    ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) can submit empty selection when require = false 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) cursorAt sets initial selection 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  └ ◼ group1value1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) initial values can be set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) values can be non-primitive 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ value0
+│  └ ◻ value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) groupSpacing renders spaced groups 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│
+│
+│  ◻ group1
+│  └ ◻ group1value0
+│
+│
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[11A",
+  "\x1B[4B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  └ ◼ group1value0
+│
+│
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[11A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`groupMultiselect (isCI = false) groupSpacing negative spacing is ignored 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  └ ◻ group1value0
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  └ ◼ group1value0
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;

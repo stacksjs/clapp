@@ -1,0 +1,123 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`note (isCI = true) renders message with title 1`] = `
+[
+  
+"│
+◇  title ───╮
+│           │
+│  message  │
+│           │
+├───────────╯
+"
+,
+]
+`;
+
+exports[`note (isCI = true) renders as wide as longest line 1`] = `
+[
+  
+"│
+◇  title ───────────────────────────╮
+│                                   │
+│  short                            │
+│  somewhat questionably long line  │
+│                                   │
+├───────────────────────────────────╯
+"
+,
+]
+`;
+
+exports[`note (isCI = true) formatter which adds length works 1`] = `
+[
+  
+"│
+◇  title ──────╮
+│              │
+│  * line 0 *  │
+│  * line 1 *  │
+│  * line 2 *  │
+│              │
+├──────────────╯
+"
+,
+]
+`;
+
+exports[`note (isCI = true) formatter which adds colors works 1`] = `
+[
+  
+"│
+◇  title ──╮
+│          │
+│  line 0  │
+│  line 1  │
+│  line 2  │
+│          │
+├──────────╯
+"
+,
+]
+`;
+
+exports[`note (isCI = false) renders message with title 1`] = `
+[
+  
+"│
+◇  title ───╮
+│           │
+│  message  │
+│           │
+├───────────╯
+"
+,
+]
+`;
+
+exports[`note (isCI = false) renders as wide as longest line 1`] = `
+[
+  
+"│
+◇  title ───────────────────────────╮
+│                                   │
+│  short                            │
+│  somewhat questionably long line  │
+│                                   │
+├───────────────────────────────────╯
+"
+,
+]
+`;
+
+exports[`note (isCI = false) formatter which adds length works 1`] = `
+[
+  
+"│
+◇  title ──────╮
+│              │
+│  * line 0 *  │
+│  * line 1 *  │
+│  * line 2 *  │
+│              │
+├──────────────╯
+"
+,
+]
+`;
+
+exports[`note (isCI = false) formatter which adds colors works 1`] = `
+[
+  
+"│
+◇  title ──╮
+│          │
+│  line 0  │
+│  line 1  │
+│  line 2  │
+│          │
+├──────────╯
+"
+,
+]
+`;

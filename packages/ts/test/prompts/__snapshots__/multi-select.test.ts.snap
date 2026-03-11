@@ -1,0 +1,1195 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`multiselect (isCI = true) renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) renders multiple selected options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0, opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) renders validation errors 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ◻ opt0
+│  ◻ opt1
+└  Please select at least one option.
+   Press  space  to select,  enter  to submit
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ◼ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) can submit without selection when required = false 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  none"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) can set cursorAt to preselect an option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) can set initial values 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◼ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) maxItems renders a sliding window 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[5B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt6",
+  "\x1B[4B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt6"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) sliding window loops upwards 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ◻ opt10
+│  ◻ opt11
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[7B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt11",
+  "\x1B[2B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt11"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) sliding window loops downwards 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ◻ opt8
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt6
+│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ◻ opt10
+│  ◻ opt11
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[7B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) can set custom labels 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ Option 0
+│  ◻ Option 1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ Option 0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Option 0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) can render option hints 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0 (Hint 0)
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0 (Hint 0)",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) shows hints for all selected options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◼ opt0 (Hint 0)
+│  ◼ opt1 (Hint 1)
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  ◻ opt2 (Hint 2)",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0, opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = true) renders multiple cancelled values 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  opt0, opt1
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) renders multiple selected options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0, opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) renders validation errors 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ◻ opt0
+│  ◻ opt1
+└  Please select at least one option.
+   Press  space  to select,  enter  to submit
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ◼ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) can submit without selection when required = false 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  none"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) can set cursorAt to preselect an option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) can set initial values 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◼ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) maxItems renders a sliding window 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[5B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt6",
+  "\x1B[4B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt6"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) sliding window loops upwards 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ◻ opt10
+│  ◻ opt11
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[7B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt11",
+  "\x1B[2B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt11"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) sliding window loops downwards 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ◻ opt8
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt6
+│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ◻ opt10
+│  ◻ opt11
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[7B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) can set custom labels 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ Option 0
+│  ◻ Option 1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ Option 0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Option 0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) can render option hints 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0 (Hint 0)
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0 (Hint 0)",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) shows hints for all selected options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◼ opt0 (Hint 0)
+│  ◼ opt1 (Hint 1)
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  ◻ opt2 (Hint 2)",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0, opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`multiselect (isCI = false) renders multiple cancelled values 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  opt0, opt1
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;

@@ -1,0 +1,4417 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`prompts (isCI = true) spinner start renders frames at interval 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+]
+`;
+
+exports[`prompts (isCI = true) spinner start renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+]
+`;
+
+exports[`prompts (isCI = true) spinner start renders timer when indicator is "timer" 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+]
+`;
+
+exports[`prompts (isCI = true) spinner stop renders submit symbol and stops spinner 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"◇  
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner stop renders cancel symbol if code = 1 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner stop renders error symbol if code > 1 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"▲  
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner stop renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner message sets message for next frame 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+]
+`;
+
+exports[`prompts (isCI = true) spinner process exit handling uses default cancel message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  Canceled
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner process exit handling uses custom cancel message when provided directly 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  Custom cancel message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner process exit handling uses custom error message when provided directly 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"▲  Custom error message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner process exit handling uses global custom cancel message from settings 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  Global cancel message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner process exit handling uses global custom error message from settings 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"▲  Global error message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner process exit handling prioritizes direct options over global settings 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  Spinner cancel message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) spinner process exit handling prioritizes direct options over global settings 2`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"▲  Spinner error message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) text renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) text renders placeholder if set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  bar
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) text can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) text renders cancelled value if one set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  xy█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  xy
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) text renders submitted value 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  xy█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) text defaultValue sets the value but does not render 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  bar"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) text validation errors render and clear 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  x█
+└  should be xy
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  xy
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) text validation errors render and clear (using Error) 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  x█
+└  should be xy
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  xy
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) confirm renders message with choices 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) confirm renders custom active choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● bleep / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  bleep"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) confirm renders custom inactive choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ bleep
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) confirm right arrow moves to next choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ○ Yes / ● No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  No"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) confirm left arrow moves to previous choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ○ Yes / ● No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ● Yes / ○ No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) confirm can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  No
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) confirm can set initialValue 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ○ Yes / ● No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  No"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) select renders options and message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) select down arrow selects next option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ○ opt0
+│  ● opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) select up arrow selects previous option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ○ opt0
+│  ● opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) select can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  opt0
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) select renders option labels 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Option 0
+│  ○ Option 1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Option 0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) select renders option hints 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0 (Hint 0)
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect renders multiple selected options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0, opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect renders validation errors 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ◻ opt0
+│  ◻ opt1
+└  Please select at least one option.
+   Press  space  to select,  enter  to submit
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ◼ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect can submit without selection when required = false 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  none"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect can set cursorAt to preselect an option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect can set initial values 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◼ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect maxItems renders a sliding window 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[5B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt6",
+  "\x1B[4B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt6"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect sliding window loops upwards 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ◻ opt10
+│  ◻ opt11
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[7B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt11",
+  "\x1B[2B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt11"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect sliding window loops downwards 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ◻ opt8
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt6
+│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ◻ opt10
+│  ◻ opt11
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[7B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect can set custom labels 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ Option 0
+│  ◻ Option 1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ Option 0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Option 0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect can render option hints 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0 (Hint 0)
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0 (Hint 0)",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect shows hints for all selected options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◼ opt0 (Hint 0)
+│  ◼ opt1 (Hint 1)
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  ◻ opt2 (Hint 2)",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0, opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) multiselect renders multiple cancelled values 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  opt0, opt1
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) password renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) password renders masked value 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ▪_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ▪▪_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  ▪▪"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) password renders custom mask 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  *_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  **_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  **"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) password renders and clears validation errors 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ▪_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ▪
+└  Password must be at least 2 characters
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ▪▪
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  ▪▪"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) password renders cancelled value 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ▪_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  ▪
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect renders message with options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[8A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[5B",
+  "\x1B[999D\x1B[8A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect can select multiple options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  │ ◻ group1value1
+│  └ ◻ group1value2
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[7A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect can select a group 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect can select a group by selecting all members 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect can deselect an option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◻ group1
+│  │ ◼ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect renders error when nothing selected 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└  Please select at least one option.
+   Press  space  to select,  enter  to submit
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect selectableGroups = false cannot select groups 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│   group1
+│    ◻ group1value0
+│    ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect selectableGroups = false selecting all members of group does not select group 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│   group1
+│    ◻ group1value0
+│    ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect can submit empty selection when require = false 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect cursorAt sets initial selection 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  └ ◼ group1value1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect initial values can be set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect values can be non-primitive 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ value0
+│  └ ◻ value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect groupSpacing renders spaced groups 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│
+│
+│  ◻ group1
+│  └ ◻ group1value0
+│
+│
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[11A",
+  "\x1B[4B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  └ ◼ group1value0
+│
+│
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[11A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) groupMultiselect groupSpacing negative spacing is ignored 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  └ ◻ group1value0
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  └ ◼ group1value0
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = true) note renders message with title 1`] = `
+[
+  
+"│
+◇  title ───╮
+│           │
+│  message  │
+│           │
+├───────────╯
+"
+,
+]
+`;
+
+exports[`prompts (isCI = true) note renders as wide as longest line 1`] = `
+[
+  
+"│
+◇  title ───────────────────────────╮
+│                                   │
+│  short                            │
+│  somewhat questionably long line  │
+│                                   │
+├───────────────────────────────────╯
+"
+,
+]
+`;
+
+exports[`prompts (isCI = true) note formatter which adds length works 1`] = `
+[
+  
+"│
+◇  title ──────╮
+│              │
+│  * line 0 *  │
+│  * line 1 *  │
+│  * line 2 *  │
+│              │
+├──────────────╯
+"
+,
+]
+`;
+
+exports[`prompts (isCI = true) note formatter which adds colors works 1`] = `
+[
+  
+"│
+◇  title ──╮
+│          │
+│  line 0  │
+│  line 1  │
+│  line 2  │
+│          │
+├──────────╯
+"
+,
+]
+`;
+
+exports[`prompts (isCI = false) spinner start renders frames at interval 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+]
+`;
+
+exports[`prompts (isCI = false) spinner start renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+]
+`;
+
+exports[`prompts (isCI = false) spinner start renders timer when indicator is "timer" 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+]
+`;
+
+exports[`prompts (isCI = false) spinner stop renders submit symbol and stops spinner 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"◇  
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner stop renders cancel symbol if code = 1 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner stop renders error symbol if code > 1 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"▲  
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner stop renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"◇  foo
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner message sets message for next frame 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+]
+`;
+
+exports[`prompts (isCI = false) spinner process exit handling uses default cancel message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  Canceled
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner process exit handling uses custom cancel message when provided directly 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  Custom cancel message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner process exit handling uses custom error message when provided directly 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"▲  Custom error message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner process exit handling uses global custom cancel message from settings 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  Global cancel message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner process exit handling uses global custom error message from settings 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"▲  Global error message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner process exit handling prioritizes direct options over global settings 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"■  Spinner cancel message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) spinner process exit handling prioritizes direct options over global settings 2`] = `
+[
+  "\x1B[?25l",
+  
+"│
+"
+,
+  
+"▲  Spinner error message
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) text renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) text renders placeholder if set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  bar
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) text can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) text renders cancelled value if one set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  xy█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  xy
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) text renders submitted value 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  xy█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) text defaultValue sets the value but does not render 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  bar"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) text validation errors render and clear 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  x█
+└  should be xy
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  xy
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) text validation errors render and clear (using Error) 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  x█",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  x█
+└  should be xy
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  xy
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  xy"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) confirm renders message with choices 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) confirm renders custom active choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● bleep / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  bleep"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) confirm renders custom inactive choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ bleep
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) confirm right arrow moves to next choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ○ Yes / ● No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  No"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) confirm left arrow moves to previous choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ○ Yes / ● No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ● Yes / ○ No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) confirm can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  No
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) confirm can set initialValue 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ○ Yes / ● No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  No"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) select renders options and message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) select down arrow selects next option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ○ opt0
+│  ● opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) select up arrow selects previous option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ○ opt0
+│  ● opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) select can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  opt0
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) select renders option labels 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Option 0
+│  ○ Option 1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Option 0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) select renders option hints 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● opt0 (Hint 0)
+│  ○ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect renders multiple selected options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0, opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect renders validation errors 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ◻ opt0
+│  ◻ opt1
+└  Please select at least one option.
+   Press  space  to select,  enter  to submit
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ◼ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect can submit without selection when required = false 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  none"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect can set cursorAt to preselect an option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect can set initial values 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◼ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect maxItems renders a sliding window 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[5B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt6",
+  "\x1B[4B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt6"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect sliding window loops upwards 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ◻ opt10
+│  ◻ opt11
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[7B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt11",
+  "\x1B[2B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt11"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect sliding window loops downwards 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ...
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt3
+│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt4
+│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt5
+│  ◻ opt6
+│  ◻ opt7
+│  ◻ opt8
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt6
+│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[3B",
+  "\x1B[J",
+  
+"│  ◻ opt7
+│  ◻ opt8
+│  ◻ opt9
+│  ◻ opt10
+│  ◻ opt11
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+│  ◻ opt3
+│  ◻ opt4
+│  ...
+└
+"
+,
+  "\x1B[999D\x1B[9A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[7B",
+  "\x1B[999D\x1B[9A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect can set custom labels 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ Option 0
+│  ◻ Option 1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ Option 0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Option 0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect can render option hints 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0 (Hint 0)
+│  ◻ opt1
+└
+"
+,
+  "\x1B[999D\x1B[5A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0 (Hint 0)",
+  "\x1B[3B",
+  "\x1B[999D\x1B[5A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect shows hints for all selected options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◼ opt0 (Hint 0)
+│  ◼ opt1 (Hint 1)
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  ◻ opt2 (Hint 2)",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  opt0, opt1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) multiselect renders multiple cancelled values 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ opt0
+│  ◻ opt1
+│  ◻ opt2
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  ◼ opt1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  opt0, opt1
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) password renders message 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) password renders masked value 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ▪_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ▪▪_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  ▪▪"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) password renders custom mask 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  *_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  **_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  **"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) password renders and clears validation errors 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ▪_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ▪
+└  Password must be at least 2 characters
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ▪▪
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  ▪▪"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) password renders cancelled value 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  _
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ▪_",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  ▪
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect renders message with options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[8A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[5B",
+  "\x1B[999D\x1B[8A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect can select multiple options 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  │ ◻ group1value1
+│  └ ◻ group1value2
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[4B",
+  "\x1B[999D\x1B[7A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value1",
+  "\x1B[3B",
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect can select a group 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect can select a group by selecting all members 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect can deselect an option 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  │ ◼ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◻ group1
+│  │ ◼ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect renders error when nothing selected 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"▲  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└  Please select at least one option.
+   Press  space  to select,  enter  to submit
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect selectableGroups = false cannot select groups 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│   group1
+│    ◻ group1value0
+│    ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect selectableGroups = false selecting all members of group does not select group 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│   group1
+│    ◻ group1value0
+│    ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│    ◼ group1value1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0, group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect can submit empty selection when require = false 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect cursorAt sets initial selection 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◻ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[4B",
+  "\x1B[2K\x1B[G",
+  "│  └ ◼ group1value1",
+  "\x1B[2B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect initial values can be set 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ group1value0
+│  └ ◼ group1value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value1"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect values can be non-primitive 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  │ ◻ value0
+│  └ ◻ value1
+└
+"
+,
+  "\x1B[999D\x1B[6A",
+  "\x1B[3B",
+  "\x1B[2K\x1B[G",
+  "│  │ ◼ value0",
+  "\x1B[3B",
+  "\x1B[999D\x1B[6A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect groupSpacing renders spaced groups 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│
+│
+│  ◻ group1
+│  └ ◻ group1value0
+│
+│
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[11A",
+  "\x1B[4B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  └ ◼ group1value0
+│
+│
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[11A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) groupMultiselect groupSpacing negative spacing is ignored 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ◻ group1
+│  └ ◻ group1value0
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[2B",
+  "\x1B[J",
+  
+"│  ◼ group1
+│  └ ◼ group1value0
+│  ◻ group2
+│  └ ◻ group2value0
+└
+"
+,
+  "\x1B[999D\x1B[7A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  group1value0"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`prompts (isCI = false) note renders message with title 1`] = `
+[
+  
+"│
+◇  title ───╮
+│           │
+│  message  │
+│           │
+├───────────╯
+"
+,
+]
+`;
+
+exports[`prompts (isCI = false) note renders as wide as longest line 1`] = `
+[
+  
+"│
+◇  title ───────────────────────────╮
+│                                   │
+│  short                            │
+│  somewhat questionably long line  │
+│                                   │
+├───────────────────────────────────╯
+"
+,
+]
+`;
+
+exports[`prompts (isCI = false) note formatter which adds length works 1`] = `
+[
+  
+"│
+◇  title ──────╮
+│              │
+│  * line 0 *  │
+│  * line 1 *  │
+│  * line 2 *  │
+│              │
+├──────────────╯
+"
+,
+]
+`;
+
+exports[`prompts (isCI = false) note formatter which adds colors works 1`] = `
+[
+  
+"│
+◇  title ──╮
+│          │
+│  line 0  │
+│  line 1  │
+│  line 2  │
+│          │
+├──────────╯
+"
+,
+]
+`;

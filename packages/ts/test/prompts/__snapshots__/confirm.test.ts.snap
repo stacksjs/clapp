@@ -1,0 +1,383 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`confirm (isCI = true) renders message with choices 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = true) renders custom active choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● bleep / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  bleep"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = true) renders custom inactive choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ bleep
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = true) right arrow moves to next choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ○ Yes / ● No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  No"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = true) left arrow moves to previous choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ○ Yes / ● No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ● Yes / ○ No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = true) can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  No
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = true) can set initialValue 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ○ Yes / ● No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  No"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = false) renders message with choices 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = false) renders custom active choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● bleep / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  bleep"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = false) renders custom inactive choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ bleep
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = false) right arrow moves to next choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ○ Yes / ● No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  No"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = false) left arrow moves to previous choice 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ○ Yes / ● No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[2B",
+  "\x1B[2K\x1B[G",
+  "│  ● Yes / ○ No",
+  "\x1B[2B",
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  Yes"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = false) can cancel 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ● Yes / ○ No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"■  foo
+│  No
+│"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
+
+exports[`confirm (isCI = false) can set initialValue 1`] = `
+[
+  "\x1B[?25l",
+  
+"│
+◆  foo
+│  ○ Yes / ● No
+└
+"
+,
+  "\x1B[999D\x1B[4A",
+  "\x1B[1B",
+  "\x1B[J",
+  
+"◇  foo
+│  No"
+,
+  
+"
+"
+,
+  "\x1B[?25h",
+]
+`;
