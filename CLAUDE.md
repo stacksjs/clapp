@@ -2,7 +2,7 @@
 
 ## About
 
-A toolkit for building CLI prompts in TypeScript.
+clapp is a TypeScript-first CLI framework built on Bun for creating command-line applications with interactive prompts. It provides a CAC-inspired command/option API for building CLI tools, plus clack-inspired prompt components (text, confirm, select, multiselect, spinner, password). It can be used both as a CLI framework (`new CLI()`) and as a prompt library.
 
 ## Linting
 
