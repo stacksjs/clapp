@@ -123,7 +123,7 @@ cli.parse()
 Getting started with clapp is simple:
 
 ```bash
-# Use this GitHub template or run the following command:
+# Use this GitHub template or run the following command
 bunx degit stacksjs/clapp my-cli-app
 cd my-cli-app
 

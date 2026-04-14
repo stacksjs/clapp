@@ -26,6 +26,7 @@ Clapp Zig is a **production-ready, feature-complete** CLI framework with 22+ mod
 ### Interactive Prompts
 
 #### Basic Prompts
+
 - **Text Input** - Prompts with validation, placeholders, and defaults
 - **Confirm Prompts** - Yes/no confirmations with default values
 - **Select Prompts** - Single-choice selection from a list
@@ -34,6 +35,7 @@ Clapp Zig is a **production-ready, feature-complete** CLI framework with 22+ mod
 - **Intro/Outro** - Session start and end messages
 
 #### Advanced Prompts
+
 - **Autocomplete** - Search-as-you-type with fuzzy matching and keyboard navigation
 - **Path Picker** - File/directory selection with validation and type checking
 - **Number Input** - Numeric input with min/max validation and integer-only mode
