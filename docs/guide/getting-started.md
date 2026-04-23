@@ -50,7 +50,10 @@ cli
     console.log(options.loud ? greeting.toUpperCase() : greeting)
   })
 
-cli.parse()
+// `run()` is preferred over `parse()` for executables — it catches
+// usage errors (unknown flag, missing argument) and exits with a
+// friendly one-line message + exit code 2 instead of a stack trace.
+await cli.run()
 ```
 
 Run your CLI:
@@ -128,12 +131,21 @@ cli.command('serve', 'Start the server')
 
 ### Parsing
 
-Always call `parse()` at the end to process command-line arguments:
+For a shipped binary, `await cli.run()` is the recommended entry point — it's `parse()` wrapped with usage-error handling:
 
 ```ts
-cli.parse()       // Uses process.argv by default
-cli.parse(args)   // Use custom arguments array
+await cli.run()         // Uses process.argv. Catches usage errors, exits 2.
+await cli.run(args)     // Custom arguments array.
 ```
+
+Under the hood:
+
+```ts
+// `run()` is shorthand for:
+await cli.parse(process.argv, { exitOnError: true })
+```
+
+Use `cli.parse()` directly when you want to handle usage errors yourself (tests, programmatic consumers) — it rethrows the underlying `ClappError` unchanged.
 
 ## Next Steps
 

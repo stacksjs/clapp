@@ -164,6 +164,20 @@ export function camelcaseOptionName(name: string): string {
 }
 
 export class ClappError extends Error {
+  /**
+   * Process exit code that a CLI should use when this error bubbles out
+   * of `parse()` with `exitOnError: true`. Always `2` for usage errors,
+   * matching the POSIX convention for command-line misuse.
+   */
+  exitCode: number = 2
+
+  /**
+   * `true` for errors the user caused — unknown options, missing args,
+   * etc. `run()` / `parse({ exitOnError: true })` treats these as
+   * "print friendly message and exit" rather than dumping a stack.
+   */
+  isUsageError: boolean = true
+
   constructor(message: string) {
     super(message)
     this.name = this.constructor.name

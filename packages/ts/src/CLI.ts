@@ -370,15 +370,37 @@ export class CLI extends EventEmitter {
   }
 
   /**
-   * Parse argv
+   * Parse argv.
+   *
+   * By default this re-throws any error from argument validation so
+   * tests and programmatic consumers can catch it. Pass
+   * `exitOnError: true` (or use the {@link run} convenience) to have
+   * clapp print a friendly message and `process.exit(exitCode)` for
+   * usage errors like unknown flags.
    */
   async parse(
     argv: string[] = processArgs,
     {
       /** Whether to run the action for matched command */
       run = true,
-    }: { run?: boolean } = {},
+      /**
+       * When `true`, `ClappError` instances whose `isUsageError` flag is
+       * set are rendered as a one-line message (plus "run --help" hint)
+       * and terminate the process with the error's `exitCode`. Other
+       * errors still propagate. Defaults to `false` for back-compat.
+       */
+      exitOnError = false,
+    }: { run?: boolean, exitOnError?: boolean } = {},
   ): Promise<ParsedArgv> {
+    if (exitOnError) {
+      try {
+        return await this.parse(argv, { run })
+      }
+      catch (err) {
+        this.handleUsageError(err)
+        throw err
+      }
+    }
     this.rawArgs = argv
     if (!this.name) {
       this.name = argv[1] ? getFileName(argv[1]) : 'cli'
@@ -558,6 +580,44 @@ export class CLI extends EventEmitter {
       args,
       options,
     }
+  }
+
+  /**
+   * Convenience wrapper for CLI binaries: identical to `parse(argv, {
+   * exitOnError: true, run: true })`. Intended as the last line of a
+   * `bin/*.ts` entry — catches usage errors, prints a friendly message,
+   * and calls `process.exit(2)`. Unexpected errors still surface so the
+   * host's own error reporter can see them.
+   */
+  async run(argv: string[] = processArgs): Promise<ParsedArgv> {
+    return this.parse(argv, { run: true, exitOnError: true })
+  }
+
+  /**
+   * Print a friendly one-line message for a `ClappError.isUsageError`
+   * and terminate the process with its `exitCode`. Non-usage errors are
+   * re-thrown so the caller / test harness can see them. Exposed so
+   * downstream CLIs can invoke the same renderer from their own
+   * try/catch if they want to bypass `exitOnError`.
+   */
+  handleUsageError(err: unknown): void {
+    const isClappError = !!err && typeof err === 'object'
+      && (err as { name?: string }).name === 'ClappError'
+    const isUsage = isClappError && (err as { isUsageError?: boolean }).isUsageError !== false
+    if (!isUsage)
+      return
+
+    const e = err as { message?: string, exitCode?: number }
+    const raw = e.message ?? 'command-line error'
+    const label = this.name ? `${this.name}: ` : ''
+    // Messages built by `checkUnknownOptions` / `checkOptionValue`
+    // already include a "Run … --help" hint. Only append our own when
+    // the underlying message is terse and doesn't mention help.
+    const suffix = /--help/.test(raw)
+      ? ''
+      : `\nRun \`${this.name ?? 'cli'} --help\` for usage.`
+    process.stderr.write(`${label}${raw}${suffix}\n`)
+    process.exit(e.exitCode ?? 2)
   }
 
   async runMatchedCommand(): Promise<unknown> {

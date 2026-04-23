@@ -114,26 +114,88 @@ app.command('hello', 'Say hello')
 
 ## Error Handling
 
-Handle errors gracefully:
+### Usage errors are handled for you
+
+When your binary calls `cli.run()` (recommended) or
+`cli.parse(argv, { exitOnError: true })`, clapp traps usage errors —
+unknown flags, missing required args, bad option values — and exits
+with code `2` after printing a one-line message to stderr. No stack
+trace, no unhandled rejection.
+
+```ts
+// bin/mycli.ts
+async function main() {
+  const app = cli('mycli').version('1.0.0').help()
+
+  app.command('build', 'Build the project')
+    .option('--verbose', 'Verbose output')
+    .action(() => { /* … */ })
+
+  await app.run()   // ← usage errors handled inside
+}
+
+main().catch((err) => {
+  // Internal failures only reach here. `cli.run()` already handled
+  // usage errors like `mycli build --wong-flag`.
+  console.error(err)
+  process.exit(1)
+})
+```
+
+Running `mycli build --wong-flag` prints:
+
+```
+mycli: Unknown option `--wong-flag`
+
+Did you mean one of these?
+  • --verbose
+
+Run `mycli build --help` to see available options.
+```
+
+…and exits 2.
+
+### Custom action errors
+
+`throw new ClappError(msg)` inside an action marks it as a usage error
+by default — `cli.run()` will print + exit. To flag an action-level
+error as an internal failure (so `.catch()` sees it), set
+`isUsageError = false`:
 
 ```ts
 import { cli, ClappError } from '@stacksjs/clapp'
 
-const app = cli('mycli')
-  .version('1.0.0')
-  .help()
+const app = cli('mycli').version('1.0.0').help()
 
 app.command('read <file>', 'Read a file')
   .action((file) => {
     try {
-      // Attempt to read file
       const contents = readFileSync(file, 'utf8')
       console.log(contents)
     }
-    catch (err) {
-      throw new ClappError(`Could not read file: ${file}`)
+    catch {
+      const err = new ClappError(`Could not read file: ${file}`)
+      err.isUsageError = false   // ← internal failure, don't swallow
+      err.exitCode = 1
+      throw err
     }
   })
+
+await app.run()
+```
+
+### DIY — catch and delegate
+
+If you want full control, `parse()` still throws by default and `handleUsageError()` is the renderer `run()` uses internally:
+
+```ts
+try {
+  await app.parse(process.argv)
+}
+catch (err) {
+  app.handleUsageError(err)   // prints + exits for ClappError usage errors
+  throw err                   // rethrows non-usage errors
+}
 ```
 
 ## Global Options

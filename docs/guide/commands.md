@@ -267,7 +267,24 @@ cli
 
 ## Error Handling
 
-Handle errors gracefully:
+Usage errors (unknown flag, missing argument, bad option value) are handled automatically when you call `cli.run()` or `cli.parse(argv, { exitOnError: true })`:
+
+```ts
+// User typed `my-cli deploy --wong-flag`:
+//
+//   my-cli: Unknown option `--wong-flag`
+//
+//   Did you mean one of these?
+//     • --verbose
+//
+//   Run `my-cli deploy --help` to see available options.
+//
+// Exit code: 2
+
+await cli.run()
+```
+
+Action-level errors still bubble to your `main().catch()` — `run()` only swallows usage errors. Wrap individual actions in try/catch if you want to translate an internal failure into a friendly message:
 
 ```ts
 cli
@@ -276,12 +293,15 @@ cli
     try {
       await deploy(env)
       console.log('Deployment successful!')
-    } catch (error) {
-      console.error('Deployment failed:', error.message)
+    }
+    catch (error) {
+      console.error('Deployment failed:', (error as Error).message)
       process.exit(1)
     }
   })
 ```
+
+See the [CLI framework feature docs](../features/cli-framework.md#error-handling) for `ClappError.isUsageError`, `exitCode`, and the DIY `handleUsageError()` renderer.
 
 ## Async Actions
 

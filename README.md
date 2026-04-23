@@ -118,6 +118,78 @@ cli
 cli.parse()
 ```
 
+### Shipping a real binary — use `cli.run()`
+
+For actual CLI executables, prefer `cli.run()` over `cli.parse()`.
+`run()` wraps parse + `runMatchedCommand` with usage-error handling:
+when the user types an unknown flag or omits a required argument, clapp
+prints a one-line message (plus "run --help" hint) to stderr and exits
+with code `2` — no stack trace, no unhandled-rejection noise.
+
+```ts
+// bin/my-cli.ts
+async function main() {
+  const cli = new CLI('my-cli')
+    .version('1.0.0')
+    .help()
+
+  cli.command('build', 'Build the project')
+    .option('--verbose', 'Verbose output')
+    .action((opts) => { /* … */ })
+
+  await cli.run()
+}
+
+main().catch((err) => {
+  // Anything that escapes `cli.run()` is an unexpected internal error
+  // — a filesystem failure, a bug in an action handler, etc.
+  console.error(err)
+  process.exit(1)
+})
+```
+
+Typing `my-cli build --wong-flag` now prints:
+
+```
+my-cli: Unknown option `--wong-flag`
+
+Did you mean one of these?
+  • --verbose
+
+Run `my-cli build --help` to see available options.
+```
+
+…and exits with code 2. Non-usage errors (e.g. your action throwing) still propagate so the outer `.catch()` sees them.
+
+### Opt-in from an existing `cli.parse()`
+
+If you already use `parse()`, the same behaviour is available as an option:
+
+```ts
+await cli.parse(process.argv, { exitOnError: true })
+```
+
+Or handle errors yourself and delegate to the same renderer:
+
+```ts
+try {
+  await cli.parse(process.argv)
+}
+catch (err) {
+  cli.handleUsageError(err)    // prints + exits for usage errors
+  throw err                    // rethrows non-usage errors
+}
+```
+
+`ClappError` instances carry two fields you can introspect:
+
+- `isUsageError: boolean` — `true` for user-caused errors (unknown
+  option, missing arg, bad option value). Set to `false` if you throw
+  `ClappError` yourself for an internal failure and want `run()` /
+  `handleUsageError()` to propagate it rather than swallow it.
+- `exitCode: number` — defaults to `2`. Override for specific error
+  classes (e.g. `137` for a timeout).
+
 ## Get Started
 
 Getting started with clapp is simple:

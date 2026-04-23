@@ -66,17 +66,59 @@ outro('You are all set!')
 Build robust command-line applications with an elegant API:
 
 ```typescript
-import { command, run } from '@stacksjs/clapp'
+import { CLI } from '@stacksjs/clapp'
 
-command('greet')
-  .description('Greet a user')
-  .option('-n, --name <name>', 'Name to greet', { default: 'World' })
-  .action((options) => {
-    console.log(`Hello, ${options.name}!`)
+const cli = new CLI('greet')
+  .version('1.0.0')
+  .help()
+
+cli.command('hello <name>', 'Greet a user')
+  .option('--shout', 'Uppercase the greeting')
+  .action((name, opts) => {
+    const line = `Hello, ${name}!`
+    console.log(opts.shout ? line.toUpperCase() : line)
   })
 
-run()
+// `run()` catches usage errors (unknown flags, missing args), prints a
+// friendly message, and exits with code 2. Non-usage errors propagate.
+await cli.run()
 ```
+
+### Usage-error handling
+
+Running `greet hello --nope` prints:
+
+```
+greet: Unknown option `--nope`
+
+Run `greet hello --help` to see available options.
+```
+
+…and exits with code `2` — no stack trace.
+
+Three levels of integration:
+
+```typescript
+// 1. Highest level — `run()` handles usage errors for you.
+await cli.run()
+
+// 2. Same behaviour as an option on `parse()`.
+await cli.parse(process.argv, { exitOnError: true })
+
+// 3. DIY — catch and delegate to the same renderer.
+try {
+  await cli.parse(process.argv)
+}
+catch (err) {
+  cli.handleUsageError(err)  // prints + exits for ClappError usage errors
+  throw err                  // rethrows non-usage errors
+}
+```
+
+`ClappError` instances expose:
+
+- `isUsageError: boolean` — `true` for "the user typed it wrong", `false` for internal failures.
+- `exitCode: number` — defaults to `2` for usage errors; override for specific error classes.
 
 ### Telemetry
 
