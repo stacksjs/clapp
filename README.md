@@ -184,10 +184,13 @@ catch (err) {
 `ClappError` instances carry two fields you can introspect:
 
 - `isUsageError: boolean` — `true` for user-caused errors (unknown
+
   option, missing arg, bad option value). Set to `false` if you throw
   `ClappError` yourself for an internal failure and want `run()` /
   `handleUsageError()` to propagate it rather than swallow it.
+
 - `exitCode: number` — defaults to `2`. Override for specific error
+
   classes (e.g. `137` for a timeout).
 
 ## Get Started
