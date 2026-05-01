@@ -71,7 +71,7 @@ describe('parse({ exitOnError: true })', () => {
 
   it('prefixes the message with the CLI name when set', async () => {
     const app = cli('demo')
-    app.command('build').option('--verbose').action(() => {})
+    app.command('build').option('--verbose', 'Verbose output').action(() => {})
 
     await expect(async () => {
       await app.parse(['node', 'demo', 'build', '--wrong'], { exitOnError: true })
@@ -104,7 +104,7 @@ describe('cli.run()', () => {
 
   it('is a thin shorthand for parse({ exitOnError: true })', async () => {
     const app = cli('demo')
-    app.command('build').option('--verbose').action(() => {})
+    app.command('build').option('--verbose', 'Verbose output').action(() => {})
 
     await expect(async () => {
       await app.run(['node', 'demo', 'build', '--wrong'])
