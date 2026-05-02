@@ -1,3 +1,38 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.5...v0.2.6)
+
+### 🐛 Bug Fixes
+
+- allow structural unknown-subcommand handlers ([d449dbd](https://github.com/stacksjs/clapp/commit/d449dbd)) _(by Chris <chrisbreuer93@gmail.com>)_
+- allow typed command actions ([7fcb57f](https://github.com/stacksjs/clapp/commit/7fcb57f)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **test**: make 'note formatter' test deterministic ([29deddc](https://github.com/stacksjs/clapp/commit/29deddc)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### 🧹 Chores
+
+- release v0.2.6 ([0b5f75a](https://github.com/stacksjs/clapp/commit/0b5f75a)) _(by Chris <chrisbreuer93@gmail.com>)_
+- release v0.2.5 ([a7e25a2](https://github.com/stacksjs/clapp/commit/a7e25a2)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.4...HEAD)
+
+### 🐛 Bug Fixes
+
+- allow structural unknown-subcommand handlers ([d449dbd](https://github.com/stacksjs/clapp/commit/d449dbd)) _(by Chris <chrisbreuer93@gmail.com>)_
+- allow typed command actions ([7fcb57f](https://github.com/stacksjs/clapp/commit/7fcb57f)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **test**: make 'note formatter' test deterministic ([29deddc](https://github.com/stacksjs/clapp/commit/29deddc)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### 🧹 Chores
+
+- release v0.2.5 ([a7e25a2](https://github.com/stacksjs/clapp/commit/a7e25a2)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.4...v0.2.5)
 
 ### 🐛 Bug Fixes
