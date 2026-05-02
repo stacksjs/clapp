@@ -135,7 +135,7 @@ export class Command {
     return this
   }
 
-  action(callback: (...args: unknown[]) => unknown): this {
+  action(callback: (...args: any[]) => unknown): this {
     this.commandAction = callback
     return this
   }
