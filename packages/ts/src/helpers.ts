@@ -1,5 +1,10 @@
-import type { CLI } from './CLI'
 import process from 'node:process'
+
+interface UnknownSubcommandCli {
+  name?: string
+  args?: ReadonlyArray<string>
+  on(event: string, listener: () => void): unknown
+}
 
 /**
  * Wire the canonical "unknown subcommand" handler for a command group.
@@ -30,12 +35,12 @@ import process from 'node:process'
  * onUnknownSubcommand(buddy, 'queue')
  * ```
  */
-export function onUnknownSubcommand(cliInstance: CLI, prefix: string): void {
+export function onUnknownSubcommand(cliInstance: UnknownSubcommandCli, prefix: string): void {
   cliInstance.on(`${prefix}:*`, () => {
     const args = cliInstance.args ?? []
     process.stderr.write(
       `Unknown ${prefix} subcommand: ${[...args].join(' ')}\n`
-      + `Run \`${cliInstance.name} ${prefix} --help\` to see available subcommands.\n`,
+      + `Run \`${cliInstance.name ?? 'cli'} ${prefix} --help\` to see available subcommands.\n`,
     )
     // 64 = EX_USAGE per <sysexits.h>. Distinct from 1 (general failure)
     // so CI / shell scripts can branch on "user-error" vs "real failure"
