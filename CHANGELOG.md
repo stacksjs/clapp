@@ -1,3 +1,146 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.1...v0.2.2)
+
+### 🚀 Features
+
+- onUnknownSubcommand helper for command-group fallback ([738dba9](https://github.com/stacksjs/clapp/commit/738dba9)) _(by Chris <chrisbreuer93@gmail.com>)_
+- add "did you mean?" support ([090a7af](https://github.com/stacksjs/clapp/commit/090a7af)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### 🐛 Bug Fixes
+
+- chain pantry publish:commit calls for single-arg CLI ([4323cb4](https://github.com/stacksjs/clapp/commit/4323cb4)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- commit test snapshots for CI ([5258025](https://github.com/stacksjs/clapp/commit/5258025)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### 🧹 Chores
+
+- release v0.2.2 ([9f32900](https://github.com/stacksjs/clapp/commit/9f32900)) _(by Chris <chrisbreuer93@gmail.com>)_
+- improve exit on error ([eed9bf7](https://github.com/stacksjs/clapp/commit/eed9bf7)) _(by Chris <chrisbreuer93@gmail.com>)_
+- fresh install to pick up pickier 0.1.21 ([10af331](https://github.com/stacksjs/clapp/commit/10af331)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- fix lint errors ([057bc6b](https://github.com/stacksjs/clapp/commit/057bc6b)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- include md in pickier lint extensions ([2e1d45c](https://github.com/stacksjs/clapp/commit/2e1d45c)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- update dependencies ([934aea7](https://github.com/stacksjs/clapp/commit/934aea7)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- repo cleanup and modernization ([478397e](https://github.com/stacksjs/clapp/commit/478397e)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- remove redundant docs/.vitepress ([5a5608a](https://github.com/stacksjs/clapp/commit/5a5608a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- use Pantry action for publish-commit and add job dependencies ([2d5a0b8](https://github.com/stacksjs/clapp/commit/2d5a0b8)) _(by Chris <chrisbreuer93@gmail.com>)_
+- remove file ignores from pickier config ([1c07b18](https://github.com/stacksjs/clapp/commit/1c07b18)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- add CLAUDE.md and CHANGELOG.md to pickier ignores ([e85896f](https://github.com/stacksjs/clapp/commit/e85896f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- remove .pickierignore ([9ed23b6](https://github.com/stacksjs/clapp/commit/9ed23b6)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- update better-dx to ^0.2.7 ([7ecae79](https://github.com/stacksjs/clapp/commit/7ecae79)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- enrich CLAUDE.md with detailed project context from README ([8f8a13a](https://github.com/stacksjs/clapp/commit/8f8a13a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- update CLAUDE.md with project context and crosswind details ([3ed534b](https://github.com/stacksjs/clapp/commit/3ed534b)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- add proper claude code guidelines ([0ca4fc2](https://github.com/stacksjs/clapp/commit/0ca4fc2)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- use pantry monorepo action instead of pantry-setup ([ae3a9b8](https://github.com/stacksjs/clapp/commit/ae3a9b8)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- ignore claude config in linter ([5381317](https://github.com/stacksjs/clapp/commit/5381317)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- add claude code guidelines ([45dec52](https://github.com/stacksjs/clapp/commit/45dec52)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([6a0899f](https://github.com/stacksjs/clapp/commit/6a0899f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([4409200](https://github.com/stacksjs/clapp/commit/4409200)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([e47a5af](https://github.com/stacksjs/clapp/commit/e47a5af)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([9ba3dc6](https://github.com/stacksjs/clapp/commit/9ba3dc6)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([f4d246d](https://github.com/stacksjs/clapp/commit/f4d246d)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([989e171](https://github.com/stacksjs/clapp/commit/989e171)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([3ff5919](https://github.com/stacksjs/clapp/commit/3ff5919)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([bd7f531](https://github.com/stacksjs/clapp/commit/bd7f531)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([3c868aa](https://github.com/stacksjs/clapp/commit/3c868aa)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([cb8e43a](https://github.com/stacksjs/clapp/commit/cb8e43a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([ce2e4f4](https://github.com/stacksjs/clapp/commit/ce2e4f4)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([2bedeab](https://github.com/stacksjs/clapp/commit/2bedeab)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([1766e0d](https://github.com/stacksjs/clapp/commit/1766e0d)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([9269707](https://github.com/stacksjs/clapp/commit/9269707)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([c383913](https://github.com/stacksjs/clapp/commit/c383913)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([d841e4b](https://github.com/stacksjs/clapp/commit/d841e4b)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([545dcd4](https://github.com/stacksjs/clapp/commit/545dcd4)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([fba8dc0](https://github.com/stacksjs/clapp/commit/fba8dc0)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: update all non-major dependencies (#1538) ([e5d6805](https://github.com/stacksjs/clapp/commit/e5d6805)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#1538](https://github.com/stacksjs/clapp/issues/1538), [#1538](https://github.com/stacksjs/clapp/issues/1538))
+- wip ([b61acb5](https://github.com/stacksjs/clapp/commit/b61acb5)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([ca9a8cf](https://github.com/stacksjs/clapp/commit/ca9a8cf)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([7eff358](https://github.com/stacksjs/clapp/commit/7eff358)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([40aea95](https://github.com/stacksjs/clapp/commit/40aea95)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([95ba5a1](https://github.com/stacksjs/clapp/commit/95ba5a1)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([50b769e](https://github.com/stacksjs/clapp/commit/50b769e)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([59bdf33](https://github.com/stacksjs/clapp/commit/59bdf33)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([79ffdf1](https://github.com/stacksjs/clapp/commit/79ffdf1)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([5355263](https://github.com/stacksjs/clapp/commit/5355263)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: update all non-major dependencies (#27) ([146e617](https://github.com/stacksjs/clapp/commit/146e617)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#27](https://github.com/stacksjs/clapp/issues/27), [#27](https://github.com/stacksjs/clapp/issues/27))
+- **deps**: update actions/checkout action to v6 (#29) ([c7f4d9d](https://github.com/stacksjs/clapp/commit/c7f4d9d)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#29](https://github.com/stacksjs/clapp/issues/29), [#29](https://github.com/stacksjs/clapp/issues/29))
+- wip ([5f9879f](https://github.com/stacksjs/clapp/commit/5f9879f)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([c7b9980](https://github.com/stacksjs/clapp/commit/c7b9980)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _[renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot])_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.1...HEAD)
+
+### 🚀 Features
+
+- onUnknownSubcommand helper for command-group fallback ([738dba9](https://github.com/stacksjs/clapp/commit/738dba9)) _(by Chris <chrisbreuer93@gmail.com>)_
+- add "did you mean?" support ([090a7af](https://github.com/stacksjs/clapp/commit/090a7af)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### 🐛 Bug Fixes
+
+- chain pantry publish:commit calls for single-arg CLI ([4323cb4](https://github.com/stacksjs/clapp/commit/4323cb4)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- commit test snapshots for CI ([5258025](https://github.com/stacksjs/clapp/commit/5258025)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### 🧹 Chores
+
+- improve exit on error ([eed9bf7](https://github.com/stacksjs/clapp/commit/eed9bf7)) _(by Chris <chrisbreuer93@gmail.com>)_
+- fresh install to pick up pickier 0.1.21 ([10af331](https://github.com/stacksjs/clapp/commit/10af331)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- fix lint errors ([057bc6b](https://github.com/stacksjs/clapp/commit/057bc6b)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- include md in pickier lint extensions ([2e1d45c](https://github.com/stacksjs/clapp/commit/2e1d45c)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- update dependencies ([934aea7](https://github.com/stacksjs/clapp/commit/934aea7)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- repo cleanup and modernization ([478397e](https://github.com/stacksjs/clapp/commit/478397e)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- remove redundant docs/.vitepress ([5a5608a](https://github.com/stacksjs/clapp/commit/5a5608a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- use Pantry action for publish-commit and add job dependencies ([2d5a0b8](https://github.com/stacksjs/clapp/commit/2d5a0b8)) _(by Chris <chrisbreuer93@gmail.com>)_
+- remove file ignores from pickier config ([1c07b18](https://github.com/stacksjs/clapp/commit/1c07b18)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- add CLAUDE.md and CHANGELOG.md to pickier ignores ([e85896f](https://github.com/stacksjs/clapp/commit/e85896f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- remove .pickierignore ([9ed23b6](https://github.com/stacksjs/clapp/commit/9ed23b6)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- update better-dx to ^0.2.7 ([7ecae79](https://github.com/stacksjs/clapp/commit/7ecae79)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- enrich CLAUDE.md with detailed project context from README ([8f8a13a](https://github.com/stacksjs/clapp/commit/8f8a13a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- update CLAUDE.md with project context and crosswind details ([3ed534b](https://github.com/stacksjs/clapp/commit/3ed534b)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- add proper claude code guidelines ([0ca4fc2](https://github.com/stacksjs/clapp/commit/0ca4fc2)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- use pantry monorepo action instead of pantry-setup ([ae3a9b8](https://github.com/stacksjs/clapp/commit/ae3a9b8)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- ignore claude config in linter ([5381317](https://github.com/stacksjs/clapp/commit/5381317)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- add claude code guidelines ([45dec52](https://github.com/stacksjs/clapp/commit/45dec52)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([6a0899f](https://github.com/stacksjs/clapp/commit/6a0899f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([4409200](https://github.com/stacksjs/clapp/commit/4409200)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([e47a5af](https://github.com/stacksjs/clapp/commit/e47a5af)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([9ba3dc6](https://github.com/stacksjs/clapp/commit/9ba3dc6)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([f4d246d](https://github.com/stacksjs/clapp/commit/f4d246d)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([989e171](https://github.com/stacksjs/clapp/commit/989e171)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([3ff5919](https://github.com/stacksjs/clapp/commit/3ff5919)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([bd7f531](https://github.com/stacksjs/clapp/commit/bd7f531)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([3c868aa](https://github.com/stacksjs/clapp/commit/3c868aa)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([cb8e43a](https://github.com/stacksjs/clapp/commit/cb8e43a)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([ce2e4f4](https://github.com/stacksjs/clapp/commit/ce2e4f4)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([2bedeab](https://github.com/stacksjs/clapp/commit/2bedeab)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([1766e0d](https://github.com/stacksjs/clapp/commit/1766e0d)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([9269707](https://github.com/stacksjs/clapp/commit/9269707)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([c383913](https://github.com/stacksjs/clapp/commit/c383913)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([d841e4b](https://github.com/stacksjs/clapp/commit/d841e4b)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([545dcd4](https://github.com/stacksjs/clapp/commit/545dcd4)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([fba8dc0](https://github.com/stacksjs/clapp/commit/fba8dc0)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: update all non-major dependencies (#1538) ([e5d6805](https://github.com/stacksjs/clapp/commit/e5d6805)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#1538](https://github.com/stacksjs/clapp/issues/1538), [#1538](https://github.com/stacksjs/clapp/issues/1538))
+- wip ([b61acb5](https://github.com/stacksjs/clapp/commit/b61acb5)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([ca9a8cf](https://github.com/stacksjs/clapp/commit/ca9a8cf)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([7eff358](https://github.com/stacksjs/clapp/commit/7eff358)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- wip ([40aea95](https://github.com/stacksjs/clapp/commit/40aea95)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([95ba5a1](https://github.com/stacksjs/clapp/commit/95ba5a1)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([50b769e](https://github.com/stacksjs/clapp/commit/50b769e)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([59bdf33](https://github.com/stacksjs/clapp/commit/59bdf33)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([79ffdf1](https://github.com/stacksjs/clapp/commit/79ffdf1)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([5355263](https://github.com/stacksjs/clapp/commit/5355263)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: update all non-major dependencies (#27) ([146e617](https://github.com/stacksjs/clapp/commit/146e617)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#27](https://github.com/stacksjs/clapp/issues/27), [#27](https://github.com/stacksjs/clapp/issues/27))
+- **deps**: update actions/checkout action to v6 (#29) ([c7f4d9d](https://github.com/stacksjs/clapp/commit/c7f4d9d)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#29](https://github.com/stacksjs/clapp/issues/29), [#29](https://github.com/stacksjs/clapp/issues/29))
+- wip ([5f9879f](https://github.com/stacksjs/clapp/commit/5f9879f)) _(by Chris <chrisbreuer93@gmail.com>)_
+- wip ([c7b9980](https://github.com/stacksjs/clapp/commit/c7b9980)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _[renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot])_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.0...v0.2.1)
 
 ### 🧹 Chores
