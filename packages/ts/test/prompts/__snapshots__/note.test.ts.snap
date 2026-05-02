@@ -51,9 +51,9 @@ exports[`note (isCI = true) formatter which adds colors works 1`] = `
 "│
 ◇  title ──╮
 │          │
-│  line 0  │
-│  line 1  │
-│  line 2  │
+│  \x1B[31mline 0\x1B[39m  │
+│  \x1B[31mline 1\x1B[39m  │
+│  \x1B[31mline 2\x1B[39m  │
 │          │
 ├──────────╯
 "
@@ -112,9 +112,9 @@ exports[`note (isCI = false) formatter which adds colors works 1`] = `
 "│
 ◇  title ──╮
 │          │
-│  line 0  │
-│  line 1  │
-│  line 2  │
+│  \x1B[31mline 0\x1B[39m  │
+│  \x1B[31mline 1\x1B[39m  │
+│  \x1B[31mline 2\x1B[39m  │
 │          │
 ├──────────╯
 "

@@ -1,5 +1,4 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, jest, test } from 'bun:test'
-import colors from 'picocolors'
 import * as prompts from '../../src'
 import { MockReadable, MockWritable } from '../utils'
 
@@ -55,8 +54,13 @@ describe.each(['true', 'false'])('note (isCI = %s)', (isCI) => {
   })
 
   test('formatter which adds colors works', () => {
+    // Use hardcoded ANSI codes instead of `colors.red(line)` — picocolors
+    // enables colors when `process.env.CI` is set (its `isColorSupported`
+    // detection treats CI as a yes), which means the test would emit
+    // colored output in CI but bare output locally, making the snapshot
+    // non-deterministic across environments.
     prompts.note('line 0\nline 1\nline 2', 'title', {
-      format: line => colors.red(line),
+      format: line => `\x1B[31m${line}\x1B[39m`,
       input,
       output,
     })

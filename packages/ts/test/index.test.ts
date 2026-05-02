@@ -1,7 +1,6 @@
 import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, mock, setSystemTime, spyOn } from 'bun:test'
 import { EventEmitter } from 'node:events'
 import { Readable, Writable } from 'node:stream'
-import colors from 'picocolors'
 import * as prompts from '../src/prompts'
 import { isCancel } from '../src/utils/index'
 import { settings } from '../src/utils/settings'
@@ -1427,8 +1426,11 @@ describe.each(['true', 'false'])('prompts (isCI = %s)', (isCI) => {
     })
 
     it('formatter which adds colors works', () => {
+      // Hardcoded ANSI codes — picocolors flips its `isColorSupported`
+      // detection based on `process.env.CI`, which would otherwise make
+      // this snapshot non-deterministic across local/CI environments.
       prompts.note('line 0\nline 1\nline 2', 'title', {
-        format: line => colors.red(line),
+        format: line => `\x1B[31m${line}\x1B[39m`,
         input,
         output,
       })
