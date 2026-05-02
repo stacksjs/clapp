@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0",
+  "lockfileVersion": 1,
+  "generatedAt": "1771538299",
+  "packages": {
+    "picocolors@^1.1.1": {
+      "name": "picocolors",
+      "version": "^1.1.1",
+      "source": "pkgx"
+    },
+    "wrap-ansi@^9.0.2": {
+      "name": "wrap-ansi",
+      "version": "^9.0.2",
+      "source": "pkgx"
+    },
+    "mri@^1.2.0": {
+      "name": "mri",
+      "version": "^1.2.0",
+      "source": "pkgx"
+    }
+  }
+}
