@@ -40,7 +40,8 @@
     "changelog": "bunx logsmith --verbose",
     "changelog:generate": "bunx logsmith --output CHANGELOG.md",
     "release": "bun --bun run changelog:generate && bunx --bun bumpx prompt --recursive",
-    "release:patch": "bun --bun run changelog:generate && bunx --bun bumpx patch --recursive --yes && cd packages/ts && bun publish",
+    "release:patch": "bun --bun run changelog:generate && bunx --bun bumpx patch --recursive --yes",
+    "publish:patch": "bun --bun run changelog:generate && bunx --bun bumpx patch --recursive --yes",
     "release:minor": "bun --bun run changelog:generate && bunx --bun bumpx minor --recursive --yes && cd packages/ts && bun publish",
     "release:major": "bun --bun run changelog:generate && bunx --bun bumpx major --recursive --yes && cd packages/ts && bun publish",
     "dev:docs": "bun --bun bunpress dev docs",
@@ -49,7 +50,8 @@
     "typecheck": "bun --bun tsc --noEmit"
   },
   "devDependencies": {
-    "better-dx": "^0.2.7",
+    "better-dx": "^0.2.11",
+    "bun-plugin-dtsx": "^0.9.14",
     "picocolors": "^1.1.1"
   },
   "git-hooks": {

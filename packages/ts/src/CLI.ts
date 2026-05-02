@@ -17,6 +17,16 @@ interface ParsedArgv {
   options: ParsedOptions
 }
 
+export interface ParseOptions {
+  /** Whether to run the action for matched command. */
+  run?: boolean
+  /**
+   * Render usage errors and terminate with their exit code instead of
+   * propagating them to the caller.
+   */
+  exitOnError?: boolean
+}
+
 export class CLI extends EventEmitter {
   /** The program name to display in help and version message */
   name: string
@@ -380,18 +390,9 @@ export class CLI extends EventEmitter {
    */
   async parse(
     argv: string[] = processArgs,
-    {
-      /** Whether to run the action for matched command */
-      run = true,
-      /**
-       * When `true`, `ClappError` instances whose `isUsageError` flag is
-       * set are rendered as a one-line message (plus "run --help" hint)
-       * and terminate the process with the error's `exitCode`. Other
-       * errors still propagate. Defaults to `false` for back-compat.
-       */
-      exitOnError = false,
-    }: { run?: boolean, exitOnError?: boolean } = {},
+    options: ParseOptions = {},
   ): Promise<ParsedArgv> {
+    let { run = true, exitOnError = false } = options
     if (exitOnError) {
       try {
         return await this.parse(argv, { run })

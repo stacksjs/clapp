@@ -34,7 +34,7 @@ export default class TextPrompt extends Prompt<string> {
 
     this.on('key', (char) => {
       if (char === '\t' && this.placeholder) {
-        if (!this.value) {
+        if (!this.userInput || this.userInput === '\t') {
           this._setValue(this.placeholder)
           this._setUserInput(this.placeholder, true)
         }
