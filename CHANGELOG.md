@@ -1,3 +1,27 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.3...v0.2.4)
+
+### 🐛 Bug Fixes
+
+- publish valid clapp declarations ([3800823](https://github.com/stacksjs/clapp/commit/3800823)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### 🧹 Chores
+
+- release v0.2.4 ([c340c6c](https://github.com/stacksjs/clapp/commit/c340c6c)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.3...HEAD)
+
+### 🐛 Bug Fixes
+
+- publish valid clapp declarations ([3800823](https://github.com/stacksjs/clapp/commit/3800823)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.2...v0.2.3)
 
 ### 🚀 Features
