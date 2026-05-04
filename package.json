@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "better-dx": "^0.2.11",
-    "bun-plugin-dtsx": "^0.9.14",
+    "bun-plugin-dtsx": "^0.9.18",
     "picocolors": "^1.1.1"
   },
   "git-hooks": {
