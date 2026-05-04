@@ -1,3 +1,24 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.6...v0.2.7)
+
+### 🧹 Chores
+
+- release v0.2.7 ([febc299](https://github.com/stacksjs/clapp/commit/febc299)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: bump bun-plugin-dtsx to ^0.9.18 ([04515a5](https://github.com/stacksjs/clapp/commit/04515a5)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### Contributors
+
+- _glennmichael123 <gtorregosa@gmail.com>_
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.6...HEAD)
+
+### 🧹 Chores
+
+- **deps**: bump bun-plugin-dtsx to ^0.9.18 ([04515a5](https://github.com/stacksjs/clapp/commit/04515a5)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### Contributors
+
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.5...v0.2.6)
 
 ### 🐛 Bug Fixes
