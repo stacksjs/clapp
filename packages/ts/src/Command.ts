@@ -180,10 +180,15 @@ export class Command {
    * @param name Command name
    */
   isMatched(name: string): boolean {
-    if (this.aliasNames.includes(name)) return true
-    if (this.name === name) return true
-    if (this.namespace && `${this.namespace}:${this.name}` === name) return true
-    return false
+    if (this.aliasNames.includes(name))
+      return true
+    // For namespaced commands (e.g. registered as `publish:model`), only the
+    // fully qualified `namespace:name` form should dispatch — matching the
+    // bare `name` would have `model` from `publish:model` swallow input
+    // intended for an unrelated top-level `model` command.
+    if (this.namespace)
+      return `${this.namespace}:${this.name}` === name
+    return this.name === name
   }
 
   get isDefaultCommand(): boolean {
