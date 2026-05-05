@@ -168,11 +168,22 @@ export class Command {
   }
 
   /**
-   * Check if a command name is matched by this command
+   * Check if a command name is matched by this command.
+   *
+   * Namespaced commands (registered with a colon, e.g. `make:seeder`)
+   * are split during construction: the segment before `:` becomes
+   * `this.namespace` and the segment after becomes `this.name`. The
+   * user types the full namespaced form, so the match needs to accept
+   * either the bare name (alias of unnamespaced commands) or the
+   * reconstructed `namespace:name` — without this, every namespaced
+   * command falls through to "Command not found".
    * @param name Command name
    */
   isMatched(name: string): boolean {
-    return this.name === name || this.aliasNames.includes(name)
+    if (this.aliasNames.includes(name)) return true
+    if (this.name === name) return true
+    if (this.namespace && `${this.namespace}:${this.name}` === name) return true
+    return false
   }
 
   get isDefaultCommand(): boolean {
