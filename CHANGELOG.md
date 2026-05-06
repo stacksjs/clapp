@@ -1,3 +1,34 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.7...v0.2.8)
+
+### 🐛 Bug Fixes
+
+- **command**: match namespaced commands like `make:seeder` ([ca18908](https://github.com/stacksjs/clapp/commit/ca18908)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **tsconfig**: drop deprecated baseUrl and dead paths block ([bd6a3b7](https://github.com/stacksjs/clapp/commit/bd6a3b7)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### 🧹 Chores
+
+- release v0.2.8 ([97908dd](https://github.com/stacksjs/clapp/commit/97908dd)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- refresh bun.lock to pick up bun-plugin-dtsx@0.9.18 ([897058f](https://github.com/stacksjs/clapp/commit/897058f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### Contributors
+
+- _glennmichael123 <gtorregosa@gmail.com>_
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.7...HEAD)
+
+### 🐛 Bug Fixes
+
+- **command**: match namespaced commands like `make:seeder` ([ca18908](https://github.com/stacksjs/clapp/commit/ca18908)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **tsconfig**: drop deprecated baseUrl and dead paths block ([bd6a3b7](https://github.com/stacksjs/clapp/commit/bd6a3b7)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### 🧹 Chores
+
+- refresh bun.lock to pick up bun-plugin-dtsx@0.9.18 ([897058f](https://github.com/stacksjs/clapp/commit/897058f)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### Contributors
+
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.6...v0.2.7)
 
 ### 🧹 Chores
