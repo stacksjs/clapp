@@ -1,13 +1,17 @@
 import type { PromptOptions } from './prompt'
 import Prompt from './prompt'
 
-interface MultiSelectOptions<T extends { value: any }> extends PromptOptions<T['value'][], MultiSelectPrompt<T>> {
+interface MultiSelectPromptOption {
+  value: unknown
+}
+
+interface MultiSelectOptions<T extends MultiSelectPromptOption> extends PromptOptions<T['value'][], MultiSelectPrompt<T>> {
   options: T[]
   initialValues?: T['value'][]
   required?: boolean
   cursorAt?: T['value']
 }
-export default class MultiSelectPrompt<T extends { value: any }> extends Prompt<T['value'][]> {
+export default class MultiSelectPrompt<T extends MultiSelectPromptOption> extends Prompt<T['value'][]> {
   options: T[]
   cursor = 0
 

@@ -1,7 +1,11 @@
 import type { PromptOptions } from './prompt'
 import Prompt from './prompt'
 
-interface GroupMultiSelectOptions<T extends { value: any }>
+interface GroupMultiSelectPromptOption {
+  value: unknown
+}
+
+interface GroupMultiSelectOptions<T extends GroupMultiSelectPromptOption>
   extends PromptOptions<T['value'][], GroupMultiSelectPrompt<T>> {
   options: Record<string, T[]>
   initialValues?: T['value'][]
@@ -9,7 +13,7 @@ interface GroupMultiSelectOptions<T extends { value: any }>
   cursorAt?: T['value']
   selectableGroups?: boolean
 }
-export default class GroupMultiSelectPrompt<T extends { value: any }> extends Prompt<T['value'][]> {
+export default class GroupMultiSelectPrompt<T extends GroupMultiSelectPromptOption> extends Prompt<T['value'][]> {
   options: (T & { group: string | boolean })[]
   cursor = 0
   #selectableGroups: boolean
@@ -33,11 +37,11 @@ export default class GroupMultiSelectPrompt<T extends { value: any }> extends Pr
       this.value = []
     }
     if (item.group === true) {
-      const group = item.value
+      const group = String(item.value)
       const groupedItems = this.getGroupItems(group)
       if (this.isGroupSelected(group)) {
         this.value = this.value.filter(
-          (v: string) => groupedItems.findIndex(i => i.value === v) === -1,
+          (v: T['value']) => groupedItems.findIndex(i => i.value === v) === -1,
         )
       }
       else {

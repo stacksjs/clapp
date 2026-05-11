@@ -12,7 +12,7 @@ import {
   S_RADIO_INACTIVE,
   symbol,
 } from './common.js'
-import { limitOptions } from './limit-options.js'
+import { limitOptions } from './limit-options'
 
 function getLabel<T>(option: Option<T>) {
   return option.label ?? String(option.value ?? '')

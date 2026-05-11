@@ -1,3 +1,42 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.8...v0.2.9)
+
+### 🐛 Bug Fixes
+
+- **command**: dispatch namespaced commands by fully qualified name ([05ae723](https://github.com/stacksjs/clapp/commit/05ae723)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### 🧹 Chores
+
+- release v0.2.9 ([dd205d7](https://github.com/stacksjs/clapp/commit/dd205d7)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **ci**: bump actions/checkout to v6, actions/cache to v5 ([c59fa59](https://github.com/stacksjs/clapp/commit/c59fa59)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### ⏪ Reverts
+
+- keep staged-lint kebab + bunx gitlint shorthand ([84580b4](https://github.com/stacksjs/clapp/commit/84580b4)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.8...HEAD)
+
+### 🐛 Bug Fixes
+
+- **command**: dispatch namespaced commands by fully qualified name ([05ae723](https://github.com/stacksjs/clapp/commit/05ae723)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### 🧹 Chores
+
+- **ci**: bump actions/checkout to v6, actions/cache to v5 ([c59fa59](https://github.com/stacksjs/clapp/commit/c59fa59)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### ⏪ Reverts
+
+- keep staged-lint kebab + bunx gitlint shorthand ([84580b4](https://github.com/stacksjs/clapp/commit/84580b4)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.7...v0.2.8)
 
 ### 🐛 Bug Fixes

@@ -1,11 +1,15 @@
 import type { PromptOptions } from './prompt'
 import Prompt from './prompt'
 
-interface SelectOptions<T extends { value: any }> extends PromptOptions<T['value'], SelectPrompt<T>> {
+interface SelectPromptOption {
+  value: unknown
+}
+
+interface SelectOptions<T extends SelectPromptOption> extends PromptOptions<T['value'], SelectPrompt<T>> {
   options: T[]
   initialValue?: T['value']
 }
-export default class SelectPrompt<T extends { value: any }> extends Prompt<T['value']> {
+export default class SelectPrompt<T extends SelectPromptOption> extends Prompt<T['value']> {
   options: T[]
   cursor = 0
 
