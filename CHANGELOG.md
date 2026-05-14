@@ -1,3 +1,27 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.9...v0.2.10)
+
+### 🐛 Bug Fixes
+
+- **clapp**: render namespaced help commands ([0fc01a4](https://github.com/stacksjs/clapp/commit/0fc01a4)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### 🧹 Chores
+
+- release v0.2.10 ([20d167c](https://github.com/stacksjs/clapp/commit/20d167c)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.9...HEAD)
+
+### 🐛 Bug Fixes
+
+- **clapp**: render namespaced help commands ([0fc01a4](https://github.com/stacksjs/clapp/commit/0fc01a4)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+### Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.8...v0.2.9)
 
 ### 🐛 Bug Fixes
