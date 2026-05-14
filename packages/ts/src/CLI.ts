@@ -355,8 +355,8 @@ export class CLI extends EventEmitter {
       // Get all command names including aliases
       const allCommandNames: string[] = []
       for (const command of this.commands) {
-        if (command.name) {
-          allCommandNames.push(command.name)
+        if (command.displayName) {
+          allCommandNames.push(command.displayName)
         }
         if (command.aliasNames) {
           allCommandNames.push(...command.aliasNames)

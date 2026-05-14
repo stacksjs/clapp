@@ -199,6 +199,10 @@ export class Command {
     return this instanceof GlobalCommand
   }
 
+  get displayName(): string {
+    return this.namespace ? `${this.namespace}:${this.name}` : this.name
+  }
+
   /**
    * Check if an option is registered in this command
    * @param name Option name
@@ -296,7 +300,7 @@ export class Command {
           .map(
             command =>
               `  $ ${name}${
-                command.name === '' ? '' : ` ${command.name}`
+                command.displayName === '' ? '' : ` ${command.displayName}`
               } --help`,
           )
           .join('\n'),
