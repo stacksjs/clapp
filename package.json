@@ -50,7 +50,7 @@
     "typecheck": "bun --bun tsc --noEmit"
   },
   "devDependencies": {
-    "better-dx": "^0.2.11",
+    "better-dx": "^0.2.15",
     "bun-plugin-dtsx": "^0.9.18",
     "picocolors": "^1.1.1"
   },
