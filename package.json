@@ -65,5 +65,8 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "overrides": {
+    "typescript": "^7.0.2"
+  }
 }
