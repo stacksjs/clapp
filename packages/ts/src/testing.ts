@@ -120,11 +120,17 @@ export async function execCommand(
 
   const capturedOutput: string[] = []
 
+  // `setupTest` replaces `process.stdout` with the MockWritable, so
+  // assigning `process.stdout.write` below would override the very
+  // method we forward to, recursing until the stack overflows. Bind the
+  // real stream method first and forward to that instead.
+  const realStdoutWrite = stdout.write.bind(stdout)
+
   // Override stdout.write to capture all output
   process.stdout.write = function (chunk: any) {
     const str = chunk.toString()
     capturedOutput.push(str)
-    stdout.write(str)
+    realStdoutWrite(str)
     return true
   } as any
 
@@ -133,7 +139,7 @@ export async function execCommand(
   console.log = function (...args: any[]) {
     const str = args.map(arg => String(arg)).join(' ')
     capturedOutput.push(`${str}\n`)
-    stdout.write(`${str}\n`)
+    realStdoutWrite(`${str}\n`)
     return undefined
   } as any
 
