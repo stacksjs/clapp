@@ -7,7 +7,7 @@ import Command, { GlobalCommand } from './Command'
 import { processArgs } from './runtimes/node'
 import { style } from './style'
 import type { TransformConfig } from './utils'
-import { camelcaseOptionName, findSimilarCommands, getFileName, getMriOptions, setByType, setDotProp } from './utils'
+import { camelcaseOptionName, findSimilarCommands, getFileName, getMriOptions, isClappError, setByType, setDotProp } from './utils'
 
 /** Parsed command-line options */
 export type ParsedOptions = Record<string, unknown>
@@ -630,23 +630,22 @@ export class CLI extends EventEmitter {
    * try/catch if they want to bypass `exitOnError`.
    */
   handleUsageError(err: unknown): void {
-    const isClappError = !!err && typeof err === 'object'
-      && (err as { name?: string }).name === 'ClappError'
-    const isUsage = isClappError && (err as { isUsageError?: boolean }).isUsageError !== false
-    if (!isUsage)
+    if (!isClappError(err) || err.isUsageError === false)
       return
 
-    const e = err as { message?: string, exitCode?: number }
-    const raw = e.message ?? 'command-line error'
+    const raw = err.message || 'command-line error'
     const label = this.name ? `${this.name}: ` : ''
     // Messages built by `checkUnknownOptions` / `checkOptionValue`
-    // already include a "Run … --help" hint. Only append our own when
-    // the underlying message is terse and doesn't mention help.
+    // already include a "Run … --help" hint. Otherwise fall back to the
+    // error's usage line when it has one, and only then to a generic
+    // `--help` pointer.
     const suffix = /--help/.test(raw)
       ? ''
-      : `\nRun \`${this.name ?? 'cli'} --help\` for usage.`
+      : err.usage
+        ? `\nUsage: ${err.usage}`
+        : `\nRun \`${this.name ?? 'cli'} --help\` for usage.`
     process.stderr.write(`${label}${raw}${suffix}\n`)
-    process.exit(e.exitCode ?? 2)
+    process.exit(err.exitCode ?? 2)
   }
 
   async runMatchedCommand(): Promise<unknown> {
