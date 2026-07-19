@@ -266,6 +266,11 @@ export class Command {
       // Display commands grouped by namespace
       let commandBody = ''
 
+      // Keep the ungrouped top section deterministic and scannable.
+      // Code-point comparison (not localeCompare) so the order does not
+      // depend on the runtime locale.
+      noNamespaceCommands.sort((a, b) => (a.rawName < b.rawName ? -1 : a.rawName > b.rawName ? 1 : 0))
+
       // First show commands without namespace
       if (noNamespaceCommands.length > 0) {
         commandBody += noNamespaceCommands
