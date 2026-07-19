@@ -426,6 +426,30 @@ export class CLI extends EventEmitter {
           break
         }
       }
+
+      // "Colon is optional": when no command matched argv[0] exactly, try
+      // the joined `argv[0]:argv[1]` form so `buddy make model` dispatches
+      // to the registered `make:model` command, consuming both tokens.
+      // An exact match above always wins over a joined one.
+      if (shouldParse) {
+        const nextToken = slicedArgv[1]
+        if (nextToken && !nextToken.startsWith('-')) {
+          const joinedName = `${candidateName}:${nextToken}`
+          for (const command of this.commands) {
+            if (command.isMatched(joinedName)) {
+              const parsed = this.mri(slicedArgv, command)
+              shouldParse = false
+              const parsedInfo = {
+                ...parsed,
+                args: parsed.args.slice(2),
+              }
+              this.setParsedInfo(parsedInfo, command, joinedName)
+              this.emit(`command:${joinedName}`, command)
+              break
+            }
+          }
+        }
+      }
     }
 
     if (shouldParse) {
