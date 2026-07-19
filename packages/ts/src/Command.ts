@@ -305,16 +305,11 @@ export class Command {
         title: 'Commands',
         body: commandBody,
       })
+      // A single compact hint instead of re-listing every command as a
+      // `$ <name> <cmd> --help` line, which doubled the size of this
+      // output for CLIs with many commands.
       sections.push({
-        title: `For more info, run any command with the \`--help\` flag`,
-        body: commands
-          .map(
-            command =>
-              `  $ ${name}${
-                command.displayName === '' ? '' : ` ${command.displayName}`
-              } --help`,
-          )
-          .join('\n'),
+        body: `Run \`${name} <command> --help\` for command details.`,
       })
     }
 
