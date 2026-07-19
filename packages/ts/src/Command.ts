@@ -5,6 +5,7 @@ import { platformInfo as bunPlatformInfo } from './runtimes/bun'
 import { platformInfo as nodePlatformInfo } from './runtimes/node'
 import {
   ClappError,
+  camelcaseOptionName,
   findAllBrackets,
   findLongest,
   findSimilarCommands,
@@ -205,12 +206,17 @@ export class Command {
 
   /**
    * Check if an option is registered in this command
+   *
+   * Both sides are normalized to camelCase before comparing: parsed
+   * option keys are camelCased (`dryRun`) while a declared name may
+   * carry its raw kebab-case spelling (`dry-run`), and either side
+   * must satisfy the other.
    * @param name Option name
    */
   hasOption(name: string): boolean {
-    name = name.split('.')[0]
+    const normalized = camelcaseOptionName(name.split('.')[0])
     return !!this.options.find((option) => {
-      return option.names.includes(name)
+      return option.names.some(optionName => camelcaseOptionName(optionName) === normalized)
     })
   }
 
@@ -374,6 +380,15 @@ export class Command {
     }
   }
 
+  /**
+   * Usage line for this command as shown in help output
+   * (e.g. `$ buddy upgrade [options]`). Attached to {@link ClappError}s
+   * so callers can render message + usage without a stack trace.
+   */
+  get usageLine(): string {
+    return `$ ${this.cli.name} ${this.usageText || this.rawName}`
+  }
+
   checkRequiredArgs(): void {
     const minimalArgsCount = this.args.filter(arg => arg.required).length
 
@@ -385,6 +400,7 @@ export class Command {
       throw new ClappError(
         `Missing required argument${missingArgs.length > 1 ? 's' : ''}: ${argNames}\n\n`
         + `Run \`${this.cli.name} ${this.rawName} --help\` for usage information.`,
+        this.usageLine,
       )
     }
   }
@@ -408,8 +424,9 @@ export class Command {
           const allOptions = [...globalCommand.options, ...this.options]
           const allOptionNames = allOptions.flatMap(opt => opt.names)
 
+          const normalizedName = camelcaseOptionName(name.split('.')[0])
           const optionFlag = name.length > 1 ? `--${name}` : `-${name}`
-          const suggestions = findSimilarCommands(name, allOptionNames)
+          const suggestions = findSimilarCommands(normalizedName, allOptionNames)
 
           let errorMsg = `Unknown option \`${optionFlag}\``
 
@@ -423,7 +440,7 @@ export class Command {
 
           errorMsg += `\n\nRun \`${this.cli.name} ${this.rawName} --help\` to see available options.`
 
-          throw new ClappError(errorMsg)
+          throw new ClappError(errorMsg, this.usageLine)
         }
       }
     }
@@ -446,6 +463,7 @@ export class Command {
           throw new ClappError(
             `Option \`${option.rawName}\` requires a value.\n\n`
             + `Example: ${this.cli.name} ${this.rawName} ${option.rawName} <value>`,
+            this.usageLine,
           )
         }
       }
