@@ -178,9 +178,19 @@ export class ClappError extends Error {
    */
   isUsageError: boolean = true
 
-  constructor(message: string) {
+  /**
+   * Optional usage line for the command that raised the error
+   * (e.g. `$ buddy upgrade [options]`). Callers that catch the error
+   * can print `message` + `usage` without a stack trace.
+   */
+  usage?: string
+
+  constructor(message: string, usage?: string) {
     super(message)
     this.name = this.constructor.name
+    if (usage !== undefined) {
+      this.usage = usage
+    }
     if (typeof Error.captureStackTrace === 'function') {
       Error.captureStackTrace(this, this.constructor)
     }
@@ -199,6 +209,21 @@ export class ClappError extends Error {
     }
     return this.message
   }
+}
+
+/**
+ * Type guard for {@link ClappError}. Also matches duck-typed errors from
+ * a duplicated `@stacksjs/clapp` copy (e.g. nested `node_modules`), where
+ * `instanceof` against this module's class would fail.
+ */
+export function isClappError(err: unknown): err is ClappError {
+  if (err instanceof ClappError) {
+    return true
+  }
+  return !!err
+    && typeof err === 'object'
+    && (err as { name?: unknown }).name === 'ClappError'
+    && typeof (err as { message?: unknown }).message === 'string'
 }
 
 // Thank you to
