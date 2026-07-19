@@ -2,6 +2,7 @@
  * Lightweight argv parser — replaces `mri` dependency.
  * Handles: --flag, --key=value, --key value, -abc, --no-flag, aliases, booleans.
  */
+import { camelcase } from './utils'
 
 interface ParseOptions {
   alias?: Record<string, string[]>
@@ -60,21 +61,29 @@ export function parseArgv(argv: string[], opts: ParseOptions = {}): ParseResult 
       const eqIdx = arg.indexOf('=')
 
       if (eqIdx !== -1) {
-        // --key=value
-        const key = arg.slice(2, eqIdx)
+        // --key=value. Declared option names are camelCased, so the
+        // parsed key must be camelCased too (`--dry-run=x` → `dryRun`)
+        const key = camelcase(arg.slice(2, eqIdx))
         const value = arg.slice(eqIdx + 1)
         setKey(key, value)
       }
       else {
-        const key = arg.slice(2)
+        const rawKey = arg.slice(2)
 
-        // --no-flag
-        if (key.startsWith('no-')) {
-          const actualKey = key.slice(3)
+        // --no-flag (check the raw spelling before camelCasing, since
+        // `no-` would otherwise become `noXxx`)
+        if (rawKey.startsWith('no-')) {
+          const actualKey = camelcase(rawKey.slice(3))
           setKey(actualKey, false)
           continue
         }
 
+        // Declared option names, aliases, and the boolean table are all
+        // camelCased (`--dry-run` registers as `dryRun`). Look the flag
+        // up under its camelCased spelling; otherwise a dashed boolean
+        // flag misses the boolean table and swallows the next positional
+        // argument as its "value".
+        const key = camelcase(rawKey)
         const canonical = aliasOf[key] || key
         if (booleans.has(canonical) || booleans.has(key)) {
           setKey(key, true)
