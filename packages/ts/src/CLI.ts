@@ -456,7 +456,11 @@ export class CLI extends EventEmitter {
     if (this.options.debug) {
       this.isDebug = true
     }
-    if (this.options.noInteraction) {
+    // Negated flags parse to their stem key with value `false`
+    // (`--no-interaction` → `{ interaction: false }`), so check the stem
+    // key here. The legacy `noX` spelling is accepted too, for callers
+    // that set `cli.options` programmatically.
+    if (this.options.noInteraction || this.options.interaction === false) {
       this.isNoInteraction = true
     }
     if (this.options.env) {
@@ -468,14 +472,14 @@ export class CLI extends EventEmitter {
     if (this.options.force) {
       this.isForce = true
     }
-    if (this.options.noEmoji !== undefined) {
-      this.useEmoji = !this.options.noEmoji
+    if (this.options.noEmoji || this.options.emoji === false) {
+      this.useEmoji = false
     }
     if (this.options.theme) {
       this.theme = String(this.options.theme)
     }
-    if (this.options.noCache !== undefined) {
-      this.isNoCache = Boolean(this.options.noCache)
+    if (this.options.noCache || this.options.cache === false) {
+      this.isNoCache = true
     }
 
     if (this.options.help && this.showHelpOnExit) {
