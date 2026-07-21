@@ -1,4 +1,4 @@
-import type { BunPressOptions } from 'bunpress'
+import type { BunPressOptions } from '@stacksjs/bunpress'
 
 const config: BunPressOptions = {
   name: 'clapp',
