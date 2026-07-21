@@ -313,9 +313,13 @@ export class Command {
       })
     }
 
+    const localOptionNames = new Set(this.options.flatMap(option => option.names))
     let options = this.isGlobalCommand
       ? globalOptions
-      : [...this.options, ...(globalOptions || [])]
+      : [
+          ...this.options,
+          ...(globalOptions || []).filter(option => !option.names.some(name => localOptionNames.has(name))),
+        ]
     if (!this.isGlobalCommand && !this.isDefaultCommand) {
       options = options.filter(option => option.name !== 'version')
     }

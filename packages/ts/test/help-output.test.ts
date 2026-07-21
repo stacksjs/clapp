@@ -51,4 +51,18 @@ describe('Help Output', () => {
     expect(appleIdx).toBeLessThan(mangoIdx)
     expect(mangoIdx).toBeLessThan(zebraIdx)
   })
+
+  it('shows a command-local option once when it overrides a global option', async () => {
+    const app = cli('demo')
+    app.option('-v, --verbose', 'Global verbose output')
+    app.command('build', 'Build the project')
+      .option('--verbose', 'Build diagnostics')
+      .action(() => {})
+
+    const result = await execCommand(app, ['build', '--help'])
+
+    expect(result.stdout.match(/--verbose/g)).toHaveLength(1)
+    expect(result.stdout).toContain('Build diagnostics')
+    expect(result.stdout).not.toContain('Global verbose output')
+  })
 })
