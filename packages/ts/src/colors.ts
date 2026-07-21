@@ -1,6 +1,6 @@
 /**
  * Lightweight color functions — replaces `picocolors` dependency.
- * Uses standard ANSI escape codes. Zero dependencies.
+ * Uses standard ANSI escape codes.
  * Respects NO_COLOR, FORCE_COLOR, and TTY detection.
  */
 
