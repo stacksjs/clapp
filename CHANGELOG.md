@@ -1,3 +1,42 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.10...v0.2.11)
+
+## 🚀 Features
+
+- **cli**: dispatch space-separated colon command invocation ([9e971d1](https://github.com/stacksjs/clapp/commit/9e971d1)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **cli**: add isClappError guard and optional usage line to ClappError ([da97007](https://github.com/stacksjs/clapp/commit/da97007)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🐛 Bug Fixes
+
+- **command**: replace per-command help re-listing with compact hint ([fbbc1a5](https://github.com/stacksjs/clapp/commit/fbbc1a5)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **command**: sort ungrouped commands alphabetically in help output ([cdb562c](https://github.com/stacksjs/clapp/commit/cdb562c)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **testing**: capture command output without recursing into the mocked stream ([453c950](https://github.com/stacksjs/clapp/commit/453c950)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **cli**: render usage errors with usage line instead of stack ([c83cff4](https://github.com/stacksjs/clapp/commit/c83cff4)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **command**: normalize option names in unknown-option check ([4f4c847](https://github.com/stacksjs/clapp/commit/4f4c847)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **cli**: apply negated global flags to their modes ([469c454](https://github.com/stacksjs/clapp/commit/469c454)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **parser**: parse dashed boolean flags as booleans ([fddc6e8](https://github.com/stacksjs/clapp/commit/fddc6e8)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **scripts**: stop double-generating CHANGELOG on release ([7ebf979](https://github.com/stacksjs/clapp/commit/7ebf979)) _(by Glenn Michael Torregosa <gtorregosa@gmail.com>)_
+
+## 🧪 Tests
+
+- cover parser regressions for flags, colon dispatch, and error shape ([138a795](https://github.com/stacksjs/clapp/commit/138a795)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🧹 Chores
+
+- release v0.2.11 ([5a01daf](https://github.com/stacksjs/clapp/commit/5a01daf)) _(by Chris <chrisbreuer93@gmail.com>)_
+- upgrade to TypeScript 7 ([e2f26ae](https://github.com/stacksjs/clapp/commit/e2f26ae)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **deps**: refresh bun.lock to pick up pickier 0.1.37 ([8a254a6](https://github.com/stacksjs/clapp/commit/8a254a6)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: refresh bun.lock to pick up pickier 0.1.35 ([f3e2dad](https://github.com/stacksjs/clapp/commit/f3e2dad)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: refresh bun.lock to pick up pickier 0.1.33 ([3ecc71c](https://github.com/stacksjs/clapp/commit/3ecc71c)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: refresh bun.lock to pick up @stacksjs/logsmith 0.2.3 ([461348d](https://github.com/stacksjs/clapp/commit/461348d)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: refresh bun.lock to pick up buddy-bot 0.9.20 ([82fe034](https://github.com/stacksjs/clapp/commit/82fe034)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+- **deps**: bump better-dx to ^0.2.15 ([8be4442](https://github.com/stacksjs/clapp/commit/8be4442)) _(by glennmichael123 <gtorregosa@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _Glenn Michael Torregosa <gtorregosa@gmail.com>_
+- _glennmichael123 <gtorregosa@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.9...v0.2.10)
 
 ### 🐛 Bug Fixes
