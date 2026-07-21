@@ -1,3 +1,19 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.11...v0.2.12)
+
+## 🐛 Bug Fixes
+
+- **command**: dedupe overridden global options in help ([ccc00e1](https://github.com/stacksjs/clapp/commit/ccc00e1)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🧹 Chores
+
+- release v0.2.12 ([9c96a98](https://github.com/stacksjs/clapp/commit/9c96a98)) _(by Chris <chrisbreuer93@gmail.com>)_
+- adjust deps ([7280ff4](https://github.com/stacksjs/clapp/commit/7280ff4)) _(by Chris <chrisbreuer93@gmail.com>)_
+- adjust configs ([3ee7026](https://github.com/stacksjs/clapp/commit/3ee7026)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.10...v0.2.11)
 
 ## 🚀 Features
