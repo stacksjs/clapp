@@ -1,3 +1,21 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.12...v0.2.13)
+
+## 🐛 Bug Fixes
+
+- **parser**: collect a flag given more than once ([370e3e5](https://github.com/stacksjs/clapp/commit/370e3e5)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 📚 Documentation
+
+- link the community as stacksjs.com/discord ([34e748b](https://github.com/stacksjs/clapp/commit/34e748b)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🧹 Chores
+
+- release v0.2.13 ([5880ae0](https://github.com/stacksjs/clapp/commit/5880ae0)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.11...v0.2.12)
 
 ## 🐛 Bug Fixes
