@@ -34,18 +34,38 @@ export function parseArgv(argv: string[], opts: ParseOptions = {}): ParseResult 
     }
   }
 
+  /**
+   * Merge a repeated flag with what is already there.
+   *
+   * A flag given more than once collects its values: `--user a --user b`
+   * parses as `['a', 'b']`, so a CLI can accept a list without inventing a
+   * separator. Repeating a boolean stays `true` — `-v -v` means the same
+   * thing as `-v`, and turning it into an array only surprises callers that
+   * test it for truth.
+   */
+  function merge(existing: unknown, value: unknown): unknown {
+    if (existing === undefined) return value
+    if (typeof value === 'boolean') return value
+    return Array.isArray(existing) ? [...existing, value] : [existing, value]
+  }
+
   function setKey(key: string, value: unknown): void {
     const canonical = aliasOf[key] || key
-    result[canonical] = value
+    // Merge once against the canonical name, then write the same value to
+    // every spelling — otherwise `-u a -u b` would collect twice through the
+    // alias and its canonical name.
+    const merged = merge(result[canonical], value)
+
+    result[canonical] = merged
     // Also set on all aliases
     if (alias[canonical]) {
-      for (const a of alias[canonical]) result[a] = value
+      for (const a of alias[canonical]) result[a] = merged
     }
     // If key is an alias, also set on its siblings
     if (aliasOf[key] && alias[aliasOf[key]]) {
-      for (const a of alias[aliasOf[key]]) result[a] = value
+      for (const a of alias[aliasOf[key]]) result[a] = merged
     }
-    result[key] = value
+    result[key] = merged
   }
 
   for (let i = 0; i < argv.length; i++) {

@@ -304,3 +304,81 @@ describe('ClappError shape', () => {
     expect(err.usage).toBe('$ buddy deploy <environment>')
   })
 })
+
+describe('repeated flags', () => {
+  it('collects a flag given more than once', async () => {
+    const app = cli('ts-sftp')
+
+    let received: Record<string, unknown> | undefined
+    app
+      .command('serve', 'Serve files')
+      .option('--user <entry>', 'A user, repeatable')
+      .action((options: Record<string, unknown>) => {
+        received = options
+      })
+
+    await app.parse(['bun', 'ts-sftp', 'serve', '--user', 'a:1', '--user', 'b:2', '--user', 'c:3'], { run: true })
+    expect(received?.user).toEqual(['a:1', 'b:2', 'c:3'])
+  })
+
+  it('leaves a flag given once as a scalar', async () => {
+    const app = cli('ts-sftp')
+
+    let received: Record<string, unknown> | undefined
+    app
+      .command('serve', 'Serve files')
+      .option('--user <entry>', 'A user, repeatable')
+      .action((options: Record<string, unknown>) => {
+        received = options
+      })
+
+    await app.parse(['bun', 'ts-sftp', 'serve', '--user', 'only:1'], { run: true })
+    expect(received?.user).toBe('only:1')
+  })
+
+  it('collects --key=value spellings too', async () => {
+    const app = cli('app')
+
+    let received: Record<string, unknown> | undefined
+    app
+      .command('run', 'Run')
+      .option('--env <pair>', 'Environment pair')
+      .action((options: Record<string, unknown>) => {
+        received = options
+      })
+
+    await app.parse(['bun', 'app', 'run', '--env=A=1', '--env=B=2'], { run: true })
+    expect(received?.env).toEqual(['A=1', 'B=2'])
+  })
+
+  it('keeps a repeated boolean a boolean', async () => {
+    const app = cli('app')
+
+    let received: Record<string, unknown> | undefined
+    app
+      .command('run', 'Run')
+      .option('--verbose', 'Talk more')
+      .action((options: Record<string, unknown>) => {
+        received = options
+      })
+
+    await app.parse(['bun', 'app', 'run', '--verbose', '--verbose'], { run: true })
+    expect(received?.verbose).toBe(true)
+  })
+
+  it('collects through an alias without double-counting it', async () => {
+    const app = cli('app')
+
+    let received: Record<string, unknown> | undefined
+    app
+      .command('run', 'Run')
+      .option('-u, --user <entry>', 'A user, repeatable')
+      .action((options: Record<string, unknown>) => {
+        received = options
+      })
+
+    await app.parse(['bun', 'app', 'run', '-u', 'a', '--user', 'b'], { run: true })
+    expect(received?.user).toEqual(['a', 'b'])
+    expect(received?.u).toEqual(['a', 'b'])
+  })
+})
