@@ -605,6 +605,35 @@ export class CLI extends EventEmitter {
       }
     }
 
+    /*
+     * An option declared to take a list always yields a list.
+     *
+     * The underlying parser returns a bare value for a single occurrence and
+     * an array once a flag repeats, so `--allow [ip...]` handed back a STRING
+     * for `--allow a` and an ARRAY for `--allow a --allow b`. The shape of
+     * `options.allow` therefore depended on how many times the user typed the
+     * flag, and the natural consumer - `options.allow.map(...)`, or a
+     * `for…of` - iterated the characters of that string in the single case.
+     * It fails as a list of one-character IPs rather than as an error.
+     *
+     * Every consumer had to write `Array.isArray(x) ? x : [x]` to be correct,
+     * which is the library's job. A declared default is left exactly as the
+     * author wrote it: `{ default: false }` is a sentinel meaning "not
+     * supplied", not an empty list.
+     */
+    for (const cliOption of cliOptions) {
+      if (!cliOption.variadic)
+        continue
+      for (const name of cliOption.names) {
+        const value = options[name]
+        if (value === undefined || Array.isArray(value))
+          continue
+        if (cliOption.config.default !== undefined && value === cliOption.config.default)
+          continue
+        options[name] = [value]
+      }
+    }
+
     return {
       args,
       options,

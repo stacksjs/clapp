@@ -105,3 +105,72 @@ describe('a command declared with a single argument', () => {
     expect(received).toBe('ada')
   })
 })
+
+/**
+ * An option declared to take a list always yields a list.
+ *
+ * The underlying parser returns a bare value for a single occurrence and an
+ * array once a flag repeats, so `--allow [ip...]` handed back a STRING for
+ * `--allow a` and an ARRAY for `--allow a --allow b`. The shape depended on
+ * how many times the user typed the flag, and the natural consumer -
+ * `options.allow.map(...)`, or a `for…of` - iterated the characters of that
+ * string in the single case, failing as a list of one-character IPs rather
+ * than as an error.
+ *
+ * Every consumer had to write `Array.isArray(x) ? x : [x]` to be correct.
+ */
+
+async function allowOption(argv: string[], config: Record<string, unknown> = { default: false }) {
+  const app = cli('buddy')
+  let received: unknown
+
+  app
+    .command('down', 'maintenance mode')
+    .option('--allow [ip...]', 'allowed IPs', config)
+    .action((options: Record<string, unknown>) => {
+      received = options.allow
+    })
+
+  await app.parse(['bun', 'buddy', 'down', ...argv], { run: true })
+  return received
+}
+
+describe('a variadic option', () => {
+  it('yields a one-element array for a single occurrence', async () => {
+    expect(await allowOption(['--allow', '1.1.1.1'])).toEqual(['1.1.1.1'])
+  })
+
+  it('yields an array for repeated occurrences', async () => {
+    expect(await allowOption(['--allow', '1.1.1.1', '--allow', '2.2.2.2'])).toEqual(['1.1.1.1', '2.2.2.2'])
+  })
+
+  it('yields an array for the --flag=value form too', async () => {
+    expect(await allowOption(['--allow=1.1.1.1'])).toEqual(['1.1.1.1'])
+  })
+
+  it('leaves a declared default exactly as the author wrote it', async () => {
+    // `{ default: false }` is a sentinel meaning "not supplied", not an empty
+    // list, so it must not be wrapped into `[false]`.
+    expect(await allowOption([])).toBe(false)
+  })
+
+  it('leaves an option that was never supplied and has no default undefined', async () => {
+    expect(await allowOption([], {})).toBeUndefined()
+  })
+
+  it('does not wrap a non-variadic option', async () => {
+    const app = cli('buddy')
+    let received: unknown
+
+    app
+      .command('serve', 'serve')
+      .option('--host [name]', 'host')
+      .action((options: Record<string, unknown>) => {
+        received = options.host
+      })
+
+    await app.parse(['bun', 'buddy', 'serve', '--host', 'localhost'], { run: true })
+
+    expect(received).toBe('localhost')
+  })
+})

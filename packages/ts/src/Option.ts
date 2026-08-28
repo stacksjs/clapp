@@ -17,6 +17,15 @@ export default class Option {
   required?: boolean
   config: OptionConfig
   negated: boolean
+  /**
+   * Declared to take a list, as `--allow [ip...]` or `--allow [...ip]`.
+   *
+   * The parser hands back a bare value for one occurrence and an array for
+   * two, so without this the shape of `options.allow` depended on how many
+   * times the user happened to pass the flag. `CLI.mri` uses this to give a
+   * variadic option an array either way.
+   */
+  variadic: boolean
 
   constructor(
     public rawName: string,
@@ -29,6 +38,9 @@ export default class Option {
     rawName = rawName.replace(/\.\*/g, '')
 
     this.negated = false
+    // Read before `removeBrackets` strips the bracket this lives in. Both
+    // spellings, matching `findAllBrackets`.
+    this.variadic = /[<[](?:\.\.\.[^\]>]+|[^\]>]+\.\.\.)[\]>]/.test(rawName)
     this.names = removeBrackets(rawName)
       .split(',')
       .map((v: string) => {
