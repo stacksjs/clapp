@@ -15,6 +15,17 @@ export function findAllBrackets(v: string): {
 
   const res = []
 
+  /*
+   * Both spellings of a variadic argument are accepted.
+   *
+   * Only the LEADING form (`[...files]`) used to be recognised, and the
+   * trailing one (`[files...]`) - the spelling in most CLI documentation, and
+   * the one people reach for first - parsed as a plain argument named
+   * "files...". The command then ran with `variadic: false`, so the action got
+   * `args[0]` and every argument after the first was dropped in silence:
+   * `mycli check a.ts b.ts c.ts` checked a.ts, reported success, and never
+   * mentioned the other two.
+   */
   const parse = (match: string[]) => {
     let variadic = false
     let value = match[1]
@@ -22,9 +33,13 @@ export function findAllBrackets(v: string): {
       value = value.slice(3)
       variadic = true
     }
+    else if (value.endsWith('...')) {
+      value = value.slice(0, -3)
+      variadic = true
+    }
     return {
       required: match[0].startsWith('<'),
-      value,
+      value: value.trim(),
       variadic,
     }
   }
