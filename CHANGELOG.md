@@ -1,3 +1,17 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.14...v0.2.15)
+
+## 🐛 Bug Fixes
+
+- **parser**: a variadic option's shape depended on how often the flag was passed ([052bbde](https://github.com/stacksjs/clapp/commit/052bbde)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🧹 Chores
+
+- release v0.2.15 ([869e749](https://github.com/stacksjs/clapp/commit/869e749)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.13...v0.2.14)
 
 ## 🐛 Bug Fixes
