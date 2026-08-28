@@ -1,3 +1,19 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.13...v0.2.14)
+
+## 🐛 Bug Fixes
+
+- **parser**: a trailing-ellipsis argument silently dropped all but the first value ([3ea9209](https://github.com/stacksjs/clapp/commit/3ea9209)) _(by Chris <chrisbreuer93@gmail.com>)_
+
+## 🧹 Chores
+
+- release v0.2.14 ([a103698](https://github.com/stacksjs/clapp/commit/a103698)) _(by Chris <chrisbreuer93@gmail.com>)_
+- **deps**: update shivammathur/setup-php action to v2.37.1 [security] (#1808) ([4f4bd2c](https://github.com/stacksjs/clapp/commit/4f4bd2c)) _(by [renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot]))_ ([#1808](https://github.com/stacksjs/clapp/issues/1808), [#1808](https://github.com/stacksjs/clapp/issues/1808))
+
+## Contributors
+
+- _Chris <chrisbreuer93@gmail.com>_
+- _[renovate[bot] <29139614+renovate[bot]@users.noreply.github.com>](https://github.com/renovate[bot])_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.12...v0.2.13)
 
 ## 🐛 Bug Fixes
