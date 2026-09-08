@@ -152,6 +152,17 @@ export function setByType(
   for (const key of Object.keys(transforms)) {
     const transform = transforms[key]
 
+    /*
+     * An option the user never gave has no value to coerce. Coercing it
+     * anyway turned `undefined` into the one-element list `['undefined']`
+     * — a literal string that reads as a supplied value — and only once
+     * some *other* flag was present, since this runs per parsed key. An
+     * absent option must stay absent so a caller can still fall back to
+     * its own default.
+     */
+    if (obj[key] === undefined)
+      continue
+
     if (transform.shouldTransform) {
       obj[key] = Array.prototype.concat.call([], obj[key])
 

@@ -382,3 +382,48 @@ describe('repeated flags', () => {
     expect(received?.u).toEqual(['a', 'b'])
   })
 })
+
+/**
+ * A list-typed option the user never passed used to be coerced anyway, so
+ * `undefined` came back as the one-element list `['undefined']` — and only
+ * when some unrelated flag was also present, since the coercion ran once per
+ * parsed key. Callers could not tell "not supplied" from "supplied", and fell
+ * back to a config-file default only when the command was given no flags at
+ * all.
+ */
+describe('absent list-typed options', () => {
+  async function parseWith(argv: string[]): Promise<Record<string, unknown>> {
+    const app = cli('probe')
+    let received: Record<string, unknown> = {}
+    app
+      .command('generate', 'Generate')
+      .option('--entrypoints <files>', 'Entry points', { type: [String] })
+      .option('--root <path>', 'Root', { default: './src' })
+      .action((options: Record<string, unknown>) => {
+        received = options
+      })
+    await app.parse(['node', 'probe', ...argv], { run: true })
+    return received
+  }
+
+  it('stays undefined when the flag is absent and no other flag is passed', async () => {
+    expect((await parseWith(['generate'])).entrypoints).toBeUndefined()
+  })
+
+  it('stays undefined when the flag is absent but another flag is passed', async () => {
+    expect((await parseWith(['generate', '--root', 'src'])).entrypoints).toBeUndefined()
+  })
+
+  it('still yields a list for a single occurrence', async () => {
+    expect((await parseWith(['generate', '--entrypoints', 'a.ts', '--root', 'src'])).entrypoints).toEqual(['a.ts'])
+  })
+
+  it('collects every occurrence of a repeated flag', async () => {
+    expect((await parseWith(['generate', '--entrypoints', 'a.ts', '--entrypoints', 'b.ts'])).entrypoints)
+      .toEqual(['a.ts', 'b.ts'])
+  })
+
+  it('leaves a declared default in place', async () => {
+    expect((await parseWith(['generate', '--entrypoints', 'a.ts'])).root).toBe('./src')
+  })
+})
