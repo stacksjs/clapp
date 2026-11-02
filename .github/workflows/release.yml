@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Pantry
-        uses: home-lang/pantry/packages/action@main
+        uses: home-lang/pantry/packages/action@v0.11.164
 
       - name: Install Dependencies
         run: bun install
@@ -31,7 +31,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub Release
-        uses: stacksjs/action-releaser@v1.2.9
+        uses: stacksjs/action-releaser@v1.2.11
         with:
           files: |
             bin/clapp-linux-x64.zip
