@@ -1,3 +1,18 @@
+[Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.16...v0.2.17)
+
+## 🐛 Bug Fixes
+
+- ship the complete strict public prompt and testing SDK ([fc3978b](https://github.com/stacksjs/clapp/commit/fc3978b)) _(by Chris)_
+
+## 🔧 Chores
+
+- run @stacksjs/logsmith, not the unrelated npm 'logsmith' ([5314c9b](https://github.com/stacksjs/clapp/commit/5314c9b)) _(by Chris)_
+- release through @stacksjs/bumpx, not the unrelated npm 'bumpx' ([bcbf9af](https://github.com/stacksjs/clapp/commit/bcbf9af)) _(by Chris)_
+
+## Contributors
+
+- _Chris_
+
 [Compare changes](https://github.com/stacksjs/clapp/compare/v0.2.15...v0.2.16)
 
 ## 🐛 Bug Fixes
