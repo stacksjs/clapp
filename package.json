@@ -23,15 +23,15 @@
   ],
   "scripts": {
     "build": "bun --bun build.ts",
-    "compile": "bun build ./bin/cli.ts --compile --minify --outfile bin/clapp",
+    "compile": "bun build ./packages/ts/bin/cli.ts --compile --minify --outfile bin/clapp",
     "compile:all": "bun run compile:linux-x64 && bun run compile:linux-arm64 && bun run compile:windows-x64 && bun run compile:darwin-x64 && bun run compile:darwin-arm64",
-    "compile:linux-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-linux-x64 --outfile bin/clapp-linux-x64",
-    "compile:linux-arm64": "bun build ./bin/cli.ts --compile --minify --target=bun-linux-arm64 --outfile bin/clapp-linux-arm64",
-    "compile:windows-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-windows-x64 --outfile bin/clapp-windows-x64.exe",
-    "compile:darwin-x64": "bun build ./bin/cli.ts --compile --minify --target=bun-darwin-x64 --outfile bin/clapp-darwin-x64",
-    "compile:darwin-arm64": "bun build ./bin/cli.ts --compile --minify --target=bun-darwin-arm64 --outfile bin/clapp-darwin-arm64",
+    "compile:linux-x64": "bun build ./packages/ts/bin/cli.ts --compile --minify --target=bun-linux-x64 --outfile bin/clapp-linux-x64",
+    "compile:linux-arm64": "bun build ./packages/ts/bin/cli.ts --compile --minify --target=bun-linux-arm64 --outfile bin/clapp-linux-arm64",
+    "compile:windows-x64": "bun build ./packages/ts/bin/cli.ts --compile --minify --target=bun-windows-x64 --outfile bin/clapp-windows-x64.exe",
+    "compile:darwin-x64": "bun build ./packages/ts/bin/cli.ts --compile --minify --target=bun-darwin-x64 --outfile bin/clapp-darwin-x64",
+    "compile:darwin-arm64": "bun build ./packages/ts/bin/cli.ts --compile --minify --target=bun-darwin-arm64 --outfile bin/clapp-darwin-arm64",
     "fresh": "bunx rimraf node_modules/ bun.lock && bun i",
-    "prepublishOnly": "bun --bun run build",
+    "prepublishOnly": "bun run build:release",
     "test": "bun test",
     "lint": "bunx --bun pickier .",
     "lint:fix": "bunx --bun pickier . --fix",
@@ -39,18 +39,21 @@
     "format:fix": "bunx --bun pickier . --format --write",
     "changelog": "bunx @stacksjs/logsmith --verbose",
     "changelog:generate": "bunx @stacksjs/logsmith --output CHANGELOG.md",
-    "release": "bunx --bun @stacksjs/bumpx prompt --recursive",
-    "release:patch": "bunx --bun @stacksjs/bumpx patch --recursive --yes",
-    "publish:patch": "bunx --bun @stacksjs/bumpx patch --recursive --yes",
-    "release:minor": "bunx --bun @stacksjs/bumpx minor --recursive --yes && cd packages/ts && bun publish",
-    "release:major": "bunx --bun @stacksjs/bumpx major --recursive --yes && cd packages/ts && bun publish",
+    "release": "bunx --bun @stacksjs/bumpx prompt --recursive --commit --tag --push",
+    "release:patch": "bunx --bun @stacksjs/bumpx patch --recursive --commit --tag --push --yes",
+    "publish:patch": "bunx --bun @stacksjs/bumpx patch --recursive --commit --tag --push --yes",
+    "release:minor": "bunx --bun @stacksjs/bumpx minor --recursive --commit --tag --push --yes",
+    "release:major": "bunx --bun @stacksjs/bumpx major --recursive --commit --tag --push --yes",
     "dev:docs": "bun --bun bunpress dev docs",
     "build:docs": "bun --bun bunpress build docs",
     "preview:docs": "bun --bun bunpress preview docs",
-    "typecheck": "bun --bun tsc --noEmit"
+    "typecheck": "bun --bun tsc --noEmit",
+    "test:package": "bun test ./packages/ts/test/package.acceptance.ts",
+    "zip": "cd bin && zip -j clapp-linux-x64.zip clapp-linux-x64 && zip -j clapp-linux-arm64.zip clapp-linux-arm64 && zip -j clapp-windows-x64.zip clapp-windows-x64.exe && zip -j clapp-darwin-x64.zip clapp-darwin-x64 && zip -j clapp-darwin-arm64.zip clapp-darwin-arm64",
+    "build:release": "bun run build && bun run compile && bun run compile:all && bun run zip && bun run test:package"
   },
   "devDependencies": {
-    "better-dx": "^0.2.19"
+    "better-dx": "^0.2.38"
   },
   "git-hooks": {
     "pre-commit": {

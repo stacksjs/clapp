@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    tags:
+      - 'v*'
 
   pull_request:
     branches:
@@ -32,7 +34,7 @@ jobs:
             node-modules-
 
       - name: Install Dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
       - name: Lint
         run: bun run lint
@@ -55,7 +57,7 @@ jobs:
             node-modules-
 
       - name: Install Dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
       - name: Typecheck
         run: bun --bun run typecheck
@@ -78,10 +80,16 @@ jobs:
             node-modules-
 
       - name: Install Dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
       - name: Unit Test
         run: bun test
+
+      - name: Build actual package and host CLI
+        run: bun run build && bun run compile
+
+      - name: Verify strict installed package
+        run: bun run test:package
 
   publish-commit:
     needs: [lint, typecheck, test]
@@ -96,13 +104,13 @@ jobs:
         uses: home-lang/pantry/packages/action@main
 
       - name: Install Dependencies
-        run: bun install
+        run: bun install --frozen-lockfile
 
       - name: Build
         run: bun run build
 
       - name: Publish Commit
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: pantry publish:commit './packages/ts' && pantry publish:commit './packages/zig'
+        run: pantry publish:commit './packages/ts'
         env:
           PANTRY_REGISTRY_TOKEN: ${{ secrets.PANTRY_TOKEN }}

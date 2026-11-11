@@ -39,10 +39,14 @@
   "scripts": {
     "build": "bun --bun build.ts",
     "fresh": "bunx rimraf node_modules/ bun.lock && bun i",
-    "prepublishOnly": "bun --bun run build",
+    "prepublishOnly": "bun run --cwd ../.. build:release",
     "test": "bun test",
     "lint": "bunx --bun pickier .",
     "lint:fix": "bunx --bun pickier . --fix",
-    "typecheck": "bun --bun tsc --noEmit"
+    "typecheck": "bun --bun tsc --noEmit",
+    "test:package": "bun test ./test/package.acceptance.ts"
+  },
+  "devDependencies": {
+    "@dtsx/bun": "^0.11.48"
   }
 }

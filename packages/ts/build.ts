@@ -1,17 +1,26 @@
-import { dts } from 'bun-plugin-dtsx'
+import { dts } from '@dtsx/bun'
+import { rm } from 'node:fs/promises'
+import { join } from 'node:path'
 
-// Build the main library
-await Bun.build({
-  entrypoints: ['src/index.ts', 'src/telemetry.ts'],
-  outdir: './dist',
-  format: 'esm',
-  plugins: [dts()],
-  target: 'node',
-})
+export async function buildClapp(): Promise<void> {
+  const cwd = import.meta.dir
+  await rm(join(cwd, 'dist'), { recursive: true, force: true })
+  const library = await Bun.build({
+    entrypoints: [join(cwd, 'src/index.ts'), join(cwd, 'src/telemetry.ts')],
+    outdir: join(cwd, 'dist'),
+    format: 'esm',
+    splitting: true,
+    plugins: [dts({ cwd, root: './src', outdir: './dist', moduleSpecifierMode: 'node' })],
+    target: 'node',
+  })
+  if (!library.success) throw new AggregateError(library.logs, 'Clapp library build failed')
 
-// Build the CLI binary separately
-await Bun.build({
-  entrypoints: ['bin/cli.ts'],
-  outdir: './dist/bin',
-  target: 'node',
-})
+  const cli = await Bun.build({
+    entrypoints: [join(cwd, 'bin/cli.ts')],
+    outdir: join(cwd, 'dist/bin'),
+    target: 'node',
+  })
+  if (!cli.success) throw new AggregateError(cli.logs, 'Clapp CLI build failed')
+}
+
+if (import.meta.main) await buildClapp()

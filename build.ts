@@ -1,24 +1,3 @@
-import { dts } from 'bun-plugin-dtsx'
+import { buildClapp } from './packages/ts/build'
 
-// Build the main library
-await Bun.build({
-  entrypoints: ['packages/ts/src/index.ts'],
-  outdir: './dist',
-  format: 'esm',
-  splitting: true, // Add splitting back to reduce bundle size
-  plugins: [dts({
-    build: {
-      config: {
-        root: './packages/ts',
-      },
-    },
-  })],
-  target: 'node',
-})
-
-// Build the CLI binary separately
-await Bun.build({
-  entrypoints: ['packages/ts/bin/cli.ts'],
-  outdir: './dist/bin',
-  target: 'node',
-})
+await buildClapp()
