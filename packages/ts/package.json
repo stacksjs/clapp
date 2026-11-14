@@ -47,6 +47,6 @@
     "test:package": "bun test ./test/package.acceptance.ts"
   },
   "devDependencies": {
-    "@dtsx/bun": "^0.11.48"
+    "@dtsx/bun": "^0.11.55"
   }
 }
