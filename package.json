@@ -53,7 +53,7 @@
     "build:release": "bun run build && bun run compile && bun run compile:all && bun run zip && bun run test:package"
   },
   "devDependencies": {
-    "better-dx": "^0.2.38"
+    "better-dx": "^0.2.40"
   },
   "git-hooks": {
     "pre-commit": {
